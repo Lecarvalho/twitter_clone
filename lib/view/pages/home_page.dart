@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/view/project_assets.dart';
 import 'package:twitter_clone/view/widgets/appbar_widget.dart';
-import 'package:twitter_clone/view/widgets/outlined_button_widget.dart';
+import 'package:twitter_clone/view/widgets/tweet_actions_widget.dart';
 
 import 'drawer_menu.dart';
 
@@ -19,11 +20,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> _pagesSimulation = <Widget>[
-    OutlinedButtonWidget(
-      onPressed: () {
-        print("hello");
-      },
-      text: "Button",
+    TweetActionsWidget(
+      totalComments: 46,
+      totalRetweets: 18,
+      totalLikes: 363,
     ),
     Text("Search"),
     Text("Notifications"),
@@ -34,9 +34,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        title: Image.asset("assets/logos/twitter.png"),
+        title: Image.asset(LogoAssets.twitter),
         action: IconButton(
-          icon: Image.asset("assets/icons/feature.png"),
+          icon: Image.asset(IconAssets.feature),
           onPressed: null,
         ),
       ),
@@ -51,23 +51,23 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             label: "Home",
-            activeIcon: Image.asset("assets/icons/home-solid.png"),
-            icon: Image.asset("assets/icons/home.png"),
+            activeIcon: Image.asset(IconAssets.homeSolid),
+            icon: Image.asset(IconAssets.home),
           ),
           BottomNavigationBarItem(
             label: "Search",
-            activeIcon: Image.asset("assets/icons/search-solid.png"),
-            icon: Image.asset("assets/icons/search.png"),
+            activeIcon: Image.asset(IconAssets.searchSolid),
+            icon: Image.asset(IconAssets.search),
           ),
           BottomNavigationBarItem(
             label: "Notifications",
-            activeIcon: Image.asset("assets/icons/notification-solid.png"),
-            icon: Image.asset("assets/icons/notification.png"),
+            activeIcon: Image.asset(IconAssets.notificationSolid),
+            icon: Image.asset(IconAssets.notification),
           ),
           BottomNavigationBarItem(
             label: "Profile",
-            activeIcon: Image.asset("assets/icons/profile-solid.png"),
-            icon: Image.asset("assets/icons/profile.png"),
+            activeIcon: Image.asset(IconAssets.profileSolid),
+            icon: Image.asset(IconAssets.profile),
           ),
         ],
         onTap: _onNavigationTapped,
