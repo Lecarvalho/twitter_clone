@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/widgets/button_widget.dart';
+import 'package:twitter_clone/view/widgets/appbar_widget.dart';
 import 'package:twitter_clone/view/widgets/outlined_button_widget.dart';
 
 import 'drawer_menu.dart';
@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _pagesSimulation = <Widget>[
     OutlinedButtonWidget(
-      onPressed: (){
+      onPressed: () {
         print("hello");
       },
       text: "Button",
@@ -33,14 +33,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBarWidget(
         title: Image.asset("assets/logos/twitter.png"),
-        centerTitle: true,
-        elevation: .33,
-        actions: [
-          IconButton(
-              icon: Image.asset("assets/icons/feature.png"), onPressed: null)
-        ],
+        action: IconButton(
+          icon: Image.asset("assets/icons/feature.png"),
+          onPressed: null,
+        ),
       ),
       drawer: Drawer(
         child: DrawerMenu(),
