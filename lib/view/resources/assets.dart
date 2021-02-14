@@ -1,14 +1,11 @@
-class AssetsBase {
-}
-
-class LogoAssets {
+class AssetsLogos {
   static const String _assetsBasePath = "assets/logos/";
 
   static final twitter = _assetsBasePath + "twitter.png";
   static final flutterTwitterClone = _assetsBasePath + "flutter-twitter-clone.png";
 }
 
-class IconAssets {
+class AssetsIcons {
 
   static const String _assetsBasePath = "assets/icons/";
 

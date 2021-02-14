@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../project_colors.dart';
-import '../project_typography.dart';
+import 'package:twitter_clone/view/resources/colors.dart';
+import 'package:twitter_clone/view/resources/styles.dart';
 
 class OutlinedButtonWidget extends StatelessWidget {
   final Function onPressed;
@@ -14,7 +14,7 @@ class OutlinedButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      child: Text(text, style: ProjectTypography.subtitle2Blue),
+      child: Text(text, style: Styles.subtitle2Blue),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
         side: BorderSide(color: ProjectColors.blueActive),

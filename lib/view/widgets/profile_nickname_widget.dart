@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../project_typography.dart';
+import 'package:twitter_clone/view/resources/styles.dart';
 
 class ProfileNickNameWidget extends StatelessWidget {
   final String profileNickName;
@@ -8,6 +7,6 @@ class ProfileNickNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(profileNickName, style: ProjectTypography.subtitle1Gray);
+    return Text(profileNickName, style: Styles.subtitle1Gray);
   }
 }

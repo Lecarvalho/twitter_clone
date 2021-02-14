@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/project_colors.dart';
-import 'package:twitter_clone/view/project_typography.dart';
+import 'package:twitter_clone/view/resources/colors.dart';
+import 'package:twitter_clone/view/resources/styles.dart';
 
 class ButtonWidget extends StatelessWidget {
   final Function onPressed;
@@ -17,7 +17,7 @@ class ButtonWidget extends StatelessWidget {
       onPressed: onPressed,
       color: ProjectColors.blueActive,
       disabledColor: ProjectColors.blueInactive,
-      child: Text(text, style: ProjectTypography.subtitle2White),
+      child: Text(text, style: Styles.subtitle2White),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

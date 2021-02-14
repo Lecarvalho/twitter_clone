@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'view/pages/home_page.dart';
-import 'view/project_colors.dart';
-import 'view/project_typography.dart';
+import 'view/resources/colors.dart';
+import 'view/resources/styles.dart';
 
 void main() {
 
@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
           color: ProjectColors.white,
         ),
         textTheme: TextTheme(
-          bodyText2: ProjectTypography.body2,
-          bodyText1: ProjectTypography.body1
+          bodyText2: Styles.body2,
+          bodyText1: Styles.body1
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(primary: ProjectColors.blueActive),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/project_typography.dart';
+import 'package:twitter_clone/view/resources/styles.dart';
 
 class ProfileNameWidget extends StatelessWidget {
   final String profileName;
@@ -15,13 +15,13 @@ class ProfileNameWidget extends StatelessWidget {
 
     switch (profileNameSize) {
       case ProfileNameSize.small:
-        _textStyle = ProjectTypography.subtitle1;
+        _textStyle = Styles.subtitle1;
         break;
       case ProfileNameSize.medium:
-        _textStyle = ProjectTypography.h6;
+        _textStyle = Styles.h6;
         break;
       case ProfileNameSize.large:
-        _textStyle = ProjectTypography.h5;
+        _textStyle = Styles.h5;
         break;
     }
 

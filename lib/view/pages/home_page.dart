@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/project_assets.dart';
+import 'package:twitter_clone/view/resources/assets.dart';
 import 'package:twitter_clone/view/widgets/appbar_widget.dart';
 import 'package:twitter_clone/view/widgets/tweet_actions_widget.dart';
 
@@ -34,9 +34,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        title: Image.asset(LogoAssets.twitter),
+        title: Image.asset(AssetsLogos.twitter),
         action: IconButton(
-          icon: Image.asset(IconAssets.feature),
+          icon: Image.asset(AssetsIcons.feature),
           onPressed: null,
         ),
       ),
@@ -51,23 +51,23 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             label: "Home",
-            activeIcon: Image.asset(IconAssets.homeSolid),
-            icon: Image.asset(IconAssets.home),
+            activeIcon: Image.asset(AssetsIcons.homeSolid),
+            icon: Image.asset(AssetsIcons.home),
           ),
           BottomNavigationBarItem(
             label: "Search",
-            activeIcon: Image.asset(IconAssets.searchSolid),
-            icon: Image.asset(IconAssets.search),
+            activeIcon: Image.asset(AssetsIcons.searchSolid),
+            icon: Image.asset(AssetsIcons.search),
           ),
           BottomNavigationBarItem(
             label: "Notifications",
-            activeIcon: Image.asset(IconAssets.notificationSolid),
-            icon: Image.asset(IconAssets.notification),
+            activeIcon: Image.asset(AssetsIcons.notificationSolid),
+            icon: Image.asset(AssetsIcons.notification),
           ),
           BottomNavigationBarItem(
             label: "Profile",
-            activeIcon: Image.asset(IconAssets.profileSolid),
-            icon: Image.asset(IconAssets.profile),
+            activeIcon: Image.asset(AssetsIcons.profileSolid),
+            icon: Image.asset(AssetsIcons.profile),
           ),
         ],
         onTap: _onNavigationTapped,

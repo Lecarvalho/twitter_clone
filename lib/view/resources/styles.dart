@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'project_colors.dart';
+import 'colors.dart';
 
-class ProjectTypography {
+class Styles {
   static final TextStyle body2 = TextStyle(
     color: ProjectColors.black,
     fontSize: 14,
