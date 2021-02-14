@@ -17,7 +17,7 @@ class ProfilePictureWidget extends StatelessWidget {
         _imageSize = 30;
         break;
       case ProfilePicSize.medium:
-        _imageSize = 60;
+        _imageSize = 70;
         break;
       case ProfilePicSize.large:
         _imageSize = 90;

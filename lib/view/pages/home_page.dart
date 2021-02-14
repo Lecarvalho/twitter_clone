@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/view/resources/assets.dart';
 import 'package:twitter_clone/view/widgets/appbar_widget.dart';
+import 'package:twitter_clone/view/widgets/profile_picture_name_horizontal_widget.dart';
 import 'package:twitter_clone/view/widgets/tweet_actions_widget.dart';
+import 'package:twitter_clone/view/widgets/tweet_widget.dart';
 
 import 'drawer_menu.dart';
 
@@ -20,10 +22,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> _pagesSimulation = <Widget>[
-    TweetActionsWidget(
-      totalComments: 46,
-      totalRetweets: 18,
-      totalLikes: 363,
+    TweetWidget(
+      photoUrl: "assets/profile-pictures/at.jpg",
+      profileName: "Leandro Carvalho",
+      profileNickName: "@dev_lecarvalho",
+      dateTimeTweet: DateTime(2021, 02, 14, 17, 28),
+      tweetText: "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
     ),
     Text("Search"),
     Text("Notifications"),
