@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/models/tweet_activity_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet_big_single_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet_simple_widget.dart';
 
 import 'drawer_menu.dart';
@@ -24,6 +24,10 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _pagesSimulation = <Widget>[
     TweetSimpleWidget(
+      tweetActivityModel: TweetActivityModel(
+        profileName: "Zack John",
+        tweetAction: TweetAction.liked,
+      ),
       tweetModel: TweetModel(
         dateTimeTweet: DateTime.now().subtract(Duration(hours: 3)),
         profileModel: ProfileModel(
