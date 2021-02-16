@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/resources/assets.dart';
-import 'package:twitter_clone/view/widgets/appbar_widget.dart';
-import 'package:twitter_clone/view/widgets/profile_picture_name_horizontal_widget.dart';
-import 'package:twitter_clone/view/widgets/tweet_actions_widget.dart';
-import 'package:twitter_clone/view/widgets/tweet_widget.dart';
+import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/models/tweet_model.dart';
+import 'package:twitter_clone/views/resources/assets.dart';
+import 'package:twitter_clone/views/widgets/appbar_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet_big_single_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet_simple_widget.dart';
 
 import 'drawer_menu.dart';
 
@@ -22,12 +23,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> _pagesSimulation = <Widget>[
-    TweetWidget(
-      photoUrl: "assets/profile-pictures/at.jpg",
-      profileName: "Leandro Carvalho",
-      profileNickName: "@dev_lecarvalho",
-      dateTimeTweet: DateTime(2021, 02, 14, 17, 28),
-      tweetText: "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
+    TweetSimpleWidget(
+      tweetModel: TweetModel(
+        dateTimeTweet: DateTime.now().subtract(Duration(hours: 3)),
+        profileModel: ProfileModel(
+          photoUrl: "assets/profile-pictures/marsha-ambrosius.jpg",
+          profileName: "Marsha Ambrosius",
+          profileNickName: "@MarshaAmbrosius",
+        ),
+        tweetText: "Just wrote a little article that summarized some my  discoveries after reading The Rust Book"
+      ),
     ),
     Text("Search"),
     Text("Notifications"),

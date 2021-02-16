@@ -29,7 +29,7 @@ class Styles {
 
   static final TextStyle body1Gray = TextStyle(
     color: ProjectColors.gray,
-    fontSize: 14,
+    fontSize: 16,
     letterSpacing: 0.25,
   );
 
@@ -46,22 +46,29 @@ class Styles {
     letterSpacing: 0.15
   );
 
+  static final TextStyle subtitle2 = TextStyle(
+    color: ProjectColors.black,
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+  );
+
+
   static final TextStyle subtitle2Gray = TextStyle(
     color: ProjectColors.gray,
     fontWeight: FontWeight.w500,
-    fontSize: 15,
+    fontSize: 14,
   );
 
   static final TextStyle subtitle2White = TextStyle(
     color: ProjectColors.white,
     fontWeight: FontWeight.w500,
-    fontSize: 15,
+    fontSize: 14,
   );
 
   static final TextStyle subtitle2Blue = TextStyle(
     color: ProjectColors.blueActive,
     fontWeight: FontWeight.w500,
-    fontSize: 15,
+    fontSize: 14,
   );
 
   static final TextStyle caption = TextStyle(

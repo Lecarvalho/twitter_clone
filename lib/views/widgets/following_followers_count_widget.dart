@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/resources/styles.dart';
+import 'package:twitter_clone/views/resources/styles.dart';
 
 class FollowingFollowersCountWidget extends StatelessWidget {
   final int totalFollowing;

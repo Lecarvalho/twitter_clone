@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'view/pages/home_page.dart';
-import 'view/resources/colors.dart';
-import 'view/resources/styles.dart';
+import 'views/pages/home_page.dart';
+import 'views/resources/colors.dart';
+import 'views/resources/styles.dart';
 
 void main() {
 

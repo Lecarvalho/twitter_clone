@@ -14,7 +14,10 @@ class ProfilePictureWidget extends StatelessWidget {
 
     switch (profilePicSize) {
       case ProfilePicSize.small:
-        _imageSize = 30;
+        _imageSize = 37;
+        break;
+      case ProfilePicSize.small2:
+        _imageSize = 55;
         break;
       case ProfilePicSize.medium:
         _imageSize = 70;
@@ -41,4 +44,4 @@ class ProfilePictureWidget extends StatelessWidget {
   }
 }
 
-enum ProfilePicSize { small, medium, large }
+enum ProfilePicSize { small, small2, medium, large }

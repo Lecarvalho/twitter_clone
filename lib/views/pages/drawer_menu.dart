@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/widgets/following_followers_count_widget.dart';
-import 'package:twitter_clone/view/widgets/profile_picture_name_vertical_widget.dart';
+import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/views/widgets/following_followers_count_widget.dart';
+import 'package:twitter_clone/views/widgets/profile_picture_name_nick_vertical_widget.dart';
 
 import '../resources/assets.dart';
 
@@ -12,10 +13,12 @@ class DrawerMenu extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProfilePictureNameVerticalWidget(
-            photoUrl: "assets/profile-pictures/at.jpg",
-            profileName: "Leandro Carvalho",
-            profileNickName: "@dev_lecarvalho",
+          ProfilePictureNameNickVerticalWidget(
+            profileModel: ProfileModel(
+              photoUrl: "assets/profile-pictures/at.jpg",
+              profileName: "Leandro Carvalho",
+              profileNickName: "@dev_lecarvalho",
+            ),
           ),
           SizedBox(height: 7),
           FollowingFollowersCountWidget(

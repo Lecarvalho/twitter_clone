@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/resources/assets.dart';
-import 'package:twitter_clone/view/resources/styles.dart';
+import 'package:twitter_clone/views/resources/assets.dart';
+import 'package:twitter_clone/views/resources/styles.dart';
 
 class TweetActionsWidget extends StatelessWidget {
   final int totalComments;
@@ -15,8 +15,8 @@ class TweetActionsWidget extends StatelessWidget {
 
   Widget _getActionButton(String actionIcon, int total) {
     return GestureDetector(
-      child: Container(
-        padding: EdgeInsets.all(20),
+      child: Padding(
+        padding: EdgeInsets.all(15),
         child: Row(
           children: [
             Image.asset(actionIcon),

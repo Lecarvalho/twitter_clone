@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/view/resources/colors.dart';
-import 'package:twitter_clone/view/resources/styles.dart';
+import 'package:twitter_clone/views/resources/colors.dart';
+import 'package:twitter_clone/views/resources/styles.dart';
 
 class ButtonWidget extends StatelessWidget {
   final Function onPressed;
