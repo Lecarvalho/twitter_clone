@@ -2,10 +2,10 @@ class ProfileModel {
   ProfileModel({
     this.photoUrl,
     this.profileName,
-    this.profileNickName,
+    this.profileNickname,
   });
   
   String photoUrl;
   String profileName;
-  String profileNickName;
+  String profileNickname;
 }

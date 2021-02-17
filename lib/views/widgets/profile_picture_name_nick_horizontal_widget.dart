@@ -32,7 +32,7 @@ class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
             ),
             SizedBox(height: 5),
             ProfileNicknameWidget(
-              profileNickName: profileModel.profileNickName,
+              profileNickname: profileModel.profileNickname,
               textStyle: Styles.subtitle1Gray,
             )
           ],

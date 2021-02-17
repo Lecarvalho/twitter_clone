@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ProfileNicknameWidget extends StatelessWidget {
-  final String profileNickName;
+  final String profileNickname;
   final TextStyle textStyle;
 
   ProfileNicknameWidget({
-    @required this.profileNickName,
+    @required this.profileNickname,
     @required this.textStyle,
   });
 
@@ -13,7 +13,7 @@ class ProfileNicknameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: Text(
-        profileNickName,
+        profileNickname,
         style: textStyle,
         overflow: TextOverflow.ellipsis,
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/textbox_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet_comment_widget.dart';
 
 import 'drawer_menu.dart';
 
@@ -22,15 +24,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    final textController = TextEditingController();
-
     _pagesSimulation = <Widget>[
-      TextboxWidget(
-        textboxType: TextboxType.password,
-        maxLength: 100,
-        controller: textController,
-        hintText: "Name",
-        labelText: "Name",
+      TweetCommentWidget(
+        tweetModel: TweetModel(
+          dateTimeTweet: DateTime.now().subtract(Duration(hours: 3)),
+          profileModel: ProfileModel(
+            photoUrl: "assets/profile-pictures/marsha-ambrosius.jpg",
+            profileName: "Marsha Ambrosius",
+            profileNickname: "@MarshaAmbrosius",
+          ),
+          tweetText:
+              "Just wrote a little article that summarized some my  discoveries after reading The Rust Book",
+        ),
       ),
       Text("Search"),
       Text("Notifications"),

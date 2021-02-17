@@ -17,7 +17,7 @@ class DrawerMenu extends StatelessWidget {
             profileModel: ProfileModel(
               photoUrl: "assets/profile-pictures/at.jpg",
               profileName: "Leandro Carvalho",
-              profileNickName: "@dev_lecarvalho",
+              profileNickname: "@dev_lecarvalho",
             ),
           ),
           SizedBox(height: 7),
