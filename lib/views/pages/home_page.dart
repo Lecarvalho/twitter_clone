@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/profile_model.dart';
-import 'package:twitter_clone/models/tweet_activity_model.dart';
-import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet_simple_widget.dart';
+import 'package:twitter_clone/views/widgets/textbox_widget.dart';
 
 import 'drawer_menu.dart';
 
@@ -15,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  List<Widget> _pagesSimulation;
 
   void _onNavigationTapped(int index) {
     setState(() {
@@ -22,26 +20,25 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  List<Widget> _pagesSimulation = <Widget>[
-    TweetSimpleWidget(
-      tweetActivityModel: TweetActivityModel(
-        profileName: "Zack John",
-        tweetAction: TweetAction.liked,
+  @override
+  void initState() {
+    final textController = TextEditingController();
+
+    _pagesSimulation = <Widget>[
+      TextboxWidget(
+        textboxType: TextboxType.password,
+        maxLength: 100,
+        controller: textController,
+        hintText: "Name",
+        labelText: "Name",
       ),
-      tweetModel: TweetModel(
-        dateTimeTweet: DateTime.now().subtract(Duration(hours: 3)),
-        profileModel: ProfileModel(
-          photoUrl: "assets/profile-pictures/marsha-ambrosius.jpg",
-          profileName: "Marsha Ambrosius",
-          profileNickName: "@MarshaAmbrosius",
-        ),
-        tweetText: "Just wrote a little article that summarized some my  discoveries after reading The Rust Book"
-      ),
-    ),
-    Text("Search"),
-    Text("Notifications"),
-    Text("Profile")
-  ];
+      Text("Search"),
+      Text("Notifications"),
+      Text("Profile")
+    ];
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
