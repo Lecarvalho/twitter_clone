@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _pagesSimulation = <Widget>[
       TweetCommentWidget(
+        replyingToNickname: "@dev_lecarvalho",
         tweetModel: TweetModel(
           dateTimeTweet: DateTime.now().subtract(Duration(hours: 3)),
           profileModel: ProfileModel(

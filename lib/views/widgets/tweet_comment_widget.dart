@@ -8,7 +8,8 @@ import 'replying_to_line_widget.dart';
 
 class TweetCommentWidget extends StatelessWidget {
   final TweetModel tweetModel;
-  TweetCommentWidget({@required this.tweetModel});
+  final String replyingToNickname;
+  TweetCommentWidget({@required this.tweetModel, @required this.replyingToNickname});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class TweetCommentWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   ReplyingToLineWidget(
-                    profileNickname: tweetModel.profileModel.profileNickname,
+                    profileNickname: replyingToNickname,
                   ),
                   SizedBox(height: 5),
                   Text(tweetModel.tweetText, style: Styles.body2)
