@@ -20,7 +20,7 @@ class DrawerMenu extends StatelessWidget {
               profileNickname: "@dev_lecarvalho",
             ),
           ),
-          SizedBox(height: 7),
+          SizedBox(height: 10),
           FollowingFollowersCountWidget(
             totalFollowers: 216,
             totalFollowing: 117,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/views/resources/colors.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
   final String photoUrl;
@@ -20,7 +21,7 @@ class ProfilePictureWidget extends StatelessWidget {
         _imageSize = 55;
         break;
       case ProfilePicSize.medium:
-        _imageSize = 70;
+        _imageSize = 60;
         break;
       case ProfilePicSize.large:
         _imageSize = 90;
@@ -33,13 +34,17 @@ class ProfilePictureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _imageSize = _getImageSize();
-    return ClipOval(
-      child: Image.asset(
-        photoUrl,
-        height: _imageSize,
-        width: _imageSize,
-        fit: BoxFit.fill,
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: AssetImage(photoUrl),
+          fit: BoxFit.cover,
+        ),
+        border: Border.all(color: ProjectColors.white),
       ),
+      width: _imageSize,
+      height: _imageSize,
     );
   }
 }
