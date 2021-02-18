@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/metadata.dart';
 import 'package:twitter_clone/views/resources/styles.dart';

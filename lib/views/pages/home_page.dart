@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet_create_new_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet_reply_to_widget.dart';
 
 import 'drawer_menu.dart';
@@ -23,8 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _pagesSimulation = <Widget>[
-      TweetReplyToWidget(
-        replyingToNickname: "@maxjacobson",
+      TweetCreateNewWidget(
         photoUrl: "assets/profile-pictures/at.jpg",
       ),
       Text("Search"),
