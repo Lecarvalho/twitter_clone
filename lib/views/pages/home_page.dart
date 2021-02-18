@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/profile_model.dart';
-import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet_comment_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet_reply_to_widget.dart';
 
 import 'drawer_menu.dart';
 
@@ -25,18 +23,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _pagesSimulation = <Widget>[
-      TweetCommentWidget(
-        replyingToNickname: "@dev_lecarvalho",
-        tweetModel: TweetModel(
-          dateTimeTweet: DateTime.now().subtract(Duration(hours: 3)),
-          profileModel: ProfileModel(
-            photoUrl: "assets/profile-pictures/marsha-ambrosius.jpg",
-            profileName: "Marsha Ambrosius",
-            profileNickname: "@MarshaAmbrosius",
-          ),
-          tweetText:
-              "Just wrote a little article that summarized some my  discoveries after reading The Rust Book",
-        ),
+      TweetReplyToWidget(
+        replyingToNickname: "@maxjacobson",
+        photoUrl: "assets/profile-pictures/at.jpg",
       ),
       Text("Search"),
       Text("Notifications"),
