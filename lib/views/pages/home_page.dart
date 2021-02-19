@@ -3,7 +3,6 @@ import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/button_new_tweet_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet_create_new_widget.dart';
 
 import 'drawer_menu.dart';
 class HomePage extends StatefulWidget {
@@ -28,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _pagesSimulation = <Widget>[
-      TweetCreateNewWidget(photoUrl: "assets/profile-pictures/at.jpg"),
+      Text("Home"),
       Text("Search"),
       Text("Notifications"),
       Text("Profile")
@@ -47,9 +46,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: null,
         ),
       ),
-      drawer: Drawer(
-        child: DrawerMenu(),
-      ),
+      drawer: DrawerMenu(),
       body: Center(child: _pagesSimulation.elementAt(_selectedIndex)),
       floatingActionButton: ButtonNewTweetWidget(),
       bottomNavigationBar: BottomNavigationBar(
