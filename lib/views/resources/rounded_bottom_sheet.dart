@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RoundedShapeBottomSheet extends RoundedRectangleBorder {
+class RoundedBottomSheet extends RoundedRectangleBorder {
   @override
   BorderRadiusGeometry get borderRadius => BorderRadius.only(
         topLeft: Radius.circular(5),

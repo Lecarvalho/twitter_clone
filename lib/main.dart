@@ -1,49 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import 'config/app_config.dart';
+import 'config/graphical.dart';
+import 'config/routes.dart';
 import 'views/pages/home_page.dart';
 import 'views/resources/colors.dart';
 import 'views/resources/styles.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-        systemNavigationBarColor: ProjectColors.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-        statusBarColor: ProjectColors.transparent,
-        statusBarIconBrightness: Brightness.dark),
-  );
-  
+  Graphical.setSystemUIOverlayStyle();
+  Graphical.setPreferredOrientations();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: AppConfig.projectName,
+      routes: Routes.routes,
       theme: ThemeData(
-        primaryColor: ProjectColors.blueActive,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryIconTheme: IconThemeData(
-          color: ProjectColors.blueActive
-        ),
-        appBarTheme: AppBarTheme(
-          color: ProjectColors.white,
-        ),
-        textTheme: TextTheme(
-          bodyText2: Styles.body2,
-          bodyText1: Styles.body1
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(primary: ProjectColors.blueActive),
-        ),
-        typography: Typography.material2018()
-      ),
+          primaryColor: ProjectColors.blueActive,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          primaryIconTheme: IconThemeData(color: ProjectColors.blueActive),
+          appBarTheme: AppBarTheme(
+            color: ProjectColors.white,
+          ),
+          textTheme:
+              TextTheme(bodyText2: Styles.body2, bodyText1: Styles.body1),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(primary: ProjectColors.blueActive),
+          ),
+          typography: Typography.material2018()),
       home: HomePage(),
     );
   }

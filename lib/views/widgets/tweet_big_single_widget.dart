@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/views/resources/metadata.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/profile_picture_name_nick_horizontal_widget.dart';
 
@@ -28,7 +28,7 @@ class TweetBigSingleWidget extends StatelessWidget {
               style: Styles.body2Gray,
             ),
             Text("-", style: Styles.body2Gray),
-            Text(Metadata.projectName, style: Styles.body2Blue),
+            Text(AppConfig.projectName, style: Styles.body2Blue),
           ],
         )
       ],

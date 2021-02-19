@@ -18,6 +18,7 @@ class MultilineTextboxWidget extends StatelessWidget {
     return TextField(
       maxLines: 10,
       minLines: 1,
+      keyboardType: TextInputType.multiline,
       inputFormatters: [
         LengthLimitingTextInputFormatter(maxLength),
       ],

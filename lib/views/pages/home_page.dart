@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/profile_header_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet_create_new_widget.dart';
 
 import 'drawer_menu.dart';
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,23 +15,19 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _pagesSimulation;
 
   void _onNavigationTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 1) {
+      Navigator.of(context).pushNamed(Routes.search);
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
   void initState() {
     _pagesSimulation = <Widget>[
-      ProfileHeaderWidget(
-        profileModel: ProfileModel(
-          photoUrl: "assets/profile-pictures/maximmilian.jpg",
-          profileName: "Leandro Carvalho",
-          profileNickname: "@dev_lecarvalho",
-          bio: "Web & Mobile UI/UX development; Devops expert; Poker player",
-          inscriptionDate: DateTime(2020, 02, 15),
-        ),
-      ),
+      TweetCreateNewWidget(photoUrl: "assets/profile-pictures/at.jpg"),
       Text("Search"),
       Text("Notifications"),
       Text("Profile")
