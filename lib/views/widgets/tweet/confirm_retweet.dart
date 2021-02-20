@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 
-import 'action_bottom_sheet_widget.dart';
-import 'modal_bottom_sheet_base_widget.dart';
+import '../action_bottom_sheet_widget.dart';
+import '../modal_bottom_sheet_base_widget.dart';
 
 class ConfirmRetweet extends StatelessWidget {
   @override

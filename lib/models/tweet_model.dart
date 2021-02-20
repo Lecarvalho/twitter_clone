@@ -1,15 +1,15 @@
 import 'package:intl/intl.dart';
 
-import 'profile_model.dart';
+import 'user_model.dart';
 
 class TweetModel {
   TweetModel({
-    this.profileModel,
+    this.userModel,
     this.tweetText,
     this.dateTimeTweet,
   });
 
-  ProfileModel profileModel;
+  UserModel userModel;
   String tweetText;
   DateTime dateTimeTweet;
   String get dateLong => DateFormat.Hm().add_yMd().format(dateTimeTweet);

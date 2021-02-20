@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/button_new_tweet_widget.dart';
+import 'package:twitter_clone/views/widgets/button/button_new_tweet_widget.dart';
 
 import 'drawer_menu.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -48,7 +49,9 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: DrawerMenu(),
       body: Center(child: _pagesSimulation.elementAt(_selectedIndex)),
-      floatingActionButton: ButtonNewTweetWidget(),
+      floatingActionButton: ButtonNewTweetWidget(
+        onPressed: () => print("add tweet!"),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,

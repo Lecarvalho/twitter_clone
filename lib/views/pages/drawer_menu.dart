@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/profile_model.dart';
-import 'package:twitter_clone/views/widgets/following_followers_count_widget.dart';
-import 'package:twitter_clone/views/widgets/profile_picture_name_nick_vertical_widget.dart';
+import 'package:twitter_clone/models/user_model.dart';
+import 'package:twitter_clone/views/widgets/tweet/following_followers_count_widget.dart';
+import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_vertical_widget.dart';
 
 import '../resources/assets.dart';
 
@@ -14,10 +14,10 @@ class DrawerMenu extends Drawer {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProfilePictureNameNickVerticalWidget(
-                  profileModel: ProfileModel(
+                  profileModel: UserModel(
                     photoUrl: "assets/profile-pictures/at.jpg",
-                    profileName: "Leandro Carvalho",
-                    profileNickname: "@dev_lecarvalho",
+                    name: "Leandro Carvalho",
+                    nickname: "@dev_lecarvalho",
                   ),
                 ),
                 SizedBox(height: 10),

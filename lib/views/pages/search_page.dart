@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/search_textbox_widget.dart';
+import 'package:twitter_clone/views/widgets/textbox/search_textbox_widget.dart';
 
 class SearchPage extends StatelessWidget {
   @override

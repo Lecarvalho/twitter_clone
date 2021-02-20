@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
-import 'package:twitter_clone/views/widgets/profile_picture_name_nick_horizontal_widget.dart';
+import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_horizontal_widget.dart';
 
 class TweetBigSingleWidget extends StatelessWidget {
   final TweetModel tweetModel;
@@ -16,7 +16,7 @@ class TweetBigSingleWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ProfilePictureNameNickHorizontalWidget(
-          profileModel: tweetModel.profileModel,
+          userModel: tweetModel.userModel,
         ),
         SizedBox(height: 15),
         Text(tweetModel.tweetText, style: Styles.h5),

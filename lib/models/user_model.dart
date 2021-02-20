@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ProfileModel {
-  ProfileModel({
+class UserModel {
+  UserModel({
     @required this.photoUrl,
-    @required this.profileName,
-    @required this.profileNickname,
+    @required this.name,
+    @required this.nickname,
     this.bio,
     this.emailAdress,
     this.inscriptionDate,
   });
   
   String photoUrl;
-  String profileName;
-  String profileNickname;
+  String name;
+  String nickname;
   String bio;
   String emailAdress;
   DateTime inscriptionDate;

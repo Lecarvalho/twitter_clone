@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/views/widgets/write_tweet_widget.dart';
+
+import 'write_tweet_widget.dart';
 
 class TweetCreateNewWidget extends StatelessWidget {
   final controller = TextEditingController();

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 
 import 'action_bottom_sheet_widget.dart';
-import 'button_expanded_widget.dart';
+import 'button/button_expanded_widget.dart';
 
 class ModalBottomSheetWidget extends StatelessWidget {
   final List<ActionBottomSheetWidget> actions;

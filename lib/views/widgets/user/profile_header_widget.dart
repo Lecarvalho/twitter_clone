@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
-import 'package:twitter_clone/views/widgets/profile_picture_widget.dart';
 
 import 'profile_name_nick_vertical_widget.dart';
+import 'profile_picture_widget.dart';
 
 class ProfileHeaderWidget extends StatelessWidget {
-  final ProfileModel profileModel;
+  final UserModel profileModel;
   ProfileHeaderWidget({@required this.profileModel});
 
   @override
@@ -21,8 +21,8 @@ class ProfileHeaderWidget extends StatelessWidget {
         ),
         SizedBox(height: 10),
         ProfileNameNickVerticalWidget(
-          profileName: profileModel.profileName,
-          profileNickname: profileModel.profileNickname,
+          profileName: profileModel.name,
+          profileNickname: profileModel.nickname,
         ),
         SizedBox(height: 10),
         Text(profileModel.bio),
