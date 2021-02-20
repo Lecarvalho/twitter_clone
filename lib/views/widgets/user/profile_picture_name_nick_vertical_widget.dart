@@ -15,7 +15,7 @@ class ProfilePictureNameNickVerticalWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ProfilePictureWidget(
-          photoUrl: profileModel.photoUrl,
+          avatar: profileModel.avatar,
           profilePicSize: ProfilePicSize.medium,
         ),
         SizedBox(height: 10),

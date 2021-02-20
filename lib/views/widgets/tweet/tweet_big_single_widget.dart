@@ -19,12 +19,12 @@ class TweetBigSingleWidget extends StatelessWidget {
           userModel: tweetModel.userModel,
         ),
         SizedBox(height: 15),
-        Text(tweetModel.tweetText, style: Styles.h5),
+        Text(tweetModel.text, style: Styles.h5),
         SizedBox(height: 10),
         Row(
           children: [
             Text(
-              tweetModel.dateLong,
+              tweetModel.creationDateLong,
               style: Styles.body2Gray,
             ),
             Text("-", style: Styles.body2Gray),

@@ -39,7 +39,7 @@ class TweetSimpleWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfilePictureWidget(
-              photoUrl: tweetModel.userModel.photoUrl,
+              avatar: tweetModel.userModel.avatar,
               profilePicSize: ProfilePicSize.small2,
             ),
             SizedBox(width: 8),
@@ -53,7 +53,7 @@ class TweetSimpleWidget extends StatelessWidget {
                     profileNickname: tweetModel.userModel.nickname,
                   ),
                   SizedBox(height: 5),
-                  Text(tweetModel.tweetText, style: Styles.body2),
+                  Text(tweetModel.text, style: Styles.body2),
                   TweetActionsWidget(
                     totalComments: 46,
                     totalRetweets: 18,

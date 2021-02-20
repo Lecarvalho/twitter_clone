@@ -3,19 +3,19 @@ import 'package:intl/intl.dart';
 
 class UserModel {
   UserModel({
-    @required this.photoUrl,
+    @required this.avatar,
     @required this.name,
     @required this.nickname,
     this.bio,
-    this.emailAdress,
+    this.emailAddress,
     this.inscriptionDate,
   });
   
-  String photoUrl;
+  String avatar;
   String name;
   String nickname;
   String bio;
-  String emailAdress;
+  String emailAddress;
   DateTime inscriptionDate;
 
   String get inscriptionDateMonthYear => DateFormat.MMMM().add_y().format(inscriptionDate);

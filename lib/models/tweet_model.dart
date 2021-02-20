@@ -5,20 +5,22 @@ import 'user_model.dart';
 class TweetModel {
   TweetModel({
     this.userModel,
-    this.tweetText,
-    this.dateTimeTweet,
+    this.text,
+    this.creationDate,
   });
 
   UserModel userModel;
-  String tweetText;
-  DateTime dateTimeTweet;
-  String get dateLong => DateFormat.Hm().add_yMd().format(dateTimeTweet);
-  String get dateShort =>
-      getDifferenceInDaysOrHoursFromTweetToNow(dateTimeTweet, DateTime.now());
+  String text;
+  DateTime creationDate;
+  int heartCount;
+  
+  String get creationDateLong => DateFormat.Hm().add_yMd().format(creationDate);
+  String get creationDateShort =>
+      getDifferenceInDaysOrHoursFromTweetToNow(creationDate, DateTime.now());
 
   String getDifferenceInDaysOrHoursFromTweetToNow(
-      DateTime dateTimeTweet, DateTime now) {
-    var difference = dateTimeTweet.difference(now);
+      DateTime creationDate, DateTime now) {
+    var difference = creationDate.difference(now);
 
     if (difference.inDays == 0) {
       if (difference.inHours == 0) {

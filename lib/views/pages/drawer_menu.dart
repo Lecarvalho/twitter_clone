@@ -15,7 +15,7 @@ class DrawerMenu extends Drawer {
               children: [
                 ProfilePictureNameNickVerticalWidget(
                   profileModel: UserModel(
-                    photoUrl: "assets/profile-pictures/at.jpg",
+                    avatar: "assets/profile-pictures/at.jpg",
                     name: "Leandro Carvalho",
                     nickname: "@dev_lecarvalho",
                   ),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
-  final String photoUrl;
+  final String avatar;
   final ProfilePicSize profilePicSize;
 
   ProfilePictureWidget({
-    @required this.photoUrl,
+    @required this.avatar,
     @required this.profilePicSize,
   });
 
@@ -38,7 +38,7 @@ class ProfilePictureWidget extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: AssetImage(photoUrl),
+          image: AssetImage(avatar),
           fit: BoxFit.cover,
         ),
         border: Border.all(color: ProjectColors.white),

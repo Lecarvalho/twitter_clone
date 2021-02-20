@@ -4,12 +4,12 @@ import 'package:twitter_clone/views/widgets/textbox/multiline_textbox_widget.dar
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
 class WriteTweetWidget extends StatelessWidget {
-  final String photoUrl;
+  final String avatar;
   final TextEditingController controller;
   final String hintText;
 
   WriteTweetWidget({
-    @required this.photoUrl,
+    @required this.avatar,
     @required this.controller,
     @required this.hintText,
   });
@@ -22,7 +22,7 @@ class WriteTweetWidget extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: 5),
           child: ProfilePictureWidget(
-            photoUrl: photoUrl,
+            avatar: avatar,
             profilePicSize: ProfilePicSize.small,
           ),
         ),

@@ -23,7 +23,7 @@ class TweetCommentWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfilePictureWidget(
-              photoUrl: tweetModel.userModel.photoUrl,
+              avatar: tweetModel.userModel.avatar,
               profilePicSize: ProfilePicSize.small2,
             ),
             SizedBox(width: 8),
@@ -41,7 +41,7 @@ class TweetCommentWidget extends StatelessWidget {
                     profileNickname: replyingToNickname,
                   ),
                   SizedBox(height: 5),
-                  Text(tweetModel.tweetText, style: Styles.body2)
+                  Text(tweetModel.text, style: Styles.body2)
                 ],
               ),
             )

@@ -7,8 +7,8 @@ import 'profile_name_nick_vertical_widget.dart';
 import 'profile_picture_widget.dart';
 
 class ProfileHeaderWidget extends StatelessWidget {
-  final UserModel profileModel;
-  ProfileHeaderWidget({@required this.profileModel});
+  final UserModel userModel;
+  ProfileHeaderWidget({@required this.userModel});
 
   @override
   Widget build(BuildContext context) {
@@ -16,23 +16,23 @@ class ProfileHeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ProfilePictureWidget(
-          photoUrl: profileModel.photoUrl,
+          avatar: userModel.avatar,
           profilePicSize: ProfilePicSize.large,
         ),
         SizedBox(height: 10),
         ProfileNameNickVerticalWidget(
-          profileName: profileModel.name,
-          profileNickname: profileModel.nickname,
+          profileName: userModel.name,
+          profileNickname: userModel.nickname,
         ),
         SizedBox(height: 10),
-        Text(profileModel.bio),
+        Text(userModel.bio),
         SizedBox(height: 10),
         Row(
           children: [
             Icon(Icons.date_range, color: ProjectColors.gray),
             SizedBox(width: 5),
             Text(
-              "Joined ${profileModel.inscriptionDateMonthYear}",
+              "Joined ${userModel.inscriptionDateMonthYear}",
               style: Styles.body2Gray,
             ),
           ],
