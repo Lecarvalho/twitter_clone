@@ -11,12 +11,9 @@ class ProfileNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Text(
-        profileName,
-        style: textStyle,
-        overflow: TextOverflow.ellipsis,
-      ),
+    return Text(
+      profileName,
+      style: textStyle,
     );
   }
 }

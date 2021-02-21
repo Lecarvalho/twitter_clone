@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/tweet_activity_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
+import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
-import 'package:twitter_clone/views/widgets/user/profile_name_nick_horizontal_widget.dart';
+import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
+import '../divider_widget.dart';
 import 'tweet_actions_widget.dart';
 import 'tweet_activity_widget.dart';
 
@@ -32,6 +34,7 @@ class TweetSimpleWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 10),
         tweetActivityWidget,
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -48,22 +51,24 @@ class TweetSimpleWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ProfileNameNickHorizontalWidget(
+                  ProfileNameNickTimeAgoHorizontalWidget(
                     profileName: tweetModel.userModel.name,
                     profileNickname: tweetModel.userModel.nickname,
+                    timeAgo: tweetModel.creationTimeAgo,
                   ),
                   SizedBox(height: 5),
                   Text(tweetModel.text, style: Styles.body2),
+                  SizedBox(height: 5),
                   TweetActionsWidget(
-                    totalComments: 46,
-                    totalRetweets: 18,
-                    totalLikes: 363,
+                    totalComments: tweetModel.commentCount,
+                    totalRetweets: tweetModel.retweetCount,
+                    totalLikes: tweetModel.heartCount,
                   ),
                 ],
               ),
-            )
+            ),
           ],
-        )
+        ),
       ],
     );
   }

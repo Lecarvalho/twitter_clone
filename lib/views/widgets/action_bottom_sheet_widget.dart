@@ -26,7 +26,7 @@ class ActionBottomSheetWidget extends StatelessWidget {
               padding: EdgeInsets.only(left: 20, right: 20),
               child: Image.asset(icon),
             ),
-            Text(text, style: Styles.body1)
+            Text(text)
           ],
         ),
       ),

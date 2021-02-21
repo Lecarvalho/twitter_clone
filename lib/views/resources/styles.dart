@@ -5,50 +5,37 @@ import 'colors.dart';
 class Styles {
   static final TextStyle body2 = TextStyle(
     color: ProjectColors.black,
-    fontSize: 14,
+    fontSize: 15,
     letterSpacing: 0.5,
   );
 
   static final TextStyle body2Gray = TextStyle(
     color: ProjectColors.gray,
-    fontSize: 14,
+    fontSize: 15,
     letterSpacing: 0.5,
   );
 
   static final TextStyle body2Blue = TextStyle(
     color: ProjectColors.blueActive,
-    fontSize: 14,
+    fontSize: 15,
     letterSpacing: 0.5,
   );
-
-  static final TextStyle body1 = TextStyle(
-    color: ProjectColors.black,
-    fontSize: 16,
-    letterSpacing: 0.25,
-  );
-
-  static final TextStyle body1Gray = TextStyle(
-    color: ProjectColors.gray,
-    fontSize: 16,
-    letterSpacing: 0.25,
-  );
-
   static final TextStyle subtitle1 = TextStyle(
     color: ProjectColors.black,
-    fontWeight: FontWeight.w500,
-    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    fontSize: 15,
     letterSpacing: 0.15,
   );
 
   static final TextStyle subtitle1Gray = TextStyle(
     color: ProjectColors.gray,
-    fontSize: 16,
+    fontSize: 15,
     letterSpacing: 0.15
   );
 
   static final TextStyle subtitle2 = TextStyle(
     color: ProjectColors.black,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w700,
     fontSize: 14,
   );
 
@@ -73,7 +60,7 @@ class Styles {
 
   static final TextStyle caption = TextStyle(
     color: ProjectColors.gray,
-    fontSize: 12,
+    fontSize: 13,
     letterSpacing: 0.4 
   );
 

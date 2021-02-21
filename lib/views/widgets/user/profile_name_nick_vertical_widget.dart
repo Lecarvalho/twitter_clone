@@ -21,12 +21,12 @@ class ProfileNameNickVerticalWidget extends StatelessWidget {
       children: [
         ProfileNameWidget(
           profileName: profileName,
-          textStyle: Styles.h5,
+          textStyle: Styles.h6,
         ),
         SizedBox(height: 3),
         ProfileNicknameWidget(
           profileNickname: profileNickname,
-          textStyle: Styles.body1Gray,
+          textStyle: Styles.body2Gray,
         ),
       ],
     );

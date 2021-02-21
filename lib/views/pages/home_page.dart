@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/controllers/tweet_controller.dart';
+import 'package:twitter_clone/models/tweet_model.dart';
+import 'package:twitter_clone/services/get_tweets_service_mock.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
+import 'package:twitter_clone/views/resources/project_logos.dart';
+import 'package:twitter_clone/views/resources/projects_icons.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
+import 'package:twitter_clone/views/widgets/bottom_navigation_widget.dart';
 import 'package:twitter_clone/views/widgets/button/button_new_tweet_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet/tweet_list_widget.dart';
 
 import 'drawer_menu.dart';
 
@@ -27,8 +34,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    var tweetController = TweetController(service: GetTweetsServiceMock());
+
     _pagesSimulation = <Widget>[
-      Text("Home"),
+      FutureBuilder<List<TweetModel>>(
+        future: tweetController.getTweets(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return TweetListWidget(tweets: snapshot.data);
+          }
+          return Container();
+        },
+      ),
       Text("Search"),
       Text("Notifications"),
       Text("Profile")
@@ -41,9 +58,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        title: Image.asset(AssetsLogos.twitter),
+        title: ProjectLogos.twitter,
         action: IconButton(
-          icon: Image.asset(AssetsIcons.feature),
+          icon: ProjectIcons.feature,
           onPressed: null,
         ),
       ),
@@ -52,34 +69,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: ButtonNewTweetWidget(
         onPressed: () => print("add tweet!"),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            label: "Home",
-            activeIcon: Image.asset(AssetsIcons.homeSolid),
-            icon: Image.asset(AssetsIcons.home),
-          ),
-          BottomNavigationBarItem(
-            label: "Search",
-            activeIcon: Image.asset(AssetsIcons.searchSolid),
-            icon: Image.asset(AssetsIcons.search),
-          ),
-          BottomNavigationBarItem(
-            label: "Notifications",
-            activeIcon: Image.asset(AssetsIcons.notificationSolid),
-            icon: Image.asset(AssetsIcons.notification),
-          ),
-          BottomNavigationBarItem(
-            label: "Profile",
-            activeIcon: Image.asset(AssetsIcons.profileSolid),
-            icon: Image.asset(AssetsIcons.profile),
-          ),
-        ],
-        onTap: _onNavigationTapped,
-        currentIndex: _selectedIndex,
+      bottomNavigationBar: BottomNavigationWidget(
+        onNavigationTapped: _onNavigationTapped,
+        selectedIndex: _selectedIndex,
       ),
     );
   }

@@ -8,7 +8,7 @@ main() {
 
       var tweetModel = TweetModel(creationDate: aDayBefore);
 
-      expect(tweetModel.creationDateShort, "1d");
+      expect(tweetModel.creationTimeAgo, "1d");
     });
 
     test("5 days before", () {
@@ -16,7 +16,7 @@ main() {
 
       var tweetModel = TweetModel(creationDate: fiveDaysBefore);
 
-      expect(tweetModel.creationDateShort, "5d");
+      expect(tweetModel.creationTimeAgo, "5d");
     });
 
     test("1 hour before", () {
@@ -24,7 +24,7 @@ main() {
 
       var tweetModel = TweetModel(creationDate: anHourBefore);
 
-      expect(tweetModel.creationDateShort, "1h");
+      expect(tweetModel.creationTimeAgo, "1h");
     });
 
     test("5 hours before", () {
@@ -32,7 +32,7 @@ main() {
 
       var tweetModel = TweetModel(creationDate: fiveHoursBefore);
 
-      expect(tweetModel.creationDateShort, "5h");
+      expect(tweetModel.creationTimeAgo, "5h");
     });
 
     test("1 minute before", () {
@@ -40,7 +40,7 @@ main() {
 
       var tweetModel = TweetModel(creationDate: aMinuteBefore);
 
-      expect(tweetModel.creationDateShort, "1m");
+      expect(tweetModel.creationTimeAgo, "1m");
     });
 
     test("5 minutes before", () {
@@ -48,7 +48,7 @@ main() {
 
       var tweetModel = TweetModel(creationDate: fiveMinutesBefore);
 
-      expect(tweetModel.creationDateShort, "5m");
+      expect(tweetModel.creationTimeAgo, "5m");
     });
   });
 }

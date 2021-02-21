@@ -14,14 +14,14 @@ class FollowingFollowersCountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(totalFollowing.toString()),
+        Text(totalFollowing.toString(), style: Styles.subtitle1),
         SizedBox(width: 3),
         Text(
           "Following",
           style: Styles.body2Gray,
         ),
         SizedBox(width: 10),
-        Text(totalFollowers.toString()),
+        Text(totalFollowers.toString(), style: Styles.subtitle1),
         SizedBox(width: 3),
         Text(
           "Followers",

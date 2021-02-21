@@ -6,6 +6,7 @@ class ProjectColors {
   static final Color transparent = Colors.transparent;
   static const Color gray = Color(0xFF687684);
   static const Color grayBackground = Color(0xFFE7ECF0);
+  static const Color grayDivider = Color(0xFFCED5DC);
   static const Color blueActive = Color(0xFF4C9EEB);
   static const Color blueInactive = Color(0xFFB9DCF7);
 }

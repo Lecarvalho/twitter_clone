@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/assets.dart';
+import 'package:twitter_clone/views/resources/projects_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 class TweetActionsWidget extends StatelessWidget {
@@ -13,14 +14,14 @@ class TweetActionsWidget extends StatelessWidget {
     @required this.totalLikes,
   });
 
-  Widget _getActionButton(String actionIcon, int total) {
+  Widget _getActionButton(Image actionIcon, int total) {
     return GestureDetector(
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(10),
         child: Row(
           children: [
-            Image.asset(actionIcon),
-            SizedBox(width: 5),
+            actionIcon,
+            SizedBox(width: 10),
             Text(total.toString(), style: Styles.caption)
           ],
         ),
@@ -32,9 +33,9 @@ class TweetActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _commentWidget = _getActionButton(AssetsIcons.comment, totalComments);
-    var _retweetWidget = _getActionButton(AssetsIcons.retweet, totalRetweets);
-    var _likesWidget = _getActionButton(AssetsIcons.heart, totalLikes);
+    var _commentWidget = _getActionButton(ProjectIcons.comment, totalComments);
+    var _retweetWidget = _getActionButton(ProjectIcons.retweet, totalRetweets);
+    var _likesWidget = _getActionButton(ProjectIcons.heart, totalLikes);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,

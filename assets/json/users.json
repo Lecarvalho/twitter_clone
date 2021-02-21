@@ -1,0 +1,56 @@
+[
+    {
+        "id": "1",
+        "avatar": "assets/profile-pictures/at.jpg",
+        "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
+        "emailAddress": "leandro@lecarvalho.net",
+        "inscriptionDate": "2021-01-01T15:56:56.782Z",
+        "name": "Leandro Carvalho",
+        "nickname": "@dev_lecarvalho"
+    },
+    {
+        "id": "2",
+        "avatar": "assets/profile-pictures/27786.jpeg",
+        "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
+        "emailAddress": "leandro@lecarvalho.net",
+        "inscriptionDate": "2021-01-01T15:56:56.782Z",
+        "name": "steveklabnik",
+        "nickname": "@steveklabnik"
+    },
+    {
+        "id": "3",
+        "avatar": "assets/profile-pictures/qE8Pko5G.jpg",
+        "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
+        "emailAddress": "leandro@lecarvalho.net",
+        "inscriptionDate": "2021-01-01T15:56:56.782Z",
+        "name": "Dj Nyack",
+        "nickname": "@djnyack"
+    },
+    {
+        "id": "4",
+        "avatar": "assets/profile-pictures/spacex.jpg",
+        "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
+        "emailAddress": "leandro@lecarvalho.net",
+        "inscriptionDate": "2021-01-01T15:56:56.782Z",
+        "name": "Elon Musk",
+        "nickname": "@elonmusk"
+    },
+    {
+        "id": "5",
+        "avatar": "assets/profile-pictures/police.jpg",
+        "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
+        "emailAddress": "leandro@lecarvalho.net",
+        "inscriptionDate": "2021-01-01T15:56:56.782Z",
+        "name": "David Lazar",
+        "nickname": "@SPFDDCLazar"
+    },
+    {
+        "id": "6",
+        "avatar": "assets/profile-pictures/marsha-ambrosius.jpg",
+        "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
+        "emailAddress": "leandro@lecarvalho.net",
+        "inscriptionDate": "2021-01-01T15:56:56.782Z",
+        "name": "Marsha Ambrosius",
+        "nickname": "@maxjacobson"
+    }
+]

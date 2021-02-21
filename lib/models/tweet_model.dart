@@ -4,21 +4,30 @@ import 'user_model.dart';
 
 class TweetModel {
   TweetModel({
+    this.id,
+    this.userId,
     this.userModel,
     this.text,
     this.creationDate,
+    this.heartCount,
+    this.commentCount,
+    this.retweetCount,
   });
 
   UserModel userModel;
+  String userId;
+  String id;
   String text;
   DateTime creationDate;
   int heartCount;
-  
-  String get creationDateLong => DateFormat.Hm().add_yMd().format(creationDate);
-  String get creationDateShort =>
-      getDifferenceInDaysOrHoursFromTweetToNow(creationDate, DateTime.now());
+  int commentCount;
+  int retweetCount;
 
-  String getDifferenceInDaysOrHoursFromTweetToNow(
+  String get creationDateLong => DateFormat.Hm().add_yMd().format(creationDate);
+  String get creationTimeAgo =>
+      getTimeAgoToNow(creationDate, DateTime.now());
+
+  String getTimeAgoToNow(
       DateTime creationDate, DateTime now) {
     var difference = creationDate.difference(now);
 
@@ -29,5 +38,17 @@ class TweetModel {
       return (difference.inHours * -1).toString() + "h";
     }
     return (difference.inDays * -1).toString() + "d";
+  }
+
+  factory TweetModel.fromMap(Map data) {
+    return TweetModel(
+      id: data["id"],
+      userId: data["userId"],
+      text: data["text"],
+      creationDate: DateTime.parse(data["creationDate"]),
+      heartCount: data["heartCount"],
+      commentCount: data["commentCount"],
+      retweetCount: data["retweetCount"],
+    );
   }
 }

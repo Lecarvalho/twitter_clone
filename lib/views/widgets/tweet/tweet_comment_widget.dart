@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
-import 'package:twitter_clone/views/widgets/user/profile_name_nick_horizontal_widget.dart';
+import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 import 'replying_to_line_widget.dart';
 
@@ -32,9 +32,10 @@ class TweetCommentWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ProfileNameNickHorizontalWidget(
+                  ProfileNameNickTimeAgoHorizontalWidget(
                     profileName: tweetModel.userModel.name,
                     profileNickname: tweetModel.userModel.nickname,
+                    timeAgo: tweetModel.creationTimeAgo,
                   ),
                   SizedBox(height: 5),
                   ReplyingToLineWidget(

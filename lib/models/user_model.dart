@@ -6,11 +6,13 @@ class UserModel {
     @required this.avatar,
     @required this.name,
     @required this.nickname,
+    this.id,
     this.bio,
     this.emailAddress,
     this.inscriptionDate,
   });
   
+  String id;
   String avatar;
   String name;
   String nickname;
@@ -19,4 +21,25 @@ class UserModel {
   DateTime inscriptionDate;
 
   String get inscriptionDateMonthYear => DateFormat.MMMM().add_y().format(inscriptionDate);
+
+  factory UserModel.fromMapBasicInfo(Map<String, dynamic> data){
+    return UserModel(
+      id: data["id"],
+      avatar: data["avatar"],
+      name: data["name"],
+      nickname: data["nickname"]
+    );
+  }
+
+  factory UserModel.fromMapAllFields(Map<String, dynamic> data){
+    return UserModel(
+      id: data["id"],
+      avatar: data["avatar"],
+      name: data["name"],
+      nickname: data["nickname"],
+      bio: data["bio"],
+      emailAddress: data["emailAddress"],
+      inscriptionDate: DateTime.parse(data["inscriptionDate"])
+    );
+  }
 }
