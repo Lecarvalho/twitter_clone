@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
-import 'package:twitter_clone/views/resources/styles.dart';
 
 class ActionBottomSheetWidget extends StatelessWidget {
   final String icon;

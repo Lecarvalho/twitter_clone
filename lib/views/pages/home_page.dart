@@ -3,7 +3,6 @@ import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/get_tweets_service_mock.dart';
-import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/resources/projects_icons.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';

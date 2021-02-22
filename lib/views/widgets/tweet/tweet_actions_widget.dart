@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/views/resources/assets.dart';
 import 'package:twitter_clone/views/resources/projects_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 

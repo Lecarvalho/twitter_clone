@@ -49,6 +49,7 @@ class TweetModel {
       heartCount: data["heartCount"],
       commentCount: data["commentCount"],
       retweetCount: data["retweetCount"],
+      userModel: UserModel.fromMapSingleTweet(data["user"]),
     );
   }
 }

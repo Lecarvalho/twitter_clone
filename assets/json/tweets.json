@@ -2,55 +2,91 @@
     {
         "id": "1",
         "commentCount": 1,
-        "creationDate" : "2021-02-21T07:53:00.782Z",
+        "creationDate": "2021-02-21T07:53:00.782Z",
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-        "userId": "1"
+        "userId": "1",
+        "user": {
+            "id": "1",
+            "avatar": "assets/profile-pictures/at.jpg",
+            "name": "Leandro Carvalho",
+            "nickname": "@dev_lecarvalho"
+        }
     },
     {
         "id": "2",
         "commentCount": 1,
-        "creationDate" : "2021-02-20T23:28:56.782Z",
+        "creationDate": "2021-02-20T23:28:56.782Z",
         "heartCount": 1,
         "retweetCount": 1,
         "text": "I wanted a genesis so bad so I could play",
-        "userId": "2"
+        "userId": "2",
+        "user": {
+            "id": "2",
+            "avatar": "assets/profile-pictures/27786.jpeg",
+            "name": "steveklabnik",
+            "nickname": "@steveklabnik"
+        }
     },
     {
         "id": "3",
         "commentCount": 1,
-        "creationDate" : "2021-02-20T23:28:56.782Z",
+        "creationDate": "2021-02-20T23:28:56.782Z",
         "heartCount": 1,
         "retweetCount": 1,
         "text": "É imensurável a contribuição desse cara pra nossa cultura chamada Hip-Hop... Hoje ele estaria completando 47 anos de vida e pra gente celebrar, tá no ar o #DillasTape Vol. 2! Muito Obrigado J. Dilla! We Miss You.\n\nArte: @lucasbonifacio\n\ndjnyack.com\n\n#JDilla #DillaDay",
-        "userId": "3"
+        "userId": "3",
+        "user": {
+            "id": "3",
+            "avatar": "assets/profile-pictures/qE8Pko5G.jpg",
+            "name": "Dj Nyack",
+            "nickname": "@djnyack"
+        }
     },
     {
         "id": "4",
         "commentCount": 1,
-        "creationDate" : "2021-02-20T23:28:56.782Z",
+        "creationDate": "2021-02-20T23:28:56.782Z",
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Hodl the rainforests!!",
-        "userId": "4"
+        "userId": "4",
+        "user": {
+            "id": "4",
+            "avatar": "assets/profile-pictures/spacex.jpg",
+            "name": "Elon Musk",
+            "nickname": "@elonmusk"
+        }
     },
     {
         "id": "5",
         "commentCount": 1,
-        "creationDate" : "2021-02-01T23:28:56.782Z",
+        "creationDate": "2021-02-01T23:28:56.782Z",
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Children have been located and are safe! Medical attention summoned just as a precaution.",
-        "userId": "5"
+        "userId": "5",
+        "user": {
+            "id": "5",
+            "avatar": "assets/profile-pictures/police.jpg",
+            "name": "David Lazar",
+            "nickname": "@SPFDDCLazar"
+        }
     },
     {
         "id": "6",
         "commentCount": 1,
-        "creationDate" : "2021-02-01T23:28:56.782Z",
+        "creationDate": "2021-02-01T23:28:56.782Z",
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Y’all ready for this next post?",
-        "userId": "6"
+        "userId": "6",
+        "user": {
+            "id": "6",
+            "avatar": "assets/profile-pictures/marsha-ambrosius.jpg",
+            "name": "Marsha Ambrosius",
+            "nickname": "@maxjacobson"
+        }
     }
 ]

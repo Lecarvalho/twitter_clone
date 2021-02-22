@@ -22,24 +22,12 @@ class UserModel {
 
   String get inscriptionDateMonthYear => DateFormat.MMMM().add_y().format(inscriptionDate);
 
-  factory UserModel.fromMapBasicInfo(Map<String, dynamic> data){
+  factory UserModel.fromMapSingleTweet(Map<String, dynamic> data){
     return UserModel(
       id: data["id"],
       avatar: data["avatar"],
       name: data["name"],
       nickname: data["nickname"]
-    );
-  }
-
-  factory UserModel.fromMapAllFields(Map<String, dynamic> data){
-    return UserModel(
-      id: data["id"],
-      avatar: data["avatar"],
-      name: data["name"],
-      nickname: data["nickname"],
-      bio: data["bio"],
-      emailAddress: data["emailAddress"],
-      inscriptionDate: DateTime.parse(data["inscriptionDate"])
     );
   }
 }
