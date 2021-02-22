@@ -4,8 +4,8 @@ import 'package:twitter_clone/views/resources/assets.dart';
 class ProjectLogos {
   static final Image twitter = Image.asset(
     AssetsLogos.twitter,
-    width: 20,
-    height: 20,
+    width: 22,
+    height: 22,
   );
 
   static final Image flutterTwitterClone = Image.asset(

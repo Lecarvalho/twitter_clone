@@ -60,7 +60,7 @@ class Styles {
 
   static final TextStyle caption = TextStyle(
     color: ProjectColors.gray,
-    fontSize: 13,
+    fontSize: 12,
     letterSpacing: 0.4 
   );
 
