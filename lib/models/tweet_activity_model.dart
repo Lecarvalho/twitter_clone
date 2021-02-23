@@ -1,4 +1,6 @@
-class TweetActivityModel {
+import 'model_base.dart';
+
+class TweetActivityModel extends ModelBase {
   String profileName;
   TweetAction tweetAction;
 

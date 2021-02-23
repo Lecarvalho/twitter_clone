@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class UserModel {
+import 'model_base.dart';
+
+class UserModel extends ModelBase {
   UserModel({
     @required this.avatar,
     @required this.name,
@@ -28,6 +30,18 @@ class UserModel {
       avatar: data["avatar"],
       name: data["name"],
       nickname: data["nickname"]
+    );
+  }
+
+  factory UserModel.fromMapProfile(Map<String, dynamic> data){
+    return UserModel(
+      id: data["id"],
+      avatar: data["avatar"],
+      name: data["name"],
+      nickname: data["nickname"],
+      bio: data["bio"],
+      emailAddress: data["emailAddress"],
+      inscriptionDate: data["inscriptionDate"],
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/services/get_tweets_service_mock.dart';
+import 'package:twitter_clone/services/mock/tweets_service_mock.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/resources/projects_icons.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    var tweetController = TweetController(service: GetTweetsServiceMock());
+    var tweetController = TweetController(service: TweetsServiceMock());
 
     _pagesSimulation = <Widget>[
       FutureBuilder<List<TweetModel>>(

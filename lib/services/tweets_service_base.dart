@@ -1,5 +1,7 @@
 import 'package:twitter_clone/models/tweet_model.dart';
 
-abstract class GetTweetsServiceBase {
+import 'service_base.dart';
+
+abstract class TweetsServiceBase extends ServiceBase {
   Future<List<TweetModel>> getTweets();
 }

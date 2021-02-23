@@ -2,5 +2,4 @@
 
 abstract class ServiceBase {
   // final firestore = FirebaseFirestore.instance;
-
 }

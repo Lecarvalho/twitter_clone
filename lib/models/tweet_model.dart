@@ -1,8 +1,9 @@
 import 'package:intl/intl.dart';
 
+import 'model_base.dart';
 import 'user_model.dart';
 
-class TweetModel {
+class TweetModel extends ModelBase {
   TweetModel({
     this.id,
     this.userId,
@@ -40,7 +41,7 @@ class TweetModel {
     return (difference.inDays * -1).toString() + "d";
   }
 
-  factory TweetModel.fromMap(Map data) {
+  factory TweetModel.fromMap(Map<String, dynamic> data) {
     return TweetModel(
       id: data["id"],
       userId: data["userId"],

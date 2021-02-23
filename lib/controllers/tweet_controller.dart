@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/services/get_tweets_service_base.dart';
+import 'package:twitter_clone/services/tweets_service_base.dart';
 
-class TweetController {
+class TweetController extends ControllerBase<TweetsServiceBase> {
 
-  GetTweetsServiceBase service;
-  TweetController({@required this.service});
+  TweetsServiceBase service;
+  TweetController({@required this.service}) : super(service: service);
 
   Future<List<TweetModel>> getTweets() async {
     return await service.getTweets();
