@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/models/tweet_activity_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
@@ -42,6 +43,11 @@ class TweetSimpleWidget extends StatelessWidget {
             ProfilePictureWidget(
               avatar: tweetModel.userModel.avatar,
               profilePicSize: ProfilePicSize.small2,
+              userId: tweetModel.userId,
+              onTap: () => Navigator.of(context).pushNamed(
+                Routes.profile,
+                arguments: tweetModel.id,
+              ),
             ),
             SizedBox(width: 8),
             Flexible(

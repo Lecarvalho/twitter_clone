@@ -25,6 +25,7 @@ class TweetCommentWidget extends StatelessWidget {
             ProfilePictureWidget(
               avatar: tweetModel.userModel.avatar,
               profilePicSize: ProfilePicSize.small2,
+              userId: tweetModel.userId,
             ),
             SizedBox(width: 8),
             Flexible(

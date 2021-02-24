@@ -11,4 +11,12 @@ class TweetsServiceMock implements TweetsServiceBase {
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
     );
   }
+
+  @override
+  Future<List<TweetModel>> getUserTweets(String userId) async {
+    return JsonTools.jsonToModelList<TweetModel>(
+      "assets/json/user_tweets.json",
+      (Map<String, dynamic> data) => TweetModel.fromMap(data),
+    );
+  }
 }

@@ -11,4 +11,8 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
   Future<List<TweetModel>> getTweets() async {
     return await service.getTweets();
   }
+
+  Future<List<TweetModel>> getUserTweets(String userId) async {
+    return await service.getUserTweets(userId);
+  }
 }

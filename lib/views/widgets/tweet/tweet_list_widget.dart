@@ -10,6 +10,8 @@ class TweetListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      shrinkWrap: true,
+      primary: false,
       separatorBuilder: (_, __) => DividerWidget(),
       itemCount: tweets.length,
       itemBuilder: (_, index) {

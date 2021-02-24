@@ -6,11 +6,13 @@ import 'write_tweet_widget.dart';
 class TweetReplyToWidget extends StatelessWidget {
   final String replyingToNickname;
   final String avatar;
+  final String myUserId;
   final controller = TextEditingController();
 
   TweetReplyToWidget({
     @required this.replyingToNickname,
     @required this.avatar,
+    @required this.myUserId,
   });
 
   @override
@@ -28,6 +30,7 @@ class TweetReplyToWidget extends StatelessWidget {
           controller: controller,
           hintText: "Tweet your reply",
           avatar: avatar,
+          userId: myUserId,
         ),
       ],
     );

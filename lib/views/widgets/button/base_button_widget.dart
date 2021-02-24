@@ -7,6 +7,7 @@ class BaseButtonWidget extends FlatButton {
   final Color color;
   final Color disabledColor;
   final TextStyle textStyle;
+  final double height;
 
   BaseButtonWidget({
     @required this.onPressed,
@@ -15,7 +16,9 @@ class BaseButtonWidget extends FlatButton {
     @required this.textStyle,
     this.color,
     this.disabledColor,
+    this.height,
   }) : super(
+          height: height,
           child: Text(text, style: textStyle),
           shape: shape,
           onPressed: onPressed,

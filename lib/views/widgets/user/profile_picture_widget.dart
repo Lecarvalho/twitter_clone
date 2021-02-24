@@ -3,11 +3,15 @@ import 'package:twitter_clone/views/resources/colors.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
   final String avatar;
+  final String userId;
   final ProfilePicSize profilePicSize;
+  final Function onTap;
 
   ProfilePictureWidget({
     @required this.avatar,
+    @required this.userId,
     @required this.profilePicSize,
+    this.onTap,
   });
 
   double _getImageSize() {
@@ -24,7 +28,7 @@ class ProfilePictureWidget extends StatelessWidget {
         _imageSize = 60;
         break;
       case ProfilePicSize.large:
-        _imageSize = 90;
+        _imageSize = 95;
         break;
     }
 
@@ -34,17 +38,20 @@ class ProfilePictureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _imageSize = _getImageSize();
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        image: DecorationImage(
-          image: AssetImage(avatar),
-          fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: AssetImage(avatar),
+            fit: BoxFit.cover,
+          ),
+          border: Border.all(color: ProjectColors.white, width: 3),
         ),
-        border: Border.all(color: ProjectColors.white),
+        width: _imageSize,
+        height: _imageSize,
       ),
-      width: _imageSize,
-      height: _imageSize,
     );
   }
 }

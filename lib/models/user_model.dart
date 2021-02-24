@@ -41,7 +41,7 @@ class UserModel extends ModelBase {
       nickname: data["nickname"],
       bio: data["bio"],
       emailAddress: data["emailAddress"],
-      inscriptionDate: data["inscriptionDate"],
+      inscriptionDate: DateTime.parse(data["inscriptionDate"]),
     );
   }
 }

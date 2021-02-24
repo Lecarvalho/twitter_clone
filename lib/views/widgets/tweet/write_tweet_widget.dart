@@ -5,11 +5,13 @@ import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
 class WriteTweetWidget extends StatelessWidget {
   final String avatar;
+  final String userId;
   final TextEditingController controller;
   final String hintText;
 
   WriteTweetWidget({
     @required this.avatar,
+    @required this.userId,
     @required this.controller,
     @required this.hintText,
   });
@@ -24,6 +26,7 @@ class WriteTweetWidget extends StatelessWidget {
           child: ProfilePictureWidget(
             avatar: avatar,
             profilePicSize: ProfilePicSize.small,
+            userId: userId,
           ),
         ),
         SizedBox(width: 10),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
@@ -20,6 +21,11 @@ class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
         ProfilePictureWidget(
           avatar: userModel.avatar,
           profilePicSize: ProfilePicSize.small2,
+          userId: userModel.id,
+          onTap: () => Navigator.of(context).pushNamed(
+            Routes.profile,
+            arguments: userModel.id,
+          ),
         ),
         SizedBox(width: 10),
         Column(
