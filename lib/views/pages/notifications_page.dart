@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:twitter_clone/controllers/auth_controller.dart';
+import 'package:twitter_clone/controllers/user_session_controller.dart';
 import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
 import 'package:twitter_clone/models/tweet_notification_model.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
@@ -13,13 +13,13 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationsPageState extends State<NotificationsPage> {
   TweetNotificationsController _tweetNotificationsController;
-  AuthController _authController;
+  UserSessionController _userSessionController;
 
   @override
   void didChangeDependencies() {
     _tweetNotificationsController =
         Provider.of<TweetNotificationsController>(context);
-    _authController = Provider.of<AuthController>(context);
+    _userSessionController = Provider.of<UserSessionController>(context);
 
     super.didChangeDependencies();
   }
@@ -28,7 +28,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<TweetNotificationModel>>(
       future: _tweetNotificationsController
-          .getMyTweetsNotifications(_authController.authUser.userId),
+          .getMyTweetsNotifications(_userSessionController.authUser.userId),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ListView.separated(

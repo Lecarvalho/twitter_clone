@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:twitter_clone/controllers/auth_controller.dart';
+import 'package:twitter_clone/controllers/user_session_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
@@ -19,7 +19,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   ProfileController _profileController;
   TweetController _tweetController;
-  AuthController _authController;
+  UserSessionController _userSessionController;
   List<TweetModel> _userTweets;
   bool _isPageReady = false;
 
@@ -27,10 +27,10 @@ class _ProfilePageState extends State<ProfilePage> {
   void didChangeDependencies() async {
     _profileController = Provider.of<ProfileController>(context);
     _tweetController = Provider.of<TweetController>(context);
-    _authController = Provider.of<AuthController>(context);
+    _userSessionController = Provider.of<UserSessionController>(context);
 
     var userId = ModalRoute.of(context).settings.arguments ??
-        _authController.authUser.userId;
+        _userSessionController.authUser.userId;
 
     await _profileController.getUserProfile(userId);
     _userTweets = await _tweetController.getUserTweets(userId);
@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ButtonWidget(
       onPressed: () {
         setState(() {
-          _authController.unfollow(_profileController.profile.id);
+          _userSessionController.unfollow(_profileController.profile.id);
         });
       },
       text: "Following",
@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return OutlinedButtonWidget(
       onPressed: () {
         setState(() {
-          _authController.follow(_profileController.profile.id);
+          _userSessionController.follow(_profileController.profile.id);
         });
       },
       text: "Follow",
@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   BaseButtonWidget _actionButton() {
-    var loggedInUser = _authController.authUser;
+    var loggedInUser = _userSessionController.authUser;
 
     return _profileController.profile.id == loggedInUser.userId
         ? _editProfileButton()

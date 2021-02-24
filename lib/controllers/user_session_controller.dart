@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/models/auth_model.dart';
-import 'package:twitter_clone/services/auth_service_base.dart';
+import 'package:twitter_clone/services/user_session_service_base.dart';
 
-class AuthController extends ControllerBase<AuthServiceBase> {
-  AuthController({@required service}) : super(service: service);
+class UserSessionController extends ControllerBase<UserSessionServiceBase> {
+  UserSessionController({@required service}) : super(service: service);
 
   AuthModel _authUser;
 
@@ -27,17 +27,19 @@ class AuthController extends ControllerBase<AuthServiceBase> {
     }
   }
 
-  Future<void> follow(String userId) async {
+  Future<void> follow(String toFollowUserId) async {
     try {
-      _authUser.following.add(userId);
+      _authUser.following.add(toFollowUserId);
+      service.follow(_authUser.userId, toFollowUserId);
     } catch (e) {
       print("Error on follow: " + e);
     }
   }
 
-  Future<void> unfollow(String userId) async {
+  Future<void> unfollow(String toUnfollowUserId) async {
     try {
-      _authUser.following.remove(userId);
+      _authUser.following.remove(toUnfollowUserId);
+      service.unfollow(_authUser.userId, toUnfollowUserId);
     } catch (e) {
       print("Error on follow: " + e);
     }
