@@ -4,9 +4,7 @@ import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/tweets_service_base.dart';
 
 class TweetController extends ControllerBase<TweetsServiceBase> {
-
-  TweetsServiceBase service;
-  TweetController({@required this.service}) : super(service: service);
+  TweetController({@required service}) : super(service: service);
 
   Future<List<TweetModel>> getTweets() async {
     return await service.getTweets();

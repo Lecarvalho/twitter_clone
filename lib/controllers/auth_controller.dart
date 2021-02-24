@@ -1,21 +1,29 @@
 import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/controllers/controller_base.dart';
-import 'package:twitter_clone/models/user_model.dart';
+import 'package:twitter_clone/models/auth_model.dart';
 import 'package:twitter_clone/services/auth_service_base.dart';
 
 class AuthController extends ControllerBase<AuthServiceBase> {
-  AuthController({@required AuthServiceBase service}) : super(service: service);
+  AuthController({@required service}) : super(service: service);
 
-  UserModel _userSession;
+  AuthModel _authUser;
   
-  bool get isLoggedIn => _userSession != null;
-  UserModel get userSession => _userSession;
+  bool get isLoggedIn => _authUser != null;
+  AuthModel get authUser => _authUser;
 
   Future<void> signInWithGoogle() async {
-    _userSession = await super.service.sigInWithGoogle();
+    _authUser = await super.service.sigInWithGoogle();
   }
 
   Future<void> tryConnect() async {
-    _userSession = await super.service.tryConnect();
+    _authUser = await super.service.tryConnect();
+  }
+
+  Future<void> follow(String userId) async {
+    _authUser.following.add(userId);
+  }
+
+  Future<void> unfollow(String userId) async {
+    _authUser.following.remove(userId);
   }
 }

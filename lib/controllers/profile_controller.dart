@@ -4,11 +4,12 @@ import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/services/profile_service_base.dart';
 
 class ProfileController extends ControllerBase<ProfileServiceBase> {
-  ProfileServiceBase service;
-  ProfileController({@required this.service})
-      : super(service: service);
+  ProfileController({@required service}) : super(service: service);
 
-  Future<UserModel> getUserProfile(String userId) async {
-    return await service.getUserProfile(userId);
+  UserModel get profile => _profile;
+  UserModel _profile;
+
+  Future<void> getUserProfile(String userId) async {
+    _profile = await service.getUserProfile(userId);
   }
 }

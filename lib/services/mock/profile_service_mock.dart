@@ -6,9 +6,12 @@ import 'json_tools.dart';
 class ProfileServiceMock implements ProfileServiceBase {
   @override
   Future<UserModel> getUserProfile(String userId) async {
-    return await JsonTools.jsonToModel(
-      "assets/json/profile.json",
-      (Map<String, dynamic> data) => UserModel.fromMapProfile(data),
+
+    var profiles = await JsonTools.jsonToModelList<UserModel>(
+      "assets/json/profiles.json",
+      (data) => UserModel.fromMapProfile(data),
     );
+
+    return profiles.firstWhere((profile) => profile.id == userId);
   }
 }
