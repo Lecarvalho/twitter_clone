@@ -84,4 +84,10 @@ class ProjectIcons {
     width: _bigIconSize,
     height: _bigIconSize,
   );
+
+  static final Image starSolid = Image.asset(
+    AssetsIcons.starSolid,
+    width: _bigIconSize,
+    height: _bigIconSize,
+  );
 }

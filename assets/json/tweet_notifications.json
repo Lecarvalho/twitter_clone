@@ -1,0 +1,50 @@
+[
+    {
+        "id": "1",
+        "tweetId": "1",
+        "tweet": {
+            "id": "1",
+            "creationDate": "2021-02-21T07:53:00.782Z",
+            "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
+            "userId": "1",
+            "user": {
+                "id": "1",
+                "avatar": "assets/profile-pictures/at.jpg",
+                "name": "Leandro Carvalho",
+                "nickname": "@dev_lecarvalho"
+            }
+        }
+    },
+    {
+        "id": "2",
+        "tweetId": "4",
+        "tweet": {
+            "id": "4",
+            "creationDate": "2021-02-20T23:28:56.782Z",
+            "text": "Hodl the rainforests!!",
+            "userId": "4",
+            "user": {
+                "id": "4",
+                "avatar": "assets/profile-pictures/spacex.jpg",
+                "name": "Elon Musk",
+                "nickname": "@elonmusk"
+            }
+        }
+    },
+    {
+        "id": "2",
+        "tweetId": "6",
+        "tweet": {
+            "id": "6",
+            "creationDate": "2021-02-01T23:28:56.782Z",
+            "text": "Y’all ready for this next post?",
+            "userId": "6",
+            "user": {
+                "id": "6",
+                "avatar": "assets/profile-pictures/marsha-ambrosius.jpg",
+                "name": "Marsha Ambrosius",
+                "nickname": "@maxjacobson"
+            }
+        }
+    }
+]

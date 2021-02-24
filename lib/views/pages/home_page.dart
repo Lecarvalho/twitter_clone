@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
+import 'package:twitter_clone/views/pages/notifications_page.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/resources/projects_icons.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       Text("Search"),
-      Text("Notifications"),
+      NotificationsPage(),
       Text("Profile"),
     ];
 
