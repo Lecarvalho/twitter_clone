@@ -19,7 +19,7 @@ class ProfilePictureWidget extends StatelessWidget {
 
     switch (profilePicSize) {
       case ProfilePicSize.small:
-        _imageSize = 40;
+        _imageSize = 45;
         break;
       case ProfilePicSize.small2:
         _imageSize = 55;

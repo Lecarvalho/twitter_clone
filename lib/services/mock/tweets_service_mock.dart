@@ -19,4 +19,11 @@ class TweetsServiceMock implements TweetsServiceBase {
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
     );
   }
+
+  @override
+  Future<void> createTweet(TweetModel tweetModel) async {
+    print("${tweetModel.text}");
+    print("${tweetModel.userId}");
+    print("${tweetModel.creationDate.toString()}");
+  }
 }

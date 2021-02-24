@@ -7,23 +7,39 @@ class AuthController extends ControllerBase<AuthServiceBase> {
   AuthController({@required service}) : super(service: service);
 
   AuthModel _authUser;
-  
+
   bool get isLoggedIn => _authUser != null;
   AuthModel get authUser => _authUser;
 
   Future<void> signInWithGoogle() async {
-    _authUser = await super.service.sigInWithGoogle();
+    try {
+      _authUser = await super.service.sigInWithGoogle();
+    } catch (e) {
+      print("Error on signInWithGoogle: " + e);
+    }
   }
 
   Future<void> tryConnect() async {
-    _authUser = await super.service.tryConnect();
+    try {
+      _authUser = await super.service.tryConnect();
+    } catch (e) {
+      print("Error on tryConnect: " + e);
+    }
   }
 
   Future<void> follow(String userId) async {
-    _authUser.following.add(userId);
+    try {
+      _authUser.following.add(userId);
+    } catch (e) {
+      print("Error on follow: " + e);
+    }
   }
 
   Future<void> unfollow(String userId) async {
-    _authUser.following.remove(userId);
+    try {
+      _authUser.following.remove(userId);
+    } catch (e) {
+      print("Error on follow: " + e);
+    }
   }
 }

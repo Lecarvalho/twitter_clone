@@ -6,4 +6,6 @@ abstract class TweetsServiceBase extends ServiceBase {
   Future<List<TweetModel>> getTweets();
 
   Future<List<TweetModel>> getUserTweets(String userId);
+
+  Future<void> createTweet(TweetModel tweetModel);
 }

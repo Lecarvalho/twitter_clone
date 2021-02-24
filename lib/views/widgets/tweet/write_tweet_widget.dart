@@ -22,7 +22,7 @@ class WriteTweetWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 5),
+          padding: EdgeInsets.only(top: 2),
           child: ProfilePictureWidget(
             avatar: avatar,
             profilePicSize: ProfilePicSize.small,

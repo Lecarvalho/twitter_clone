@@ -10,6 +10,10 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
   UserModel _profile;
 
   Future<void> getUserProfile(String userId) async {
-    _profile = await service.getUserProfile(userId);
+    try {
+      _profile = await service.getUserProfile(userId);
+    } catch (e) {
+      print("Error on getUserProfile: " + e);
+    }
   }
 }

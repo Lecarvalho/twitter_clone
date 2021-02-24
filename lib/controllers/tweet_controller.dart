@@ -7,10 +7,36 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
   TweetController({@required service}) : super(service: service);
 
   Future<List<TweetModel>> getTweets() async {
-    return await service.getTweets();
+    try {
+      return await service.getTweets();
+    } catch (e) {
+      print("Error on getTweets: " + e);
+    }
+
+    return null;
   }
 
   Future<List<TweetModel>> getUserTweets(String userId) async {
-    return await service.getUserTweets(userId);
+    try {
+      return await service.getUserTweets(userId);
+    } catch (e) {
+      print("Error on getUserTweets: " + e);
+    }
+
+    return null;
+  }
+
+  Future<void> createTweet(String text, String myUserId) async {
+    try {
+      var tweetModel = TweetModel.toMap(
+        text: text,
+        userId: myUserId,
+        creationDate: DateTime.now(),
+      );
+
+      await service.createTweet(tweetModel);
+    } catch (e) {
+      print("Error on createTweet: " + e);
+    }
   }
 }

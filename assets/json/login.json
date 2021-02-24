@@ -1,5 +1,6 @@
 {
     "id": "1",
+    "avatar": "assets/profile-pictures/at.jpg",
     "following": [
         "2",
         "3",

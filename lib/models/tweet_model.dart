@@ -25,11 +25,9 @@ class TweetModel extends ModelBase {
   int retweetCount;
 
   String get creationDateLong => DateFormat.Hm().add_yMd().format(creationDate);
-  String get creationTimeAgo =>
-      getTimeAgoToNow(creationDate, DateTime.now());
+  String get creationTimeAgo => getTimeAgoToNow(creationDate, DateTime.now());
 
-  String getTimeAgoToNow(
-      DateTime creationDate, DateTime now) {
+  String getTimeAgoToNow(DateTime creationDate, DateTime now) {
     var difference = creationDate.difference(now);
 
     if (difference.inDays == 0) {
@@ -51,6 +49,14 @@ class TweetModel extends ModelBase {
       commentCount: data["commentCount"],
       retweetCount: data["retweetCount"],
       userModel: UserModel.fromMapSingleTweet(data["user"]),
+    );
+  }
+
+  factory TweetModel.toMap({String userId, String text, DateTime creationDate}) {
+    return TweetModel(
+      userId: userId,
+      text: text,
+      creationDate: creationDate,
     );
   }
 }

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'write_tweet_widget.dart';
 
 class TweetCreateNewWidget extends StatelessWidget {
-  final controller = TextEditingController();
+  final TextEditingController controller;
   final String avatar;
   final String myUserId;
 
   TweetCreateNewWidget({
     @required this.avatar,
     @required this.myUserId,
+    @required this.controller,
   });
 
   @override

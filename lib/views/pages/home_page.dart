@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   void _onNavigationTapped(int index) {
     if (index == 1) {
       Navigator.of(context).pushNamed(Routes.search);
-    } else if (index == 3){
+    } else if (index == 3) {
       Navigator.of(context).pushNamed(Routes.profile);
     } else {
       setState(() {
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       drawer: DrawerMenu(),
       body: Center(child: _pagesSimulation.elementAt(_selectedIndex)),
       floatingActionButton: ButtonNewTweetWidget(
-        onPressed: () => print("add tweet!"),
+        onPressed: () => Navigator.of(context).pushNamed(Routes.new_tweet),
       ),
       bottomNavigationBar: BottomNavigationWidget(
         onNavigationTapped: _onNavigationTapped,

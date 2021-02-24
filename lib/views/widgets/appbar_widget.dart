@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppBarWidget extends AppBar {
   AppBarWidget(
-      {@required Widget title,
+      {Widget title,
       bool automaticallyImplyLeading = true,
       Widget action,
       bool centerTitle = true})
