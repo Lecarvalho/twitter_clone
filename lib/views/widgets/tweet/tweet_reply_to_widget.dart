@@ -7,12 +7,13 @@ class TweetReplyToWidget extends StatelessWidget {
   final String replyingToNickname;
   final String avatar;
   final String myUserId;
-  final controller = TextEditingController();
+  final TextEditingController controller;
 
   TweetReplyToWidget({
     @required this.replyingToNickname,
     @required this.avatar,
     @required this.myUserId,
+    @required this.controller,
   });
 
   @override

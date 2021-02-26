@@ -64,9 +64,7 @@ class TweetSimpleWidget extends StatelessWidget {
                   Text(tweetModel.text, style: Styles.body2),
                   SizedBox(height: 5),
                   TweetActionsWidget(
-                    totalComments: tweetModel.commentCount,
-                    totalRetweets: tweetModel.retweetCount,
-                    totalLikes: tweetModel.heartCount,
+                    tweetModel: tweetModel,
                   ),
                 ],
               ),

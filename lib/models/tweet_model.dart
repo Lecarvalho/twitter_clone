@@ -19,7 +19,6 @@ class TweetModel extends AsTweetModelBase {
           userModel: userModel,
         );
 
-  
   int heartCount;
   int commentCount;
   int retweetCount;
@@ -37,8 +36,11 @@ class TweetModel extends AsTweetModelBase {
     );
   }
 
-  factory TweetModel.toMap(
-      {String userId, String text, DateTime creationDate}) {
+  factory TweetModel.toMap({
+    String userId,
+    String text,
+    DateTime creationDate,
+  }) {
     return TweetModel(
       userId: userId,
       text: text,

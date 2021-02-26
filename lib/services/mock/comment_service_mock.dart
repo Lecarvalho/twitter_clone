@@ -13,4 +13,11 @@ class CommentServiceMock implements CommentServiceBase {
 
     return comments.where((comment) => comment.tweetId == tweetId).toList();
   }
+
+  @override
+  Future<void> commentTweet(CommentModel commentModel) async {
+    print("tweetId: ${commentModel.tweetId}");
+    print("text: ${commentModel.text}");
+    print("myUserId: ${commentModel.userId}");
+  }
 }

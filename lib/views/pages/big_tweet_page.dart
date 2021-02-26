@@ -20,7 +20,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
   TweetController _tweetController;
   CommentController _commentController;
 
-  TweetModel _tweet;
+  TweetModel _tweetModel;
   String _tweetId;
   bool _isPageReady = false;
 
@@ -33,7 +33,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
     await _tweetController.getTweet(_tweetId);
     await _commentController.getComments(_tweetId);
 
-    _tweet = _tweetController.bigTweet;
+    _tweetModel = _tweetController.bigTweet;
 
     setState(() {
       _isPageReady = true;
@@ -51,17 +51,15 @@ class _BigTweetPageState extends State<BigTweetPage> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  TweetBigSingleWidget(tweetModel: _tweet),
+                  TweetBigSingleWidget(tweetModel: _tweetModel),
                   DividerWidget(),
                   TweetActionsWidget(
-                    totalComments: _tweet.commentCount,
-                    totalRetweets: _tweet.retweetCount,
-                    totalLikes: _tweet.heartCount,
+                    tweetModel: _tweetModel,
                   ),
                   DividerWidget(),
                   CommentListWidget(
                     comments: _commentController.comments,
-                    replyingToNickname: _tweet.userModel.nickname,
+                    replyingToNickname: _tweetModel.userModel.nickname,
                   )
                 ],
               ),

@@ -9,7 +9,7 @@ class CommentModel extends AsTweetModelBase {
     creationDate,
     userModel,
     this.tweetId,
-    this.replyingToUserId,
+    this.replyingUserId,
   }) : super(
           id: id,
           text: text,
@@ -19,7 +19,7 @@ class CommentModel extends AsTweetModelBase {
         );
 
   String tweetId;
-  String replyingToUserId;
+  String replyingUserId;
 
   factory CommentModel.fromMap(Map<String, dynamic> data) {
     return CommentModel(
@@ -28,8 +28,20 @@ class CommentModel extends AsTweetModelBase {
       text: data["text"],
       creationDate: DateTime.parse(data["creationDate"]),
       tweetId: data["tweetId"],
-      replyingToUserId: data["replyingToUserId"],
+      replyingUserId: data["replyingUserId"],
       userModel: UserModel.fromMapSingleTweet(data["user"]),
+    );
+  }
+
+  factory CommentModel.toMap({
+    String tweetId,
+    String commentText,
+    String myUserId,
+  }) {
+    return CommentModel(
+      tweetId: tweetId,
+      text: commentText,
+      userId: myUserId,
     );
   }
 }

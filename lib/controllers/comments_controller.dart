@@ -11,6 +11,27 @@ class CommentController extends ControllerBase<CommentServiceBase> {
   List<CommentModel> get comments => _comments;
 
   Future<void> getComments(String tweetId) async {
-    _comments = await service.getComments(tweetId);
+    try {
+      _comments = await service.getComments(tweetId);
+    } catch (e) {
+      print("Error on getComments: " + e);
+    }
+  }
+
+  Future<void> commentTweet({
+    String tweetId,
+    String commentText,
+    String myUserId,
+  }) async {
+    try {
+      var comment = CommentModel.toMap(
+        tweetId: tweetId,
+        commentText: commentText,
+        myUserId: myUserId,
+      );
+      await service.commentTweet(comment);
+    } catch (e) {
+      print("Error on commentTweet: " + e);
+    }
   }
 }
