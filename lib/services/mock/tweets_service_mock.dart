@@ -26,4 +26,14 @@ class TweetsServiceMock implements TweetsServiceBase {
     print("${tweetModel.userId}");
     print("${tweetModel.creationDate.toString()}");
   }
+
+  @override
+  Future<TweetModel> getTweet(String tweetId) async {
+    var tweets = await JsonTools.jsonToModelList<TweetModel>(
+      "assets/json/tweets.json",
+      (Map<String, dynamic> data) => TweetModel.fromMap(data),
+    );
+
+    return tweets.firstWhere((_tweet) => _tweet.id == tweetId);
+  }
 }

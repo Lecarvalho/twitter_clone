@@ -16,11 +16,11 @@ class TweetActionsWidget extends StatelessWidget {
   Widget _getActionButton(Image actionIcon, int total) {
     return GestureDetector(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
         child: Row(
           children: [
             actionIcon,
-            SizedBox(width: 10),
+            SizedBox(width: 5),
             Text(total.toString(), style: Styles.caption)
           ],
         ),
@@ -37,7 +37,7 @@ class TweetActionsWidget extends StatelessWidget {
     var _likesWidget = _getActionButton(ProjectIcons.heart, totalLikes);
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         _commentWidget,
         _retweetWidget,

@@ -8,4 +8,6 @@ abstract class TweetsServiceBase extends ServiceBase {
   Future<List<TweetModel>> getUserTweets(String userId);
 
   Future<void> createTweet(TweetModel tweetModel);
+
+  Future<TweetModel> getTweet(String tweetId);
 }

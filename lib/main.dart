@@ -16,9 +16,7 @@ void main() {
   Graphical.setPreferredOrientations();
 
   InitService.init().then(
-    (value) => runApp(
-      Di.init(MyApp())
-    ),
+    (value) => runApp(Di.init(MyApp())),
   );
 }
 
@@ -30,17 +28,18 @@ class MyApp extends StatelessWidget {
       title: AppConfig.projectName,
       routes: Routes.routes,
       theme: ThemeData(
-          primaryColor: ProjectColors.blueActive,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          primaryIconTheme: IconThemeData(color: ProjectColors.blueActive),
-          appBarTheme: AppBarTheme(
-            color: ProjectColors.white,
-          ),
-          textTheme: TextTheme(bodyText2: Styles.body2),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(primary: ProjectColors.blueActive),
-          ),
-          typography: Typography.material2018()),
+        primaryColor: ProjectColors.blueActive,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryIconTheme: IconThemeData(color: ProjectColors.blueActive),
+        appBarTheme: AppBarTheme(
+          color: ProjectColors.white,
+        ),
+        textTheme: TextTheme(bodyText2: Styles.body2),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(primary: ProjectColors.blueActive),
+        ),
+        typography: Typography.material2018(),
+      ),
       home: PreloadPage(),
     );
   }

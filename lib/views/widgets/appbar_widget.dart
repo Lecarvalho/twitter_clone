@@ -11,7 +11,7 @@ class AppBarWidget extends AppBar {
           title: title,
           centerTitle: centerTitle,
           elevation: .33,
-          actions: [action],
+          actions: action != null ? [action] : null,
           brightness: Brightness.light,
           automaticallyImplyLeading: automaticallyImplyLeading,
         );

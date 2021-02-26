@@ -6,6 +6,9 @@ import 'package:twitter_clone/services/tweets_service_base.dart';
 class TweetController extends ControllerBase<TweetsServiceBase> {
   TweetController({@required service}) : super(service: service);
 
+  TweetModel _bigTweet;
+  TweetModel get bigTweet => _bigTweet; 
+
   Future<List<TweetModel>> getTweets() async {
     try {
       return await service.getTweets();
@@ -37,6 +40,14 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
       await service.createTweet(tweetModel);
     } catch (e) {
       print("Error on createTweet: " + e);
+    }
+  }
+
+  Future<void> getTweet(String tweetId) async {
+    try {
+      _bigTweet = await service.getTweet(tweetId);
+    } catch (e) {
+      print("Error on getTweet: " + e);
     }
   }
 }

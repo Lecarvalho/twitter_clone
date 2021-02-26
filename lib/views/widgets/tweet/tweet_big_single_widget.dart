@@ -11,27 +11,30 @@ class TweetBigSingleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ProfilePictureNameNickHorizontalWidget(
-          userModel: tweetModel.userModel,
-        ),
-        SizedBox(height: 15),
-        Text(tweetModel.text, style: Styles.h5),
-        SizedBox(height: 10),
-        Row(
-          children: [
-            Text(
-              tweetModel.creationDateLong,
-              style: Styles.body2Gray,
-            ),
-            Text("-", style: Styles.body2Gray),
-            Text(AppConfig.projectName, style: Styles.body2Blue),
-          ],
-        )
-      ],
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ProfilePictureNameNickHorizontalWidget(
+            userModel: tweetModel.userModel,
+          ),
+          SizedBox(height: 15),
+          Text(tweetModel.text, style: Styles.h5),
+          SizedBox(height: 10),
+          Row(
+            children: [
+              Text(
+                tweetModel.creationDateLong,
+                style: Styles.body2Gray,
+              ),
+              Text("-", style: Styles.body2Gray),
+              Text(AppConfig.projectName, style: Styles.body2Blue),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

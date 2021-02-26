@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_simple_widget.dart';
@@ -15,9 +16,17 @@ class TweetListWidget extends StatelessWidget {
       separatorBuilder: (_, __) => DividerWidget(),
       itemCount: tweets.length,
       itemBuilder: (_, index) {
+        var tweet = tweets[index];
+
         return Padding(
           padding: EdgeInsets.only(left: 10, right: 10),
-          child: TweetSimpleWidget(tweetModel: tweets[index]),
+          child: GestureDetector(
+            onTap: () => Navigator.of(context).pushNamed(
+              Routes.big_tweet,
+              arguments: tweet.id,
+            ),
+            child: TweetSimpleWidget(tweetModel: tweet),
+          ),
         );
       },
     );

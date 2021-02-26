@@ -30,7 +30,7 @@ class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
         SizedBox(width: 10),
         Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfileNameWidget(
               profileName: userModel.name,
