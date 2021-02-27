@@ -13,12 +13,13 @@ class ButtonWidget extends BaseButtonWidget {
     @required this.text,
   }) : super(
           onPressed: onPressed,
+          height: 30,
           text: text,
           textStyle: Styles.subtitle2White,
           color: ProjectColors.blueActive,
           disabledColor: ProjectColors.blueInactive,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(30),
           ),
         );
 }

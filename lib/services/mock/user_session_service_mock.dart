@@ -4,7 +4,9 @@ import 'package:twitter_clone/services/mock/json_tools.dart';
 
 class UserSessionServiceMock implements UserSessionServiceBase {
   @override
-  Future<AuthModel> sigInWithGoogle() async {
+  Future<AuthModel> signInWithGoogle() async {
+    print("SignIn with Google!");
+
     return await JsonTools.jsonToModel<AuthModel>(
       "assets/json/login.json",
       (data) => AuthModel.fromMap(data),
@@ -27,5 +29,18 @@ class UserSessionServiceMock implements UserSessionServiceBase {
   @override
   Future<void> unfollow(String myUserId, String toUnfollowUserId) async {
     print("Unfollowing $toUnfollowUserId");
+  }
+
+  @override
+  Future<AuthModel> signInWithEmailPassword(String email, String password) async {
+    print("SignIn with email and password!");
+    print("email $email");
+    print("password $password");
+    return null;
+  }
+
+  @override
+  Future<void> signOff() async {
+    print("Signoff!");
   }
 }

@@ -32,7 +32,7 @@ class WriteTweetWidget extends StatelessWidget {
         SizedBox(width: 10),
         Flexible(
           child: MultilineTextboxWidget(
-            maxLength: AppConfig.limitCharacter,
+            maxLength: AppConfig.tweetMaxCharacters,
             hintText: hintText,
             controller: controller,
           ),

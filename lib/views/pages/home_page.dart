@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: null,
         ),
       ),
-      drawer: DrawerMenu(),
+      drawer: DrawerMenu(context: context),
       body: Center(child: _pagesSimulation.elementAt(_selectedIndex)),
       floatingActionButton: ButtonNewTweetWidget(
         onPressed: () => Navigator.of(context).pushNamed(Routes.new_tweet),

@@ -13,15 +13,40 @@ class UserSessionController extends ControllerBase<UserSessionServiceBase> {
 
   Future<void> signInWithGoogle() async {
     try {
-      _authUser = await super.service.sigInWithGoogle();
+      _authUser = await service.signInWithGoogle();
     } catch (e) {
       print("Error on signInWithGoogle: " + e);
     }
   }
 
+  Future<String> signInWithEmailPassword(String email, String password) async {
+    try {
+      _authUser = await service.signInWithEmailPassword(email, password);
+      if (_authUser == null){
+        return "User and password not found";
+      }
+      else {
+        return "Success";
+      }
+    } catch (e) {
+      print("Error on signInWithEmailPassword: " + e);
+    }
+    return "Error";
+  }
+
   Future<void> tryConnect() async {
     try {
       _authUser = await super.service.tryConnect();
+      _authUser = null;
+    } catch (e) {
+      print("Error on tryConnect: " + e);
+    }
+  }
+
+  Future<void> signOff() async {
+    try {
+      _authUser = null;
+      service.signOff();
     } catch (e) {
       print("Error on tryConnect: " + e);
     }

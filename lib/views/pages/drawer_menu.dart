@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/controllers/user_session_controller.dart';
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/widgets/tweet/following_followers_count_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_vertical_widget.dart';
+
 class DrawerMenu extends Drawer {
-  DrawerMenu()
+  DrawerMenu({@required BuildContext context})
       : super(
           child: SafeArea(
             child: Padding(
@@ -25,7 +29,13 @@ class DrawerMenu extends Drawer {
                     totalFollowing: 117,
                   ),
                   SizedBox(height: 25),
-                  Text("Logoff"),
+                  GestureDetector(
+                    onTap: () {
+                      Provider.of<UserSessionController>(context, listen: false).signOff();
+                      Navigator.of(context).pushNamed(Routes.login);
+                    },
+                    child: Text("Logoff"),
+                  ),
                   SizedBox(height: 50),
                   Center(
                     child: ProjectLogos.flutterTwitterClone,

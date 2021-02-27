@@ -1,11 +1,17 @@
 class AssetsLogos {
+
+  AssetsLogos._();
+
   static const String _assetsBasePath = "assets/logos/";
 
   static final twitter = _assetsBasePath + "twitter.png";
   static final flutterTwitterClone = _assetsBasePath + "flutter-twitter-clone.png";
+
 }
 
 class AssetsIcons {
+
+  AssetsIcons._();
 
   static const String _assetsBasePath = "assets/icons/";
 
@@ -26,4 +32,5 @@ class AssetsIcons {
   static const searchSolid = _assetsBasePath + "search-solid.png";
   static const search = _assetsBasePath + "search.png";
   static const starSolid = _assetsBasePath + "star-solid.png";
+  static const google = _assetsBasePath + "google.png";
 }

@@ -90,4 +90,16 @@ class ProjectIcons {
     width: _bigIconSize,
     height: _bigIconSize,
   );
+
+  static final Image appIcon = Image.asset(
+    AssetsIcons.appIcon,
+    width: 80,
+    height: 80,
+  );
+
+  static final Image googleIcon = Image.asset(
+    AssetsIcons.google,
+    width: 40,
+    height: 40,
+  );
 }
