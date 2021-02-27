@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SearchTextboxWidget extends StatelessWidget {
-  final _controller = TextEditingController();
+  final TextEditingController controller;
+  SearchTextboxWidget({@required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class SearchTextboxWidget extends StatelessWidget {
       child: TextField(
         textInputAction: TextInputAction.search,
         autofocus: true,
-        controller: _controller,
+        controller: controller,
         keyboardType: TextInputType.text,
         textAlignVertical: TextAlignVertical.center,
         inputFormatters: [
