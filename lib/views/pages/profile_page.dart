@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _userSessionController = Provider.of<UserSessionController>(context);
 
     var userId = ModalRoute.of(context).settings.arguments ??
-        _userSessionController.authUser.userId;
+        _userSessionController.authModel.userId;
 
     await _profileController.getUserProfile(userId);
     _userTweets = await _tweetController.getUserTweets(userId);
@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   BaseButtonWidget _actionButton() {
-    var loggedInUser = _userSessionController.authUser;
+    var loggedInUser = _userSessionController.authModel;
 
     return _profileController.profile.id == loggedInUser.userId
         ? _editProfileButton()

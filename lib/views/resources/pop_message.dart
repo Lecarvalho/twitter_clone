@@ -1,0 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
+
+class PopMessage {
+  PopMessage._();
+
+  static void show(String message, BuildContext context) {
+    Toast.show(
+      message,
+      context,
+      duration: Toast.LENGTH_SHORT,
+      gravity: Toast.BOTTOM,
+    );
+  }
+}

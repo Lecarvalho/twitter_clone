@@ -28,7 +28,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<TweetNotificationModel>>(
       future: _tweetNotificationsController
-          .getMyTweetsNotifications(_userSessionController.authUser.userId),
+          .getMyTweetsNotifications(_userSessionController.authModel.userId),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return ListView.separated(

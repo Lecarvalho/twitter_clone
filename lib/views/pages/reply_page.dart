@@ -33,7 +33,7 @@ class _ReplyPageState extends State<ReplyPage> {
     await _commentController.commentTweet(
       tweetId: _commentingTweet.id,
       commentText: _textController.text,
-      myUserId: _userSessionController.authUser.userId,
+      myUserId: _userSessionController.authModel.userId,
     );
 
     Navigator.of(context).pushReplacementNamed(
@@ -57,8 +57,8 @@ class _ReplyPageState extends State<ReplyPage> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetReplyToWidget(
-          avatar: _userSessionController.authUser.avatar,
-          myUserId: _userSessionController.authUser.userId,
+          avatar: _userSessionController.authModel.avatar,
+          myUserId: _userSessionController.authModel.userId,
           controller: _textController,
           replyingToNickname: _commentingTweet.userModel.nickname,
         ),

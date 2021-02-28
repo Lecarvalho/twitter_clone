@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/controllers/user_session_controller.dart';
+import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/projects_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/button/button_widget.dart';
@@ -54,16 +55,22 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void _closeKeyboard(){
+    FocusScope.of(context).requestFocus(new FocusNode());
+  }
+
   void _signInWithEmailAndPassword(BuildContext context) async {
+    _closeKeyboard();
+    
     var result = await _userSessionController.signInWithEmailPassword(
       _emailTextController.text,
       _passwordTextController.text,
     );
 
-    if (result == "Success") {
+    if (_userSessionController.isLoggedIn) {
       Navigator.of(context).pushNamed(Routes.home);
     } else {
-      print("Error: $result");
+      PopMessage.show(result, context);
     }
   }
 
@@ -106,9 +113,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildLoginWithGoogle() {
     return LoginWithGoogleButtonWidget(
       onPressed: () async {
-        await _userSessionController.signInWithGoogle();
+        var result = await _userSessionController.signInWithGoogle();
         if (_userSessionController.isLoggedIn){
           Navigator.of(context).pushNamed(Routes.home);
+        }
+        else {
+          PopMessage.show(result, context);
         }
       },
     );

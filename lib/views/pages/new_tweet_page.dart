@@ -27,7 +27,7 @@ class _NewTweetPageState extends State<NewTweetPage> {
   void _onCreateTweet() async {
     await _tweetController.createTweet(
       _textController.text,
-      _userSessionController.authUser.userId,
+      _userSessionController.authModel.userId,
     );
 
     Navigator.of(context).pushReplacementNamed(Routes.home);
@@ -48,8 +48,8 @@ class _NewTweetPageState extends State<NewTweetPage> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetCreateNewWidget(
-          avatar: _userSessionController.authUser.avatar,
-          myUserId: _userSessionController.authUser.userId,
+          avatar: _userSessionController.authModel.avatar,
+          myUserId: _userSessionController.authModel.userId,
           controller: _textController,
         ),
       ),

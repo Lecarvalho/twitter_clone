@@ -4,6 +4,8 @@ import 'package:twitter_clone/models/model_base.dart';
 class AuthModel extends ModelBase {
   String userId;
   String avatar;
+  String email;
+  String password;
   List<String> following;
   AuthModel({
     @required this.userId,
