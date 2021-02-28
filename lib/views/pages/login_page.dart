@@ -55,18 +55,31 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _closeKeyboard(){
+  void _closeKeyboard() {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
-  void _signInWithEmailAndPassword(BuildContext context) async {
+  void _onPressLogin(BuildContext context) async {
     _closeKeyboard();
-    
+
     var result = await _userSessionController.signInWithEmailPassword(
       _emailTextController.text,
       _passwordTextController.text,
     );
 
+    if (_userSessionController.isLoggedIn) {
+      Navigator.of(context).pushNamed(Routes.home);
+    } else {
+      PopMessage.show(result, context);
+    }
+  }
+
+  void _onPressCreateAccount(BuildContext context) {
+    Navigator.of(context).pushNamed(Routes.create_account);
+  }
+
+  void _onPressLoginWithGoogle() async {
+    var result = await _userSessionController.signInWithGoogle();
     if (_userSessionController.isLoggedIn) {
       Navigator.of(context).pushNamed(Routes.home);
     } else {
@@ -95,32 +108,16 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             OutlinedButtonWidget(
-              onPressed: () {
-                print("create my account");
-              },
+              onPressed: () => _onPressCreateAccount(context),
               text: "Create my account",
             ),
             ButtonWidget(
-              onPressed: () => _signInWithEmailAndPassword(context),
+              onPressed: () => _onPressLogin(context),
               text: "Login",
             ),
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildLoginWithGoogle() {
-    return LoginWithGoogleButtonWidget(
-      onPressed: () async {
-        var result = await _userSessionController.signInWithGoogle();
-        if (_userSessionController.isLoggedIn){
-          Navigator.of(context).pushNamed(Routes.home);
-        }
-        else {
-          PopMessage.show(result, context);
-        }
-      },
     );
   }
 
@@ -142,7 +139,9 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 20),
                   Text("or", style: Styles.body2Gray),
                   SizedBox(height: 10),
-                  _buildLoginWithGoogle(),
+                  LoginWithGoogleButtonWidget(
+                    onPressed: _onPressLoginWithGoogle,
+                  ),
                 ],
               ),
             ),

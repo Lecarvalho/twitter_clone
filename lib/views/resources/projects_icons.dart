@@ -102,4 +102,6 @@ class ProjectIcons {
     width: 40,
     height: 40,
   );
+
+  static final Icon photoIcon = Icon(Icons.photo_camera_outlined);
 }

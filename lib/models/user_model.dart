@@ -13,7 +13,7 @@ class UserModel extends ModelBase {
     this.emailAddress,
     this.inscriptionDate,
   });
-  
+
   String id;
   String avatar;
   String name;
@@ -22,18 +22,18 @@ class UserModel extends ModelBase {
   String emailAddress;
   DateTime inscriptionDate;
 
-  String get inscriptionDateMonthYear => DateFormat.MMMM().add_y().format(inscriptionDate);
+  String get inscriptionDateMonthYear =>
+      DateFormat.MMMM().add_y().format(inscriptionDate);
 
-  factory UserModel.fromMapSingleTweet(Map<String, dynamic> data){
+  factory UserModel.fromMapSingleTweet(Map<String, dynamic> data) {
     return UserModel(
-      id: data["id"],
-      avatar: data["avatar"],
-      name: data["name"],
-      nickname: data["nickname"]
-    );
+        id: data["id"],
+        avatar: data["avatar"],
+        name: data["name"],
+        nickname: data["nickname"]);
   }
 
-  factory UserModel.fromMapProfile(Map<String, dynamic> data){
+  factory UserModel.fromMapProfile(Map<String, dynamic> data) {
     return UserModel(
       id: data["id"],
       avatar: data["avatar"],
@@ -42,6 +42,19 @@ class UserModel extends ModelBase {
       bio: data["bio"],
       emailAddress: data["emailAddress"],
       inscriptionDate: DateTime.parse(data["inscriptionDate"]),
+    );
+  }
+
+  factory UserModel.toMap({
+    String name,
+    String emailAddress,
+    String nickname,
+  }) {
+    return UserModel(
+      name: name,
+      emailAddress: emailAddress,
+      nickname: nickname,
+      avatar: null,
     );
   }
 }

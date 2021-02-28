@@ -1,17 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:twitter_clone/views/resources/styles.dart';
+import 'package:twitter_clone/views/resources/colors.dart';
 
 class MultilineTextboxWidget extends StatelessWidget {
   final int maxLength;
   final String hintText;
   final TextEditingController controller;
+  final String labelText;
+  final TextStyle hintStyle;
+  final bool withUnderline;
 
-  MultilineTextboxWidget({
-    @required this.maxLength,
-    @required this.hintText,
-    @required this.controller,
-  });
+  MultilineTextboxWidget(
+      {@required this.maxLength,
+      @required this.hintText,
+      @required this.controller,
+      this.labelText,
+      this.hintStyle,
+      this.withUnderline = false});
+
+  InputDecoration _buildDecoration() {
+    var inputDecoration = InputDecoration(
+      hintText: hintText,
+      labelText: labelText,
+      hintStyle: hintStyle,
+    );
+
+    if (withUnderline) {
+      inputDecoration.copyWith(
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: ProjectColors.blueActive),
+        ),
+      );
+    } else {
+      inputDecoration.copyWith(
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+      );
+    }
+
+    return inputDecoration;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +54,7 @@ class MultilineTextboxWidget extends StatelessWidget {
         LengthLimitingTextInputFormatter(maxLength),
       ],
       controller: controller,
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: Styles.h6Gray,
-        border: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-      ),
+      decoration: _buildDecoration(),
     );
   }
 }

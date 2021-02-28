@@ -19,4 +19,15 @@ class AuthModel extends ModelBase {
       following: List<String>.from(data["following"]),
     );
   }
+
+
+  static bool isValidEmailPassword(String email, String password) {
+    var isValidPwd = password.isNotEmpty && password.length > 3;
+
+    return _isValidEmail(email) && isValidPwd;
+  }
+
+  static bool _isValidEmail(String email) {
+    return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+  }
 }

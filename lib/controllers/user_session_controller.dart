@@ -20,7 +20,7 @@ class UserSessionController extends ControllerBase<UserSessionServiceBase> {
       case AuthResponse.user_disabled:
         return "The user is disabled, please contact the support";
       default: //general error
-        return "We cannot make this right now, please contact the support";
+        return "We cannot make this right now, please try again later";
     }
   }
 
@@ -34,19 +34,11 @@ class UserSessionController extends ControllerBase<UserSessionServiceBase> {
     return _getAuthResponseMessage(AuthResponse.general_error);
   }
 
-  bool _isValidEmailPassword(String email, String password) {
-    var isValidPwd = password.isNotEmpty && password.length > 3;
-
-    return _isValidEmail(email) && isValidPwd;
-  }
-
-  static bool _isValidEmail(String email) {
-    return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
-  }
+  
 
   Future<String> signInWithEmailPassword(String email, String password) async {
     try {
-      if (_isValidEmailPassword(email, password)) {
+      if (AuthModel.isValidEmailPassword(email, password)) {
         var authResponse =
             await service.signInWithEmailPassword(email, password);
         return _getAuthResponseMessage(authResponse);

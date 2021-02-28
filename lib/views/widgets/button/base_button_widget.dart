@@ -23,5 +23,6 @@ class BaseButtonWidget extends FlatButton {
           shape: shape,
           onPressed: onPressed,
           disabledColor: disabledColor,
+          minWidth: 70,
         );
 }

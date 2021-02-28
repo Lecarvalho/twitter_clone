@@ -14,4 +14,14 @@ class ProfileServiceMock implements ProfileServiceBase {
 
     return profiles.firstWhere((profile) => profile.id == userId);
   }
+
+  @override
+  Future<CreateUserResponse> createUserProfile(UserModel userModel, String password) async {
+    print("name: ${userModel.name}");
+    print("email: ${userModel.emailAddress}");
+    print("nickname: ${userModel.nickname}");
+    print("password: $password");
+
+    return CreateUserResponse.success;
+  }
 }

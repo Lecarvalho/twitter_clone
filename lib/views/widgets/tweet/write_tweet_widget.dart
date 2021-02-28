@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
+import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/textbox/multiline_textbox_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
@@ -35,6 +36,7 @@ class WriteTweetWidget extends StatelessWidget {
             maxLength: AppConfig.tweetMaxCharacters,
             hintText: hintText,
             controller: controller,
+            hintStyle: Styles.h6Gray,
           ),
         ),
       ],
