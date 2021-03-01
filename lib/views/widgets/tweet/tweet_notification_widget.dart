@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/models/tweet_notification_model.dart';
-import 'package:twitter_clone/views/resources/projects_icons.dart';
+import 'package:twitter_clone/views/resources/project_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
@@ -24,12 +24,12 @@ class TweetNotificationWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProfilePictureWidget(
-                avatar: tweetNotification.tweetModel.userModel.avatar,
-                userId: tweetNotification.tweetModel.userId,
+                avatar: tweetNotification.tweet.profile.avatar,
+                profileId: tweetNotification.tweet.profileId,
                 profilePicSize: ProfilePicSize.small2,
                 onTap: () => Navigator.of(context).pushNamed(
                   Routes.home,
-                  arguments: tweetNotification.tweetModel.userId,
+                  arguments: tweetNotification.tweet.profileId,
                 ),
               ),
               SizedBox(height: 10),
@@ -39,7 +39,7 @@ class TweetNotificationWidget extends StatelessWidget {
                   style: Styles.body2Gray,
                   children: [
                     TextSpan(
-                      text: tweetNotification.tweetModel.userModel.name,
+                      text: tweetNotification.tweet.profile.name,
                       style: Styles.subtitle1,
                     ),
                     TextSpan(text: " tweet"),
@@ -47,7 +47,7 @@ class TweetNotificationWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10),
-              Text(tweetNotification.tweetModel.text, style: Styles.body2Gray),
+              Text(tweetNotification.tweet.text, style: Styles.body2Gray),
             ],
           ),
         ),

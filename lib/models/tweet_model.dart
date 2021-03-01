@@ -1,22 +1,22 @@
 import 'as_tweet_model_base.dart';
-import 'user_model.dart';
+import 'profile_model.dart';
 
 class TweetModel extends AsTweetModelBase {
   TweetModel({
-    id,
-    userId,
-    text,
-    creationDate,
-    userModel,
+    String id,
+    String profileId,
+    String text,
+    DateTime creationDate,
+    ProfileModel profile,
     this.heartCount,
     this.commentCount,
     this.retweetCount,
   }) : super(
           id: id,
-          userId: userId,
+          profileId: profileId,
           text: text,
           creationDate: creationDate,
-          userModel: userModel,
+          profile: profile,
         );
 
   int heartCount;
@@ -26,23 +26,23 @@ class TweetModel extends AsTweetModelBase {
   factory TweetModel.fromMap(Map<String, dynamic> data) {
     return TweetModel(
       id: data["id"],
-      userId: data["userId"],
+      profileId: data["profileId"],
       text: data["text"],
       creationDate: DateTime.parse(data["creationDate"]),
       heartCount: data["heartCount"],
       commentCount: data["commentCount"],
       retweetCount: data["retweetCount"],
-      userModel: UserModel.fromMapSingleTweet(data["user"]),
+      profile: ProfileModel.fromMapSingleTweet(data["profile"]),
     );
   }
 
   factory TweetModel.toMap({
-    String userId,
+    String profileId,
     String text,
     DateTime creationDate,
   }) {
     return TweetModel(
-      userId: userId,
+      profileId: profileId,
       text: text,
       creationDate: creationDate,
     );

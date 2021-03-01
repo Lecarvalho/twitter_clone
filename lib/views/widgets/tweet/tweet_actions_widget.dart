@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/views/resources/projects_icons.dart';
+import 'package:twitter_clone/views/resources/project_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 class TweetActionsWidget extends StatelessWidget {

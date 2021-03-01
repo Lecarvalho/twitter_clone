@@ -9,6 +9,7 @@ class TextboxWidget extends StatelessWidget {
   final String labelText;
   final bool showMaxLength;
   final TextEditingController controller;
+  final bool keyboardEnabled;
 
   TextboxWidget({
     @required this.textboxType,
@@ -17,6 +18,7 @@ class TextboxWidget extends StatelessWidget {
     this.labelText,
     this.hintText,
     this.showMaxLength = false,
+    this.keyboardEnabled = true,
   });
 
   @override
@@ -48,6 +50,7 @@ class TextboxWidget extends StatelessWidget {
       obscureText: isObscure,
       maxLines: maxLines,
       minLines: 1,
+      enabled: keyboardEnabled,
       maxLength: showMaxLength ? maxLength : null,
       inputFormatters: [
         LengthLimitingTextInputFormatter(maxLength),

@@ -1,47 +1,47 @@
 import 'as_tweet_model_base.dart';
-import 'user_model.dart';
+import 'profile_model.dart';
 
 class CommentModel extends AsTweetModelBase {
   CommentModel({
-    id,
-    text,
-    userId,
-    creationDate,
-    userModel,
+    String id,
+    String text,
+    String profileId,
+    DateTime creationDate,
+    ProfileModel profile,
     this.tweetId,
-    this.replyingUserId,
+    this.replyingProfileId,
   }) : super(
           id: id,
           text: text,
-          userId: userId,
+          profileId: profileId,
           creationDate: creationDate,
-          userModel: userModel,
+          profile: profile,
         );
 
   String tweetId;
-  String replyingUserId;
+  String replyingProfileId;
 
   factory CommentModel.fromMap(Map<String, dynamic> data) {
     return CommentModel(
       id: data["id"],
-      userId: data["userId"],
+      profileId: data["profileId"],
       text: data["text"],
       creationDate: DateTime.parse(data["creationDate"]),
       tweetId: data["tweetId"],
-      replyingUserId: data["replyingUserId"],
-      userModel: UserModel.fromMapSingleTweet(data["user"]),
+      replyingProfileId: data["replyingProfileId"],
+      profile: ProfileModel.fromMapSingleTweet(data["profile"]),
     );
   }
 
   factory CommentModel.toMap({
     String tweetId,
     String commentText,
-    String myUserId,
+    String myProfileId,
   }) {
     return CommentModel(
       tweetId: tweetId,
       text: commentText,
-      userId: myUserId,
+      profileId: myProfileId,
     );
   }
 }

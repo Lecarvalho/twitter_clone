@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone/controllers/search_controller.dart';
+import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
@@ -19,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void didChangeDependencies() {
-    _searchController = Provider.of<SearchController>(context);
+    _searchController = Di.instanceOf<SearchController>(context);
 
     _handleTextSearch();
     super.didChangeDependencies();
@@ -41,7 +41,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildResult() {
     return ListView.separated(
       itemBuilder: (_, index) => SearchResultWidget(
-        userModel: _searchController.profilesFound[index],
+        profile: _searchController.profilesFound[index],
       ),
       separatorBuilder: (_, __) => DividerWidget(),
       itemCount: _searchController.profilesFound.length,

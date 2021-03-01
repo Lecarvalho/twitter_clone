@@ -8,9 +8,9 @@ class TweetNotificationsController
   TweetNotificationsController({@required service}) : super(service: service);
 
   Future<List<TweetNotificationModel>> getMyTweetsNotifications(
-      String myUserId) async {
+      String myProfileId) async {
     try {
-      return await service.getMyTweetsNotifications(myUserId);
+      return await service.getMyTweetsNotifications(myProfileId);
     } catch (e) {
       print("Error on getMyTweetsNotifications: " + e);
     }

@@ -6,10 +6,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-        "userId": "1",
-        "user": {
+        "profileId": "1",
+        "profile": {
             "id": "1",
-            "avatar": "assets/profile-pictures/at.jpg",
+            "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
             "nickname": "@dev_lecarvalho"
         }
@@ -21,10 +21,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-        "userId": "1",
-        "user": {
+        "profileId": "1",
+        "profile": {
             "id": "1",
-            "avatar": "assets/profile-pictures/at.jpg",
+            "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
             "nickname": "@dev_lecarvalho"
         }
@@ -36,10 +36,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-        "userId": "1",
-        "user": {
+        "profileId": "1",
+        "profile": {
             "id": "1",
-            "avatar": "assets/profile-pictures/at.jpg",
+            "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
             "nickname": "@dev_lecarvalho"
         }
@@ -51,10 +51,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-        "userId": "1",
-        "user": {
+        "profileId": "1",
+        "profile": {
             "id": "1",
-            "avatar": "assets/profile-pictures/at.jpg",
+            "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
             "nickname": "@dev_lecarvalho"
         }

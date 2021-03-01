@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/views/resources/projects_icons.dart';
+import 'package:twitter_clone/views/resources/project_icons.dart';
 
 class BottomNavigationWidget extends BottomNavigationBar {
   final Function(int) onNavigationTapped;

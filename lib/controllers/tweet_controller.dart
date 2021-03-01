@@ -9,37 +9,40 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
   TweetModel _bigTweet;
   TweetModel get bigTweet => _bigTweet; 
 
-  Future<List<TweetModel>> getTweets() async {
+  List<TweetModel> _tweets;
+  List<TweetModel> get tweets => _tweets;
+
+  Future<void> getTweets() async {
     try {
-      return await service.getTweets();
+      _tweets = await service.getTweets();
     } catch (e) {
-      print("Error on getTweets: " + e);
+      print("Error on getTweets: " + e.toString());
     }
 
     return null;
   }
 
-  Future<List<TweetModel>> getUserTweets(String userId) async {
+  Future<void> getProfileTweets(String profileId) async {
     try {
-      return await service.getUserTweets(userId);
+      _tweets = await service.getProfileTweets(profileId);
     } catch (e) {
-      print("Error on getUserTweets: " + e);
+      print("Error on getProfileTweets: " + e.toString());
     }
 
     return null;
   }
 
-  Future<void> createTweet(String text, String myUserId) async {
+  Future<void> createTweet(String text, String myProfileId) async {
     try {
       var tweetModel = TweetModel.toMap(
         text: text,
-        userId: myUserId,
+        profileId: myProfileId,
         creationDate: DateTime.now(),
       );
 
       await service.createTweet(tweetModel);
     } catch (e) {
-      print("Error on createTweet: " + e);
+      print("Error on createTweet: " + e.toString());
     }
   }
 
@@ -47,7 +50,7 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
     try {
       _bigTweet = await service.getTweet(tweetId);
     } catch (e) {
-      print("Error on getTweet: " + e);
+      print("Error on getTweet: " + e.toString());
     }
   }
 }

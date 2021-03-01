@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone/controllers/comments_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
+import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
@@ -20,20 +20,20 @@ class _BigTweetPageState extends State<BigTweetPage> {
   TweetController _tweetController;
   CommentController _commentController;
 
-  TweetModel _tweetModel;
+  TweetModel _tweet;
   String _tweetId;
   bool _isPageReady = false;
 
   @override
   void didChangeDependencies() async {
     _tweetId = ModalRoute.of(context).settings.arguments;
-    _tweetController = Provider.of<TweetController>(context);
-    _commentController = Provider.of<CommentController>(context);
+    _tweetController = Di.instanceOf<TweetController>(context);
+    _commentController = Di.instanceOf<CommentController>(context);
 
     await _tweetController.getTweet(_tweetId);
     await _commentController.getComments(_tweetId);
 
-    _tweetModel = _tweetController.bigTweet;
+    _tweet = _tweetController.bigTweet;
 
     setState(() {
       _isPageReady = true;
@@ -51,15 +51,15 @@ class _BigTweetPageState extends State<BigTweetPage> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  TweetBigSingleWidget(tweetModel: _tweetModel),
+                  TweetBigSingleWidget(tweet: _tweet),
                   DividerWidget(),
                   TweetActionsWidget(
-                    tweetModel: _tweetModel,
+                    tweetModel: _tweet,
                   ),
                   DividerWidget(),
                   CommentListWidget(
                     comments: _commentController.comments,
-                    replyingToNickname: _tweetModel.userModel.nickname,
+                    replyingToNickname: _tweet.profile.nickname,
                   )
                 ],
               ),

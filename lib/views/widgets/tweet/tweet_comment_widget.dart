@@ -7,10 +7,10 @@ import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 import 'replying_to_line_widget.dart';
 
 class TweetCommentWidget extends StatelessWidget {
-  final CommentModel commentModel;
+  final CommentModel comment;
   final String replyingToNickname;
   TweetCommentWidget({
-    @required this.commentModel,
+    @required this.comment,
     @required this.replyingToNickname,
   });
 
@@ -28,12 +28,12 @@ class TweetCommentWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfilePictureWidget(
-              avatar: commentModel.userModel.avatar,
+              avatar: comment.profile.avatar,
               profilePicSize: ProfilePicSize.small2,
-              userId: commentModel.userId,
+              profileId: comment.profileId,
               onTap: () => Navigator.of(context).pushNamed(
                 Routes.profile,
-                arguments: commentModel.userId,
+                arguments: comment.profileId,
               ),
             ),
             SizedBox(width: 8),
@@ -43,16 +43,16 @@ class TweetCommentWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ProfileNameNickTimeAgoHorizontalWidget(
-                    profileName: commentModel.userModel.name,
-                    profileNickname: commentModel.userModel.nickname,
-                    timeAgo: commentModel.creationTimeAgo,
+                    profileName: comment.profile.name,
+                    profileNickname: comment.profile.nickname,
+                    timeAgo: comment.creationTimeAgo,
                   ),
                   SizedBox(height: 5),
                   ReplyingToLineWidget(
                     profileNickname: replyingToNickname,
                   ),
                   SizedBox(height: 5),
-                  Text(commentModel.text, style: Styles.body2)
+                  Text(comment.text, style: Styles.body2)
                 ],
               ),
             )

@@ -3,14 +3,13 @@ import 'package:intl/intl.dart';
 
 import 'model_base.dart';
 
-class UserModel extends ModelBase {
-  UserModel({
+class ProfileModel extends ModelBase {
+  ProfileModel({
     @required this.avatar,
     @required this.name,
     @required this.nickname,
     this.id,
     this.bio,
-    this.emailAddress,
     this.inscriptionDate,
   });
 
@@ -19,40 +18,36 @@ class UserModel extends ModelBase {
   String name;
   String nickname;
   String bio;
-  String emailAddress;
   DateTime inscriptionDate;
 
   String get inscriptionDateMonthYear =>
       DateFormat.MMMM().add_y().format(inscriptionDate);
 
-  factory UserModel.fromMapSingleTweet(Map<String, dynamic> data) {
-    return UserModel(
+  factory ProfileModel.fromMapSingleTweet(Map<String, dynamic> data) {
+    return ProfileModel(
         id: data["id"],
         avatar: data["avatar"],
         name: data["name"],
         nickname: data["nickname"]);
   }
 
-  factory UserModel.fromMapProfile(Map<String, dynamic> data) {
-    return UserModel(
+  factory ProfileModel.fromMapProfile(Map<String, dynamic> data) {
+    return ProfileModel(
       id: data["id"],
       avatar: data["avatar"],
       name: data["name"],
       nickname: data["nickname"],
       bio: data["bio"],
-      emailAddress: data["emailAddress"],
       inscriptionDate: DateTime.parse(data["inscriptionDate"]),
     );
   }
 
-  factory UserModel.toMap({
+  factory ProfileModel.toMap({
     String name,
-    String emailAddress,
     String nickname,
   }) {
-    return UserModel(
+    return ProfileModel(
       name: name,
-      emailAddress: emailAddress,
       nickname: nickname,
       avatar: null,
     );

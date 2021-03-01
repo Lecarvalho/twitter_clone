@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/user_session_controller.dart';
+import 'package:twitter_clone/controllers/my_session_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
+import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/button/button_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_create_new_widget.dart';
@@ -13,21 +13,21 @@ class NewTweetPage extends StatefulWidget {
 }
 
 class _NewTweetPageState extends State<NewTweetPage> {
-  UserSessionController _userSessionController;
+  MySessionController _mySessionController;
   TweetController _tweetController;
   final _textController = TextEditingController();
 
   @override
   void didChangeDependencies() {
-    _userSessionController = Provider.of<UserSessionController>(context);
-    _tweetController = Provider.of<TweetController>(context);
+    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _tweetController = Di.instanceOf<TweetController>(context);
     super.didChangeDependencies();
   }
 
   void _onCreateTweet() async {
     await _tweetController.createTweet(
       _textController.text,
-      _userSessionController.authModel.userId,
+      _mySessionController.mySession.myProfile.id,
     );
 
     Navigator.of(context).pushReplacementNamed(Routes.home);
@@ -48,8 +48,8 @@ class _NewTweetPageState extends State<NewTweetPage> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetCreateNewWidget(
-          avatar: _userSessionController.authModel.avatar,
-          myUserId: _userSessionController.authModel.userId,
+          avatar: _mySessionController.mySession.myProfile.avatar,
+          myProfileId: _mySessionController.mySession.myProfile.id,
           controller: _textController,
         ),
       ),

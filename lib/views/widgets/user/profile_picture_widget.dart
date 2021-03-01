@@ -3,13 +3,13 @@ import 'package:twitter_clone/views/resources/colors.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
   final String avatar;
-  final String userId;
+  final String profileId;
   final ProfilePicSize profilePicSize;
   final Function onTap;
 
   ProfilePictureWidget({
     @required this.avatar,
-    @required this.userId,
+    @required this.profileId,
     @required this.profilePicSize,
     this.onTap,
   });
@@ -44,7 +44,7 @@ class ProfilePictureWidget extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
-            image: AssetImage(avatar),
+            image: NetworkImage(avatar),
             fit: BoxFit.cover,
           ),
           border: Border.all(color: ProjectColors.white, width: 3),

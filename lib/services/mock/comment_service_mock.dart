@@ -18,6 +18,6 @@ class CommentServiceMock implements CommentServiceBase {
   Future<void> commentTweet(CommentModel commentModel) async {
     print("tweetId: ${commentModel.tweetId}");
     print("text: ${commentModel.text}");
-    print("myUserId: ${commentModel.userId}");
+    print("myProfileId: ${commentModel.profileId}");
   }
 }

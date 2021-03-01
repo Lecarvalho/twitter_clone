@@ -8,7 +8,7 @@ class PopMessage {
     Toast.show(
       message,
       context,
-      duration: Toast.LENGTH_SHORT,
+      duration: Toast.LENGTH_LONG,
       gravity: Toast.BOTTOM,
     );
   }

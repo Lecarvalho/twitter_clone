@@ -4,19 +4,19 @@ import 'tweet_model.dart';
 class TweetNotificationModel extends ModelBase {
   String id;
   String tweetId;
-  TweetModel tweetModel;
+  TweetModel tweet;
 
   TweetNotificationModel({
     this.id,
     this.tweetId,
-    this.tweetModel,
+    this.tweet,
   });
 
   factory TweetNotificationModel.fromMap(Map<String, dynamic> data) {
     return TweetNotificationModel(
       id: data["id"],
       tweetId: data["tweetId"],
-      tweetModel: TweetModel.fromMap(data["tweet"]),
+      tweet: TweetModel.fromMap(data["tweet"]),
     );
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/user_session_controller.dart';
+import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
+import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
-import 'package:twitter_clone/views/resources/projects_icons.dart';
+import 'package:twitter_clone/views/resources/project_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/button/button_widget.dart';
 import 'package:twitter_clone/views/widgets/button/login_with_google_button_widget.dart';
@@ -19,11 +20,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
-  UserSessionController _userSessionController;
+
+  MySessionController _mySessionController;
+  ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
-    _userSessionController = Provider.of<UserSessionController>(context);
+    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _profileController = Di.instanceOf<ProfileController>(context);
+
     super.didChangeDependencies();
   }
 
@@ -62,12 +67,14 @@ class _LoginPageState extends State<LoginPage> {
   void _onPressLogin(BuildContext context) async {
     _closeKeyboard();
 
-    var result = await _userSessionController.signInWithEmailPassword(
+    var result = await _mySessionController.signInWithEmailPassword(
       _emailTextController.text,
       _passwordTextController.text,
     );
 
-    if (_userSessionController.isLoggedIn) {
+    if (_mySessionController.amILoggedIn) {
+      await _profileController.getProfile(_mySessionController.mySession.profileId);
+      _mySessionController.setMyProfile(_profileController.profile);
       Navigator.of(context).pushNamed(Routes.home);
     } else {
       PopMessage.show(result, context);
@@ -79,9 +86,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onPressLoginWithGoogle() async {
-    var result = await _userSessionController.signInWithGoogle();
-    if (_userSessionController.isLoggedIn) {
-      Navigator.of(context).pushNamed(Routes.home);
+    var result = await _mySessionController.signInWithGoogle();
+    if (_mySessionController.amILoggedIn) {
+      await _profileController.getProfile(_mySessionController.mySession.profileId);
+      _mySessionController.setMyProfile(_profileController.profile);
+      Navigator.of(context).pushReplacementNamed(Routes.home);
     } else {
       PopMessage.show(result, context);
     }

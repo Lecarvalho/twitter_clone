@@ -5,11 +5,11 @@ import 'write_tweet_widget.dart';
 class TweetCreateNewWidget extends StatelessWidget {
   final TextEditingController controller;
   final String avatar;
-  final String myUserId;
+  final String myProfileId;
 
   TweetCreateNewWidget({
     @required this.avatar,
-    @required this.myUserId,
+    @required this.myProfileId,
     @required this.controller,
   });
 
@@ -19,7 +19,7 @@ class TweetCreateNewWidget extends StatelessWidget {
       controller: controller,
       hintText: "What's happening?",
       avatar: avatar,
-      userId: myUserId,
+      myProfileId: myProfileId,
     );
   }
 }

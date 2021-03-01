@@ -5,9 +5,9 @@ import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_horizontal_widget.dart';
 
 class TweetBigSingleWidget extends StatelessWidget {
-  final TweetModel tweetModel;
+  final TweetModel tweet;
 
-  TweetBigSingleWidget({@required this.tweetModel});
+  TweetBigSingleWidget({@required this.tweet});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +18,15 @@ class TweetBigSingleWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProfilePictureNameNickHorizontalWidget(
-            userModel: tweetModel.userModel,
+            profile: tweet.profile,
           ),
           SizedBox(height: 15),
-          Text(tweetModel.text, style: Styles.h5),
+          Text(tweet.text, style: Styles.h5),
           SizedBox(height: 10),
           Row(
             children: [
               Text(
-                tweetModel.creationDateLong,
+                tweet.creationDateLong,
                 style: Styles.body2Gray,
               ),
               Text("-", style: Styles.body2Gray),

@@ -19,28 +19,26 @@ class MultilineTextboxWidget extends StatelessWidget {
       this.withUnderline = false});
 
   InputDecoration _buildDecoration() {
-    var inputDecoration = InputDecoration(
-      hintText: hintText,
-      labelText: labelText,
-      hintStyle: hintStyle,
-    );
-
     if (withUnderline) {
-      inputDecoration.copyWith(
+      return InputDecoration(
+        hintText: hintText,
+        labelText: labelText,
+        hintStyle: hintStyle,
         border: UnderlineInputBorder(
           borderSide: BorderSide(color: ProjectColors.blueActive),
         ),
       );
     } else {
-      inputDecoration.copyWith(
+      return InputDecoration(
+        hintText: hintText,
+        labelText: labelText,
+        hintStyle: hintStyle,
         border: InputBorder.none,
         enabledBorder: InputBorder.none,
         errorBorder: InputBorder.none,
         disabledBorder: InputBorder.none,
       );
     }
-
-    return inputDecoration;
   }
 
   @override

@@ -21,13 +21,13 @@ class CommentController extends ControllerBase<CommentServiceBase> {
   Future<void> commentTweet({
     String tweetId,
     String commentText,
-    String myUserId,
+    String myProfileId,
   }) async {
     try {
       var comment = CommentModel.toMap(
         tweetId: tweetId,
         commentText: commentText,
-        myUserId: myUserId,
+        myProfileId: myProfileId,
       );
       await service.commentTweet(comment);
     } catch (e) {

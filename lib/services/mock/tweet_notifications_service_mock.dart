@@ -5,7 +5,7 @@ import 'json_tools.dart';
 
 class TweetNotificationsServiceMock implements TweetNotificationsServiceBase {
   @override
-  Future<List<TweetNotificationModel>> getMyTweetsNotifications(String myUserId) {
+  Future<List<TweetNotificationModel>> getMyTweetsNotifications(String myProfileId) {
     return JsonTools.jsonToModelList<TweetNotificationModel>(
       "assets/json/tweet_notifications.json",
       (data) => TweetNotificationModel.fromMap(data),

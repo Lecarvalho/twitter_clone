@@ -6,10 +6,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-        "userId": "1",
-        "user": {
+        "profileId": "1",
+        "profile": {
             "id": "1",
-            "avatar": "assets/profile-pictures/at.jpg",
+            "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
             "nickname": "@dev_lecarvalho"
         }
@@ -21,10 +21,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "I wanted a genesis so bad so I could play",
-        "userId": "2",
-        "user": {
+        "profileId": "2",
+        "profile": {
             "id": "2",
-            "avatar": "assets/profile-pictures/27786.jpeg",
+            "avatar": "https://avatars.githubusercontent.com/u/27786?s=460&u=b8a0a6461a63c247af18c0b4ccf61a477022deff&v=4",
             "name": "steveklabnik",
             "nickname": "@steveklabnik"
         }
@@ -36,10 +36,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "É imensurável a contribuição desse cara pra nossa cultura chamada Hip-Hop... Hoje ele estaria completando 47 anos de vida e pra gente celebrar, tá no ar o #DillasTape Vol. 2! Muito Obrigado J. Dilla! We Miss You.\n\nArte: @lucasbonifacio\n\ndjnyack.com\n\n#JDilla #DillaDay",
-        "userId": "3",
-        "user": {
+        "profileId": "3",
+        "profile": {
             "id": "3",
-            "avatar": "assets/profile-pictures/qE8Pko5G.jpg",
+            "avatar": "https://pbs.twimg.com/profile_images/1228889815741059073/qE8Pko5G_400x400.jpg",
             "name": "Dj Nyack",
             "nickname": "@djnyack"
         }
@@ -51,10 +51,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Hodl the rainforests!!",
-        "userId": "4",
-        "user": {
+        "profileId": "4",
+        "profile": {
             "id": "4",
-            "avatar": "assets/profile-pictures/spacex.jpg",
+            "avatar": "https://observer.com/wp-content/uploads/sites/2/2021/02/GettyImages-1236403254.jpg?quality=80&w=970",
             "name": "Elon Musk",
             "nickname": "@elonmusk"
         }
@@ -66,10 +66,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Children have been located and are safe! Medical attention summoned just as a precaution.",
-        "userId": "5",
-        "user": {
+        "profileId": "5",
+        "profile": {
             "id": "5",
-            "avatar": "assets/profile-pictures/police.jpg",
+            "avatar": "https://educaloi.qc.ca/wp-content/uploads/1270949455_1200x563-1.jpg",
             "name": "David Lazar",
             "nickname": "@SPFDDCLazar"
         }
@@ -81,10 +81,10 @@
         "heartCount": 1,
         "retweetCount": 1,
         "text": "Y’all ready for this next post?",
-        "userId": "6",
-        "user": {
+        "profileId": "6",
+        "profile": {
             "id": "6",
-            "avatar": "assets/profile-pictures/marsha-ambrosius.jpg",
+            "avatar": "https://thesource.com/wp-content/uploads/2018/06/Marsha-Ambrosius.jpg",
             "name": "Marsha Ambrosius",
             "nickname": "@maxjacobson"
         }

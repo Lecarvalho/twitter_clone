@@ -1,7 +1,7 @@
 [
     {
         "id": "1",
-        "avatar": "assets/profile-pictures/at.jpg",
+        "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
         "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
         "emailAddress": "leandro@lecarvalho.net",
         "inscriptionDate": "2021-01-01T15:56:56.782Z",
@@ -10,7 +10,7 @@
     },
     {
         "id": "2",
-        "avatar": "assets/profile-pictures/27786.jpeg",
+        "avatar": "https://avatars.githubusercontent.com/u/27786?s=460&u=b8a0a6461a63c247af18c0b4ccf61a477022deff&v=4",
         "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
         "emailAddress": "leandro@lecarvalho.net",
         "inscriptionDate": "2021-01-01T15:56:56.782Z",
@@ -19,7 +19,7 @@
     },
     {
         "id": "3",
-        "avatar": "assets/profile-pictures/qE8Pko5G.jpg",
+        "avatar": "https://pbs.twimg.com/profile_images/1228889815741059073/qE8Pko5G_400x400.jpg",
         "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
         "emailAddress": "leandro@lecarvalho.net",
         "inscriptionDate": "2021-01-01T15:56:56.782Z",
@@ -28,7 +28,7 @@
     },
     {
         "id": "4",
-        "avatar": "assets/profile-pictures/spacex.jpg",
+        "avatar": "https://observer.com/wp-content/uploads/sites/2/2021/02/GettyImages-1236403254.jpg?quality=80&w=970",
         "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
         "emailAddress": "leandro@lecarvalho.net",
         "inscriptionDate": "2021-01-01T15:56:56.782Z",
@@ -37,7 +37,7 @@
     },
     {
         "id": "5",
-        "avatar": "assets/profile-pictures/police.jpg",
+        "avatar": "https://educaloi.qc.ca/wp-content/uploads/1270949455_1200x563-1.jpg",
         "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
         "emailAddress": "leandro@lecarvalho.net",
         "inscriptionDate": "2021-01-01T15:56:56.782Z",
@@ -46,11 +46,20 @@
     },
     {
         "id": "6",
-        "avatar": "assets/profile-pictures/marsha-ambrosius.jpg",
+        "avatar": "https://thesource.com/wp-content/uploads/2018/06/Marsha-Ambrosius.jpg",
         "bio": "Web & Mobile UI/UX development; Devops expert; Poker player",
         "emailAddress": "leandro@lecarvalho.net",
         "inscriptionDate": "2021-01-01T15:56:56.782Z",
         "name": "Marsha Ambrosius",
         "nickname": "@maxjacobson"
+    },
+    {
+        "id": "7",
+        "avatar": null,
+        "bio": null,
+        "emailAddress": "test@test.com",
+        "inscriptionDate": "2021-01-01T15:56:56.782Z",
+        "name": "Test test",
+        "nickname": "@test"
     }
 ]

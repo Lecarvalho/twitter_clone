@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/models/user_model.dart';
+import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 import 'profile_name_widget.dart';
@@ -8,9 +8,9 @@ import 'profile_nickname_widget.dart';
 import 'profile_picture_widget.dart';
 
 class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
-  final UserModel userModel;
+  final ProfileModel profile;
 
-  ProfilePictureNameNickHorizontalWidget({@required this.userModel});
+  ProfilePictureNameNickHorizontalWidget({@required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +19,12 @@ class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ProfilePictureWidget(
-          avatar: userModel.avatar,
+          avatar: profile.avatar,
           profilePicSize: ProfilePicSize.small2,
-          userId: userModel.id,
+          profileId: profile.id,
           onTap: () => Navigator.of(context).pushNamed(
             Routes.profile,
-            arguments: userModel.id,
+            arguments: profile.id,
           ),
         ),
         SizedBox(width: 10),
@@ -33,12 +33,12 @@ class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfileNameWidget(
-              profileName: userModel.name,
+              profileName: profile.name,
               textStyle: Styles.subtitle1,
             ),
             SizedBox(height: 5),
             ProfileNicknameWidget(
-              profileNickname: userModel.nickname,
+              profileNickname: profile.nickname,
               textStyle: Styles.subtitle1Gray,
             )
           ],

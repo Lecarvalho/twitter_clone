@@ -21,7 +21,7 @@ class CommentListWidget extends StatelessWidget {
       itemBuilder: (_, index) => Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: TweetCommentWidget(
-          commentModel: comments[index],
+          comment: comments[index],
           replyingToNickname: replyingToNickname,
         ),
       ),

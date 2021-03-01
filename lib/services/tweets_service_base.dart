@@ -5,9 +5,9 @@ import 'service_base.dart';
 abstract class TweetsServiceBase extends ServiceBase {
   Future<List<TweetModel>> getTweets();
 
-  Future<List<TweetModel>> getUserTweets(String userId);
+  Future<List<TweetModel>> getProfileTweets(String profileId);
 
-  Future<void> createTweet(TweetModel tweetModel);
+  Future<void> createTweet(TweetModel tweet);
 
   Future<TweetModel> getTweet(String tweetId);
 }

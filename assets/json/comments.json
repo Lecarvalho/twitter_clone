@@ -3,12 +3,12 @@
         "id": "1",
         "tweetId": "1",
         "text": "I spent all of my school money on doge and I sold at a loss. Please dont trick others like you tricked me",
-        "userId": "6",
+        "profileId": "6",
         "creationDate": "2021-02-26T05:28:56.782Z",
-        "replyingUserId": "1",
-        "user": {
+        "replyingProfileId": "1",
+        "profile": {
             "id": "6",
-            "avatar": "assets/profile-pictures/marsha-ambrosius.jpg",
+            "avatar": "https://thesource.com/wp-content/uploads/2018/06/Marsha-Ambrosius.jpg",
             "name": "Marsha Ambrosius",
             "nickname": "@maxjacobson"
         }

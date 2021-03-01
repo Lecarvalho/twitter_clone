@@ -6,10 +6,10 @@
             "id": "1",
             "creationDate": "2021-02-21T07:53:00.782Z",
             "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-            "userId": "1",
-            "user": {
+            "profileId": "1",
+            "profile": {
                 "id": "1",
-                "avatar": "assets/profile-pictures/at.jpg",
+                "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
                 "name": "Leandro Carvalho",
                 "nickname": "@dev_lecarvalho"
             }
@@ -22,10 +22,10 @@
             "id": "4",
             "creationDate": "2021-02-20T23:28:56.782Z",
             "text": "Hodl the rainforests!!",
-            "userId": "4",
-            "user": {
+            "profileId": "4",
+            "profile": {
                 "id": "4",
-                "avatar": "assets/profile-pictures/spacex.jpg",
+                "avatar": "https://observer.com/wp-content/uploads/sites/2/2021/02/GettyImages-1236403254.jpg?quality=80&w=970",
                 "name": "Elon Musk",
                 "nickname": "@elonmusk"
             }
@@ -38,10 +38,10 @@
             "id": "6",
             "creationDate": "2021-02-01T23:28:56.782Z",
             "text": "Y’all ready for this next post?",
-            "userId": "6",
-            "user": {
+            "profileId": "6",
+            "profile": {
                 "id": "6",
-                "avatar": "assets/profile-pictures/marsha-ambrosius.jpg",
+                "avatar": "https://thesource.com/wp-content/uploads/2018/06/Marsha-Ambrosius.jpg",
                 "name": "Marsha Ambrosius",
                 "nickname": "@maxjacobson"
             }

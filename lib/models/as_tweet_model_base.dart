@@ -1,21 +1,21 @@
 import 'package:intl/intl.dart';
 
 import 'model_base.dart';
-import 'user_model.dart';
+import 'profile_model.dart';
 
 abstract class AsTweetModelBase extends ModelBase {
   String id;
   String text;
   DateTime creationDate;
-  String userId;
-  UserModel userModel;
+  String profileId;
+  ProfileModel profile;
 
   AsTweetModelBase({
     this.id,
-    this.userId,
+    this.profileId,
     this.text,
     this.creationDate,
-    this.userModel,
+    this.profile,
   });
 
   String get creationDateLong => DateFormat.Hm().add_yMd().format(creationDate);

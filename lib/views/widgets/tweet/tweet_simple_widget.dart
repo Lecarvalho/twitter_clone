@@ -41,9 +41,9 @@ class TweetSimpleWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfilePictureWidget(
-              avatar: tweetModel.userModel.avatar,
+              avatar: tweetModel.profile.avatar,
               profilePicSize: ProfilePicSize.small2,
-              userId: tweetModel.userId,
+              profileId: tweetModel.profileId,
               onTap: () => Navigator.of(context).pushNamed(
                 Routes.profile,
                 arguments: tweetModel.id,
@@ -56,8 +56,8 @@ class TweetSimpleWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ProfileNameNickTimeAgoHorizontalWidget(
-                    profileName: tweetModel.userModel.name,
-                    profileNickname: tweetModel.userModel.nickname,
+                    profileName: tweetModel.profile.name,
+                    profileNickname: tweetModel.profile.nickname,
                     timeAgo: tweetModel.creationTimeAgo,
                   ),
                   SizedBox(height: 5),

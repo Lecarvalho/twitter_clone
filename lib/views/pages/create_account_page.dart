@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/controllers/my_session_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
+import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
@@ -21,11 +22,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   final _nicknameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  MySessionController _mySessionController;
   ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
-    _profileController = Provider.of<ProfileController>(context);
+    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _profileController = Di.instanceOf<ProfileController>(context);
     super.didChangeDependencies();
   }
 
@@ -35,18 +38,31 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   void _onPressNext(BuildContext context) async {
     _closeKeyboard();
-    
-    var result = await _profileController.createUserProfile(
-      emailAddress: _emailController.text,
+
+    var result = await _mySessionController.createUserProfile(
+      email: _emailController.text,
       name: _nameController.text,
       nickname: _nicknameController.text,
       password: _passwordController.text,
     );
 
-    PopMessage.show(result.message, context);
+    if (result.success) {
+      var result = await _mySessionController.signInWithEmailPassword(
+        _emailController.text,
+        _passwordController.text,
+      );
 
-    if (result.success)
-      Navigator.of(context).pushReplacementNamed(Routes.edit_profile);
+      if (_mySessionController.amILoggedIn) {
+        await _profileController.getProfile(_mySessionController.mySession.profileId);
+        _mySessionController.setMyProfile(_profileController.profile);
+        
+        Navigator.of(context).pushReplacementNamed(Routes.edit_profile);
+      } else {
+        PopMessage.show(result, context);
+      }
+    } else {
+      PopMessage.show(result.message, context);
+    }
   }
 
   @override
@@ -55,56 +71,56 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       appBar: AppBarWidget(
         title: ProjectLogos.twitter,
       ),
-      body: ListView(
-        children: [
-          Column(
-            children: [
-              Container(
-                margin: EdgeInsets.all(20),
-                height: MediaQuery.of(context).size.height - 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextboxWidget(
-                      textboxType: TextboxType.name,
-                      hintText: "Name",
-                      showMaxLength: true,
-                      maxLength: AppConfig.nameMaxCharacters,
-                      controller: _nameController,
-                    ),
-                    TextboxWidget(
-                      textboxType: TextboxType.email,
-                      hintText: "Email address",
-                      maxLength: AppConfig.emailMaxCharacters,
-                      controller: _emailController,
-                    ),
-                    TextboxWidget(
-                      textboxType: TextboxType.nickname,
-                      hintText: "Nickname",
-                      maxLength: AppConfig.nicknameMaxCharacters,
-                      controller: _nicknameController,
-                    ),
-                    TextboxWidget(
-                      textboxType: TextboxType.password,
-                      hintText: "Password",
-                      maxLength: AppConfig.passwordMaxCharacters,
-                      controller: _passwordController,
-                    ),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+              child: Column(
+                children: [
+                  TextboxWidget(
+                    textboxType: TextboxType.name,
+                    hintText: "Name",
+                    showMaxLength: true,
+                    maxLength: AppConfig.nameMaxCharacters,
+                    controller: _nameController,
+                  ),
+                  SizedBox(height: 20),
+                  TextboxWidget(
+                    textboxType: TextboxType.email,
+                    hintText: "Email address",
+                    maxLength: AppConfig.emailMaxCharacters,
+                    controller: _emailController,
+                  ),
+                  SizedBox(height: 20),
+                  TextboxWidget(
+                    textboxType: TextboxType.nickname,
+                    hintText: "Nickname",
+                    maxLength: AppConfig.nicknameMaxCharacters,
+                    controller: _nicknameController,
+                  ),
+                  SizedBox(height: 20),
+                  TextboxWidget(
+                    textboxType: TextboxType.password,
+                    hintText: "Password",
+                    maxLength: AppConfig.passwordMaxCharacters,
+                    controller: _passwordController,
+                  ),
+                ],
               ),
-            ],
-          ),
-          DividerWidget(),
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(right: 20),
-            child: ButtonWidget(
-              onPressed: () => _onPressNext(context),
-              text: "Next",
             ),
-          ),
-        ],
+            SizedBox(height: 30),
+            DividerWidget(),
+            Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.only(right: 20),
+              child: ButtonWidget(
+                onPressed: () => _onPressNext(context),
+                text: "Next",
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

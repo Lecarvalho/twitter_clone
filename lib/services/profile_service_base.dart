@@ -1,14 +1,8 @@
-import 'package:twitter_clone/models/user_model.dart';
+import 'package:twitter_clone/models/profile_model.dart';
 
 import 'service_base.dart';
 
 abstract class ProfileServiceBase extends ServiceBase {
-  Future<UserModel> getUserProfile(String userId);
-  Future<CreateUserResponse> createUserProfile(UserModel userModel, String password);
+  Future<ProfileModel> getProfile(String profileId);
 }
 
-enum CreateUserResponse {
-  email_already_in_use,
-  invalid_information,
-  success,
-}
