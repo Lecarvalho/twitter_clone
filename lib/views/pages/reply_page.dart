@@ -19,12 +19,26 @@ class _ReplyPageState extends State<ReplyPage> {
   TweetModel _commentingTweet;
 
   final _textController = TextEditingController();
+  bool get _hasText => _textController.text?.isNotEmpty ?? false;
+  Function _onPressedReplyTweet;
 
   @override
   void didChangeDependencies() {
     _mySessionController = Di.instanceOf<MySessionController>(context);
     _commentController = Di.instanceOf<CommentController>(context);
     _commentingTweet = ModalRoute.of(context).settings.arguments;
+
+    _textController.addListener(() {
+      if (_hasText && _onPressedReplyTweet == null) {
+        setState(() {
+          _onPressedReplyTweet = _onCommentTweet;
+        });
+      } else if (!_hasText) {
+        setState(() {
+          _onPressedReplyTweet = null;
+        });
+      }
+    });
 
     super.didChangeDependencies();
   }
@@ -49,7 +63,7 @@ class _ReplyPageState extends State<ReplyPage> {
         action: Padding(
           padding: const EdgeInsets.all(10),
           child: ButtonWidget(
-            onPressed: _onCommentTweet,
+            onPressed: _onPressedReplyTweet,
             text: "Reply",
           ),
         ),

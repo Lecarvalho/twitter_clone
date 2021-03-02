@@ -21,17 +21,36 @@ class _NewTweetPageState extends State<NewTweetPage> {
   void didChangeDependencies() {
     _mySessionController = Di.instanceOf<MySessionController>(context);
     _tweetController = Di.instanceOf<TweetController>(context);
+
+    _textController.addListener(() {
+      if (_hasText && _onPressedCreateTweet == null) {
+        setState(() {
+          _onPressedCreateTweet = _onCreateTweet;
+        });
+      } else if (!_hasText) {
+        setState(() {
+          _onPressedCreateTweet = null;
+        });
+      }
+    });
+
     super.didChangeDependencies();
   }
 
   void _onCreateTweet() async {
-    await _tweetController.createTweet(
-      _textController.text,
-      _mySessionController.mySession.myProfile.id,
-    );
+    if (_textController.text?.isNotEmpty ?? true) {
+      await _tweetController.createTweet(
+        _textController.text,
+        _mySessionController.mySession.myProfile.id,
+      );
 
-    Navigator.of(context).pushReplacementNamed(Routes.home);
+      Navigator.of(context).pushReplacementNamed(Routes.home);
+    }
   }
+
+  bool get _hasText => _textController.text?.isNotEmpty ?? false;
+
+  Function _onPressedCreateTweet;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +59,7 @@ class _NewTweetPageState extends State<NewTweetPage> {
         action: Padding(
           padding: const EdgeInsets.all(10),
           child: ButtonWidget(
-            onPressed: _onCreateTweet,
+            onPressed: _onPressedCreateTweet,
             text: "Tweet",
           ),
         ),
