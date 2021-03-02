@@ -5,8 +5,8 @@ import 'json_tools.dart';
 
 class TweetsServiceMock implements TweetsServiceBase {
   @override
-  Future<List<TweetModel>> getTweets() async {
-    return JsonTools.jsonToModelList<TweetModel>(
+  Future<List<TweetModel>> getTweets(String myProfileId) async {
+    return await JsonTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
     );
@@ -35,5 +35,34 @@ class TweetsServiceMock implements TweetsServiceBase {
     );
 
     return tweets.firstWhere((_tweet) => _tweet.id == tweetId);
+  }
+
+  @override
+  Future<void> heartTweet(
+      String tweetId, String ofProfileId, String myProfileId) async {
+    print("heartTweet !");
+    print("tweetId $tweetId");
+    print("ofProfileId $ofProfileId");
+    print("myProfileId $myProfileId");
+  }
+
+  @override
+  Future<void> retweet(String tweetId, String ofProfileId, String myProfileId) async {
+    print("retweet !");
+    print("tweetId $tweetId");
+    print("ofProfileId $ofProfileId");
+    print("myProfileId $myProfileId");
+  }
+
+  @override
+  Future<void> unheartTweet(
+    String tweetId,
+    String ofProfileId,
+    String myProfileId,
+  ) async {
+    print("unheartTweet !");
+    print("tweetId $tweetId");
+    print("ofProfileId $ofProfileId");
+    print("myProfileId $myProfileId");
   }
 }

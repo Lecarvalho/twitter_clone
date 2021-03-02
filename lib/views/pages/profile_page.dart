@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/controllers/my_session_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
@@ -43,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
   OutlinedButtonWidget _editProfileButton() {
     return OutlinedButtonWidget(
       onPressed: () {
-        print("Edit profile!");
+        Navigator.of(context).pushNamed(Routes.edit_profile);
       },
       text: "Edit profile",
     );

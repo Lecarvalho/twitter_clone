@@ -18,17 +18,56 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final _viewModel = EditProfileViewModel();
+  bool _isPageReady = false;
+
+  MySessionController _mySessionController;
+  final nameController = TextEditingController();
+  final bioController = TextEditingController();
 
   @override
   void didChangeDependencies() async {
-    await _viewModel.loadPage(context);
+    _mySessionController = Di.instanceOf<MySessionController>(context);
+
+    nameController.text = _mySessionController.mySession.myProfile.name;
+    bioController.text = _mySessionController.mySession.myProfile.bio;
 
     setState(() {
-      _viewModel.isPageReady = true;
+      _isPageReady = true;
     });
 
     super.didChangeDependencies();
+  }
+
+  void _onPressSave(BuildContext context) async {
+    _closeKeyboard(context);
+
+    var result = await _mySessionController.updateProfile(bioController.text);
+    if (result == "Success") {
+      Navigator.of(context).pushNamed(Routes.home);
+    } else {
+      PopMessage.show(result, context);
+    }
+  }
+
+  void _onPressChangePhoto() async {
+    await _mySessionController.uploadAvatar(
+      _mySessionController.mySession.profileId,
+    );
+
+    setState(() {});
+  }
+
+  void _closeKeyboard(BuildContext context) {
+    FocusScope.of(context).requestFocus(new FocusNode());
+  }
+
+  ImageProvider get avatar {
+    var avatar = _mySessionController?.mySession?.myProfile?.avatar;
+
+    if (avatar?.isEmpty ?? true) {
+      return null;
+    } else
+      return NetworkImage(avatar);
   }
 
   @override
@@ -36,31 +75,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       appBar: AppBarWidget(
         action: ButtonActionBar(
-          onPressed: () => _viewModel.onPressSave(context),
+          onPressed: () => _onPressSave(context),
           text: "Save",
         ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
-        child: !_viewModel.isPageReady
+        child: !_isPageReady
             ? LoadingPageWidget()
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: _viewModel.onPressChangePhoto,
+                    onTap: _onPressChangePhoto,
                     child: CircleAvatar(
                       child: ProjectIcons.photoIcon,
                       radius: 40,
                       backgroundColor: ProjectColors.grayBackground,
-                      backgroundImage: _viewModel.avatar,
+                      backgroundImage: avatar,
                     ),
                   ),
                   SizedBox(height: 10),
                   TextboxWidget(
                     textboxType: TextboxType.name,
                     maxLength: AppConfig.nameMaxCharacters,
-                    controller: _viewModel.nameController,
+                    controller: nameController,
                     keyboardEnabled: false,
                     hintText: "Name",
                     labelText: "Name",
@@ -70,62 +109,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     maxLength: AppConfig.bioMaxCharacters,
                     hintText: "Bio",
                     labelText: "Bio",
-                    controller: _viewModel.bioController,
+                    controller: bioController,
                     withUnderline: true,
+                    autoFocus: false,
                   ),
                 ],
               ),
       ),
     );
-  }
-}
-
-class EditProfileViewModel {
-  String _avatar;
-  bool isPageReady = false;
-
-  MySessionController _mySessionController;
-  final nameController = TextEditingController();
-  final bioController = TextEditingController();
-
-  Future<void> loadPage(BuildContext context) async {
-    _mySessionController = Di.instanceOf<MySessionController>(context);
-
-    _fill();
-  }
-
-  void onPressSave(BuildContext context) async {
-    _closeKeyboard(context);
-    
-    var result = await _mySessionController.updateProfile(bioController.text);
-    if (result == "Success") {
-      Navigator.of(context).pushNamed(Routes.home);
-    } else {
-      PopMessage.show(result, context);
-    }
-  }
-
-  void onPressChangePhoto() {
-    _mySessionController.uploadAvatar(
-      _mySessionController.mySession.profileId,
-      "selectedImagePath",
-    );
-  }
-
-  void _fill() {
-    nameController.text = _mySessionController.mySession.myProfile.name;
-    bioController.text = _mySessionController.mySession.myProfile.bio;
-    _avatar = _mySessionController.mySession.myProfile.avatar;
-  }
-
-  void _closeKeyboard(BuildContext context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
-  }
-
-  ImageProvider get avatar {
-    if (_avatar?.isEmpty ?? true) {
-      return null;
-    } else
-      return NetworkImage(_avatar);
   }
 }

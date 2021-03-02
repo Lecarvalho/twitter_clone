@@ -11,12 +11,12 @@ import 'package:twitter_clone/views/widgets/button/button_widget.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/textbox_widget.dart';
 
-class CreateAccountPage extends StatefulWidget {
+class CreateProfilePage extends StatefulWidget {
   @override
-  _CreateAccountPageState createState() => _CreateAccountPageState();
+  _CreateProfilePageState createState() => _CreateProfilePageState();
 }
 
-class _CreateAccountPageState extends State<CreateAccountPage> {
+class _CreateProfilePageState extends State<CreateProfilePage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _nicknameController = TextEditingController();

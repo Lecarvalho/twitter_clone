@@ -7,19 +7,17 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
   TweetController({@required service}) : super(service: service);
 
   TweetModel _bigTweet;
-  TweetModel get bigTweet => _bigTweet; 
+  TweetModel get bigTweet => _bigTweet;
 
   List<TweetModel> _tweets;
   List<TweetModel> get tweets => _tweets;
 
-  Future<void> getTweets() async {
+  Future<void> getTweets(String myProfileId) async {
     try {
-      _tweets = await service.getTweets();
+      _tweets = await service.getTweets(myProfileId);
     } catch (e) {
       print("Error on getTweets: " + e.toString());
     }
-
-    return null;
   }
 
   Future<void> getProfileTweets(String profileId) async {
@@ -51,6 +49,41 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
       _bigTweet = await service.getTweet(tweetId);
     } catch (e) {
       print("Error on getTweet: " + e.toString());
+    }
+  }
+
+  Future<void> toggleHeartTweet(
+    TweetModel tweet,
+    String myProfileId,
+  ) async {
+    try {
+      if (tweet.isHearted) {
+        tweet.heartCount--;
+        await service.unheartTweet(tweet.id, tweet.profileId, myProfileId);
+      } else {
+        tweet.heartCount++;
+        await service.heartTweet(tweet.id, tweet.profileId, myProfileId);
+      }
+
+      tweet.isHearted = !tweet.isHearted;
+    } catch (e) {
+      print("Error on toggleHeartTweet: " + e.toString());
+    }
+  }
+
+  Future<void> retweet(
+    TweetModel tweet,
+    String myProfileId,
+  ) async {
+    try {
+      if (!tweet.isRetweeted) {
+        tweet.retweetCount++;
+        await service.retweet(tweet.id, tweet.profileId, myProfileId);
+      }
+
+      tweet.isRetweeted = true;
+    } catch (e) {
+      print("Error on retweet: " + e.toString());
     }
   }
 }

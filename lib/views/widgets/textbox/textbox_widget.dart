@@ -23,10 +23,11 @@ class TextboxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextCapitalization textCapitalization = TextCapitalization.none;
-    TextInputType keyboardType = TextInputType.text;
-    bool isObscure = false;
-    int maxLines = 3;
+    var textCapitalization = TextCapitalization.none;
+    var keyboardType = TextInputType.text;
+    var isObscure = false;
+    var maxLines = 3;
+    var restriction = FilteringTextInputFormatter.allow(RegExp("[\\w|\\s|-]"));
 
     switch (textboxType) {
       case TextboxType.name:
@@ -36,9 +37,14 @@ class TextboxWidget extends StatelessWidget {
       case TextboxType.password:
         maxLines = 1;
         isObscure = true;
+        restriction = FilteringTextInputFormatter.allow(RegExp("."));
         break;
       case TextboxType.email:
         keyboardType = TextInputType.emailAddress;
+        restriction = FilteringTextInputFormatter.allow(RegExp("[\\w|@|.|-]"));
+        break;
+      case TextboxType.nickname:
+        restriction = FilteringTextInputFormatter.allow(RegExp("[\\w|-]"));
         break;
       default:
         keyboardType = TextInputType.text;
@@ -54,6 +60,7 @@ class TextboxWidget extends StatelessWidget {
       maxLength: showMaxLength ? maxLength : null,
       inputFormatters: [
         LengthLimitingTextInputFormatter(maxLength),
+        restriction
       ],
       textAlignVertical: TextAlignVertical.center,
       controller: controller,

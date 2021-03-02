@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/pages/big_tweet_page.dart';
-import 'package:twitter_clone/views/pages/create_account_page.dart';
+import 'package:twitter_clone/views/pages/create_profile_page.dart';
 import 'package:twitter_clone/views/pages/edit_profile_page.dart';
 import 'package:twitter_clone/views/pages/home_page.dart';
 import 'package:twitter_clone/views/pages/login_page.dart';
@@ -18,7 +18,7 @@ class Routes {
   static const String new_tweet = "/new_tweet";
   static const String big_tweet = "/big_tweet";
   static const String reply = "/reply";
-  static const String create_account = "/create_account";
+  static const String create_profile = "/create_profile";
   static const String edit_profile = "/edit_profile";
 
   static final routes = <String, WidgetBuilder>{
@@ -29,7 +29,7 @@ class Routes {
     new_tweet: (BuildContext context) => NewTweetPage(),
     big_tweet: (BuildContext context) => BigTweetPage(),
     reply: (BuildContext context) => ReplyPage(),
-    create_account: (BuildContext context) => CreateAccountPage(),
+    create_profile: (BuildContext context) => CreateProfilePage(),
     edit_profile: (BuildContext context) => EditProfilePage(),
   };
 }

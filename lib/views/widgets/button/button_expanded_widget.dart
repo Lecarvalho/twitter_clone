@@ -15,7 +15,7 @@ class ButtonExpandedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 50,
+      height: 40,
       padding: EdgeInsets.only(left: 10, right: 10),
       child: FlatButton(
         onPressed: onPressed,

@@ -117,7 +117,7 @@ class MySessionServiceMock implements MySessionServiceBase {
     print("selectedImagePath: $selectedImagePath");
 
     //return new picture url
-    return "https://solutioncimex.com/wp-content/uploads/2019/04/icone-service.png";
+    return "https://static.wikia.nocookie.net/adventuretimewithfinnandjake/images/3/3b/Jakesalad.png/revision/latest/scale-to-width-down/340?cb=20190807133015";
   }
 
   @override

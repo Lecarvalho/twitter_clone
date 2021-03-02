@@ -9,14 +9,17 @@ class MultilineTextboxWidget extends StatelessWidget {
   final String labelText;
   final TextStyle hintStyle;
   final bool withUnderline;
+  final bool autoFocus;
 
-  MultilineTextboxWidget(
-      {@required this.maxLength,
-      @required this.hintText,
-      @required this.controller,
-      this.labelText,
-      this.hintStyle,
-      this.withUnderline = false});
+  MultilineTextboxWidget({
+    @required this.maxLength,
+    @required this.hintText,
+    @required this.controller,
+    this.labelText,
+    this.hintStyle,
+    this.withUnderline = false,
+    this.autoFocus = true,
+  });
 
   InputDecoration _buildDecoration() {
     if (withUnderline) {
@@ -46,7 +49,7 @@ class MultilineTextboxWidget extends StatelessWidget {
     return TextField(
       maxLines: 10,
       minLines: 1,
-      autofocus: true,
+      autofocus: autoFocus,
       keyboardType: TextInputType.multiline,
       inputFormatters: [
         LengthLimitingTextInputFormatter(maxLength),

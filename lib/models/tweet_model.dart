@@ -11,6 +11,8 @@ class TweetModel extends AsTweetModelBase {
     this.heartCount,
     this.commentCount,
     this.retweetCount,
+    this.isHearted,
+    this.isRetweeted,
   }) : super(
           id: id,
           profileId: profileId,
@@ -22,6 +24,10 @@ class TweetModel extends AsTweetModelBase {
   int heartCount;
   int commentCount;
   int retweetCount;
+  bool isHearted;
+  bool isRetweeted;
+
+  bool canRetweet(String myProfileId) => !isRetweeted && profileId !=  myProfileId;
 
   factory TweetModel.fromMap(Map<String, dynamic> data) {
     return TweetModel(
@@ -33,6 +39,8 @@ class TweetModel extends AsTweetModelBase {
       commentCount: data["commentCount"],
       retweetCount: data["retweetCount"],
       profile: ProfileModel.fromMapSingleTweet(data["profile"]),
+      isHearted: data["isHearted"],
+      isRetweeted: data["isRetweeted"],
     );
   }
 

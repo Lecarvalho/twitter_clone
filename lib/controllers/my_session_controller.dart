@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/models/my_session_model.dart';
 import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/services/my_session_service_base.dart';
+import 'package:twitter_clone/services/pick_image_service.dart';
 
 import 'controller_base.dart';
 
@@ -133,20 +134,33 @@ class MySessionController extends ControllerBase<MySessionServiceBase> {
     }
   }
 
-  Future<void> uploadAvatar(
-    String profileId,
-    String selectedImagePath,
-  ) async {
+  Future<void> uploadAvatar(String profileId) async {
     try {
-      var avatarUrl = await service.uploadAvatar(
-        profileId,
-        selectedImagePath,
-      );
+      var avatarLocalPath = await _selectAvatar();
 
-      _mySession.myProfile.avatar = avatarUrl;
+      if (avatarLocalPath != null) {
+        var avatarUrl = await service.uploadAvatar(
+          profileId,
+          avatarLocalPath,
+        );
+
+        _mySession.myProfile.avatar = avatarUrl;
+      }
     } catch (e) {
       print("Error on uploadAvatar: " + e.toString());
     }
+  }
+
+  Future<String> _selectAvatar() async {
+    var pickImageService = PickImageService();
+
+    var imagePath = await pickImageService.pickImagePath();
+    return imagePath;
+  }
+
+  Future<String> resizeAvatar() async {
+    // call an api to resize avatar
+    throw UnimplementedError();
   }
 
   String _getCreateUserResponseMessage(CreateUserResponseType response) {
@@ -169,11 +183,9 @@ class MySessionController extends ControllerBase<MySessionServiceBase> {
   Future<String> updateProfile(String bio) async {
     if (_mySession.myProfile.avatar?.isEmpty ?? true) {
       return "Please set a picture for your profile";
-    } 
-    else if (bio?.isEmpty ?? true){
+    } else if (bio?.isEmpty ?? true) {
       return "Please provide a bio for your profile";
-    }
-    else {
+    } else {
       _mySession.myProfile.bio = bio;
       service.updateProfile(_mySession.profileId, bio);
       return "Success";

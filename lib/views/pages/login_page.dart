@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onPressCreateAccount(BuildContext context) {
-    Navigator.of(context).pushNamed(Routes.create_account);
+    Navigator.of(context).pushNamed(Routes.create_profile);
   }
 
   void _onPressLoginWithGoogle() async {
