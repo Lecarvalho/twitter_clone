@@ -29,6 +29,7 @@ class AssetsIcons {
   static const profileSolid = _assetsBasePath + "profile-solid.png";
   static const profile = _assetsBasePath + "profile.png";
   static const retweet = _assetsBasePath + "retweet.png";
+  static const retweetColored = _assetsBasePath + "retweet-colored.png";
   static const searchSolid = _assetsBasePath + "search-solid.png";
   static const search = _assetsBasePath + "search.png";
   static const starSolid = _assetsBasePath + "star-solid.png";

@@ -12,7 +12,9 @@
             "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
             "nickname": "@dev_lecarvalho"
-        }
+        },
+        "isRetweeted": false,
+        "isHearted": false
     },
     {
         "id": "2",
@@ -27,7 +29,9 @@
             "avatar": "https://avatars.githubusercontent.com/u/27786?s=460&u=b8a0a6461a63c247af18c0b4ccf61a477022deff&v=4",
             "name": "steveklabnik",
             "nickname": "@steveklabnik"
-        }
+        },
+        "isRetweeted": false,
+        "isHearted": true
     },
     {
         "id": "3",
@@ -42,7 +46,9 @@
             "avatar": "https://pbs.twimg.com/profile_images/1228889815741059073/qE8Pko5G_400x400.jpg",
             "name": "Dj Nyack",
             "nickname": "@djnyack"
-        }
+        },
+        "isRetweeted": true,
+        "isHearted": true
     },
     {
         "id": "4",
@@ -57,7 +63,9 @@
             "avatar": "https://observer.com/wp-content/uploads/sites/2/2021/02/GettyImages-1236403254.jpg?quality=80&w=970",
             "name": "Elon Musk",
             "nickname": "@elonmusk"
-        }
+        },
+        "isRetweeted": false,
+        "isHearted": false
     },
     {
         "id": "5",
@@ -72,7 +80,9 @@
             "avatar": "https://educaloi.qc.ca/wp-content/uploads/1270949455_1200x563-1.jpg",
             "name": "David Lazar",
             "nickname": "@SPFDDCLazar"
-        }
+        },
+        "isRetweeted": false,
+        "isHearted": true
     },
     {
         "id": "6",
@@ -87,6 +97,8 @@
             "avatar": "https://thesource.com/wp-content/uploads/2018/06/Marsha-Ambrosius.jpg",
             "name": "Marsha Ambrosius",
             "nickname": "@maxjacobson"
-        }
+        },
+        "isRetweeted": false,
+        "isHearted": false
     }
 ]

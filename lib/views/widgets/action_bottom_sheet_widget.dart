@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 
 class ActionBottomSheetWidget extends StatelessWidget {
-  final String icon;
+  final Widget icon;
   final String text;
   final Function onPressed;
 
@@ -23,7 +23,7 @@ class ActionBottomSheetWidget extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
-              child: Image.asset(icon),
+              child: icon,
             ),
             Text(text)
           ],

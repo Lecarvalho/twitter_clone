@@ -9,4 +9,6 @@ class ProjectColors {
   static const Color grayDivider = Color(0xFFCED5DC);
   static const Color blueActive = Color(0xFF4C9EEB);
   static const Color blueInactive = Color(0xFFB9DCF7);
+  static const Color green = Color(0xFF59BC6C);
+  static const Color red = Color(0xFFCE395F);
 }

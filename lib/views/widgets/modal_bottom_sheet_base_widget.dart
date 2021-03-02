@@ -22,9 +22,10 @@ class ModalBottomSheetWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        SizedBox(height: 5),
         _buildTopLine(),
         ...actions,
-        SizedBox(height: 20),
+        SizedBox(height: 10),
         ButtonExpandedWidget(
           onPressed: () => Navigator.pop(context),
           text: "Cancel",

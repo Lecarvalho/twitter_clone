@@ -6,16 +6,21 @@ import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
-import 'tweet_actions_widget.dart';
+import 'tweet_actions/tweet_actions_widget.dart';
 import 'tweet_activity_widget.dart';
 
 class TweetSimpleWidget extends StatelessWidget {
-  final TweetModel tweetModel;
+  final TweetModel tweet;
+  final Function() onHeart;
+  final Function() onRetweet;
+
   final TweetActivityModel tweetActivityModel;
 
   TweetSimpleWidget({
-    @required this.tweetModel,
+    @required this.tweet,
     this.tweetActivityModel,
+    this.onHeart,
+    this.onRetweet,
   });
 
   @override
@@ -41,12 +46,12 @@ class TweetSimpleWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfilePictureWidget(
-              avatar: tweetModel.profile.avatar,
+              avatar: tweet.profile.avatar,
               profilePicSize: ProfilePicSize.small2,
-              profileId: tweetModel.profileId,
+              profileId: tweet.profileId,
               onTap: () => Navigator.of(context).pushNamed(
                 Routes.profile,
-                arguments: tweetModel.id,
+                arguments: tweet.id,
               ),
             ),
             SizedBox(width: 8),
@@ -56,15 +61,17 @@ class TweetSimpleWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ProfileNameNickTimeAgoHorizontalWidget(
-                    profileName: tweetModel.profile.name,
-                    profileNickname: tweetModel.profile.nickname,
-                    timeAgo: tweetModel.creationTimeAgo,
+                    profileName: tweet.profile.name,
+                    profileNickname: tweet.profile.nickname,
+                    timeAgo: tweet.creationTimeAgo,
                   ),
                   SizedBox(height: 5),
-                  Text(tweetModel.text, style: Styles.body2),
+                  Text(tweet.text, style: Styles.body2),
                   SizedBox(height: 5),
                   TweetActionsWidget(
-                    tweetModel: tweetModel,
+                    tweet: tweet,
+                    onHeart: onHeart,
+                    onRetweet: onRetweet,
                   ),
                 ],
               ),
