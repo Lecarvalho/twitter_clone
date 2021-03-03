@@ -33,8 +33,6 @@ class MySessionServiceMock implements MySessionServiceBase {
       (data) => MySessionModel.fromMap(data),
     );
 
-    mySession = null;
-
     if (mySession != null) {
       return AuthResponse(
         mySession: mySession,
