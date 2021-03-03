@@ -11,9 +11,9 @@ abstract class TweetsServiceBase extends ServiceBase {
 
   Future<TweetModel> getTweet(String tweetId);
 
-  Future<void> heartTweet(String tweetId, String ofProfileId, String myProfileId);
+  Future<void> likeTweet(String tweetId, String ofProfileId, String myProfileId);
 
-  Future<void> unheartTweet(String tweetId, String ofProfileId, String myProfileId);
+  Future<void> unlikeTweet(String tweetId, String ofProfileId, String myProfileId);
 
   Future<void> retweet(String tweetId, String ofProfileId, String myProfileId);
 }

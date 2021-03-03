@@ -38,9 +38,9 @@ class TweetsServiceMock implements TweetsServiceBase {
   }
 
   @override
-  Future<void> heartTweet(
+  Future<void> likeTweet(
       String tweetId, String ofProfileId, String myProfileId) async {
-    print("heartTweet !");
+    print("likeTweet !");
     print("tweetId $tweetId");
     print("ofProfileId $ofProfileId");
     print("myProfileId $myProfileId");
@@ -55,12 +55,12 @@ class TweetsServiceMock implements TweetsServiceBase {
   }
 
   @override
-  Future<void> unheartTweet(
+  Future<void> unlikeTweet(
     String tweetId,
     String ofProfileId,
     String myProfileId,
   ) async {
-    print("unheartTweet !");
+    print("unlikeTweet !");
     print("tweetId $tweetId");
     print("ofProfileId $ofProfileId");
     print("myProfileId $myProfileId");

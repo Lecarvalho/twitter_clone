@@ -3,7 +3,7 @@
         "id": "1",
         "commentCount": 1,
         "creationDate": "2021-02-21T07:53:00.782Z",
-        "heartCount": 1,
+        "likeCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
         "profileId": "1",
@@ -18,7 +18,23 @@
         "id": "1",
         "commentCount": 1,
         "creationDate": "2021-02-21T07:53:00.782Z",
-        "heartCount": 1,
+        "likeCount": 1,
+        "retweetCount": 1,
+        "text": "2 Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
+        "profileId": "1",
+        "profile": {
+            "id": "1",
+            "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
+            "name": "Leandro Carvalho",
+            "nickname": "@dev_lecarvalho"
+        },
+        "didIRetweet": true
+    },
+    {
+        "id": "1",
+        "commentCount": 1,
+        "creationDate": "2021-02-21T07:53:00.782Z",
+        "likeCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
         "profileId": "1",
@@ -27,28 +43,14 @@
             "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
             "nickname": "@dev_lecarvalho"
-        }
+        },
+        "didILike": true
     },
     {
         "id": "1",
         "commentCount": 1,
         "creationDate": "2021-02-21T07:53:00.782Z",
-        "heartCount": 1,
-        "retweetCount": 1,
-        "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
-        "profileId": "1",
-        "profile": {
-            "id": "1",
-            "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
-            "name": "Leandro Carvalho",
-            "nickname": "@dev_lecarvalho"
-        }
-    },
-    {
-        "id": "1",
-        "commentCount": 1,
-        "creationDate": "2021-02-21T07:53:00.782Z",
-        "heartCount": 1,
+        "likeCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
         "profileId": "1",

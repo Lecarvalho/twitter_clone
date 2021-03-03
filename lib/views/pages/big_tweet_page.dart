@@ -48,7 +48,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
   }
 
   void _onPressHeart(TweetModel tweet) async {
-    await _tweetController.toggleHeartTweet(
+    await _tweetController.toggleLikeTweet(
       tweet,
       _mySessionController.mySession.profileId,
     );

@@ -31,7 +31,7 @@ class _TweetListWidgetState extends State<TweetListWidget> {
   }
 
   void _onPressHeart(TweetModel tweet) async {
-    await _tweetController.toggleHeartTweet(
+    await _tweetController.toggleLikeTweet(
       tweet,
       _mySessionController.mySession.profileId,
     );

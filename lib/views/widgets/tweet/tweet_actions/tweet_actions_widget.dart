@@ -37,8 +37,8 @@ class TweetActionsWidget extends StatelessWidget {
           retweetCount: tweet.retweetCount,
         ),
         HeartIconWidget(
-          didIHeartIt: tweet.didIHeartIt,
-          heartCount: tweet.heartCount,
+          didILike: tweet.didILike,
+          likeCount: tweet.likeCount,
           onHeart: onHeart,
         ),
       ],

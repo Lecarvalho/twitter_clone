@@ -52,22 +52,22 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
     }
   }
 
-  Future<void> toggleHeartTweet(
+  Future<void> toggleLikeTweet(
     TweetModel tweet,
     String myProfileId,
   ) async {
     try {
-      if (tweet.didIHeartIt) {
-        tweet.heartCount--;
-        await service.unheartTweet(tweet.id, tweet.profileId, myProfileId);
+      if (tweet.didILike) {
+        tweet.likeCount--;
+        await service.unlikeTweet(tweet.id, tweet.profileId, myProfileId);
       } else {
-        tweet.heartCount++;
-        await service.heartTweet(tweet.id, tweet.profileId, myProfileId);
+        tweet.likeCount++;
+        await service.likeTweet(tweet.id, tweet.profileId, myProfileId);
       }
 
-      tweet.didIHeartIt = !tweet.didIHeartIt;
+      tweet.didILike = !tweet.didILike;
     } catch (e) {
-      print("Error on toggleHeartTweet: " + e.toString());
+      print("Error on toggleLikeTweet: " + e.toString());
     }
   }
 

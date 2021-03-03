@@ -1,5 +1,6 @@
 import 'as_tweet_model_base.dart';
 import 'profile_model.dart';
+import 'tweet_activity_model.dart';
 
 class TweetModel extends AsTweetModelBase {
   TweetModel({
@@ -8,11 +9,12 @@ class TweetModel extends AsTweetModelBase {
     String text,
     DateTime creationDate,
     ProfileModel profile,
-    this.heartCount,
+    this.likeCount,
     this.commentCount,
     this.retweetCount,
-    this.didIHeartIt,
+    this.didILike,
     this.didIRetweet,
+    this.tweetActivity,
   }) : super(
           id: id,
           profileId: profileId,
@@ -21,13 +23,15 @@ class TweetModel extends AsTweetModelBase {
           profile: profile,
         );
 
-  int heartCount;
+  int likeCount;
   int commentCount;
   int retweetCount;
-  bool didIHeartIt;
+  bool didILike;
   bool didIRetweet;
+  TweetActivityModel tweetActivity;
 
-  bool canRetweet(String myProfileId) => !didIRetweet && profileId !=  myProfileId;
+  bool canRetweet(String myProfileId) =>
+      !didIRetweet && profileId != myProfileId;
 
   factory TweetModel.fromMap(Map<String, dynamic> data) {
     return TweetModel(
@@ -35,12 +39,15 @@ class TweetModel extends AsTweetModelBase {
       profileId: data["profileId"],
       text: data["text"],
       creationDate: DateTime.parse(data["creationDate"]),
-      heartCount: data["heartCount"] ?? 0,
+      likeCount: data["likeCount"] ?? 0,
       commentCount: data["commentCount"] ?? 0,
       retweetCount: data["retweetCount"] ?? 0,
       profile: ProfileModel.fromMapSingleTweet(data["profile"]),
-      didIHeartIt: data["didIHeartIt"] ?? false,
+      didILike: data["didILike"] ?? false,
       didIRetweet: data["didIRetweet"] ?? false,
+      tweetActivity: data["activity"] != null
+          ? TweetActivityModel.fromMap(data["activity"])
+          : null,
     );
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/models/tweet_activity_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
@@ -14,32 +13,21 @@ class TweetSimpleWidget extends StatelessWidget {
   final Function() onHeart;
   final Function() onRetweet;
 
-  final TweetActivityModel tweetActivityModel;
-
   TweetSimpleWidget({
     @required this.tweet,
-    this.tweetActivityModel,
     this.onHeart,
     this.onRetweet,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget tweetActivityWidget = Container();
-
-    if (tweetActivityModel != null) {
-      tweetActivityWidget = TweetActivityWidget(
-        tweetActivityModel: tweetActivityModel,
-      );
-    }
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 10),
-        tweetActivityWidget,
+        TweetActivityWidget(tweetActivity: tweet.tweetActivity),
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,

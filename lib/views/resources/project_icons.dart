@@ -37,6 +37,12 @@ class ProjectIcons {
         height: _microIconSize,
       );
 
+  static Image get heartSolidDarken => Image.asset(
+        AssetsIcons.heartSolidDarken,
+        width: _microIconSize,
+        height: _microIconSize,
+      );
+
   static Image get homeSolid => Image.asset(
         AssetsIcons.homeSolid,
         width: _bigIconSize,
