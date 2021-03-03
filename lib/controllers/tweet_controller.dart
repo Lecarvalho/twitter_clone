@@ -57,7 +57,7 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
     String myProfileId,
   ) async {
     try {
-      if (tweet.isHearted) {
+      if (tweet.didIHeartIt) {
         tweet.heartCount--;
         await service.unheartTweet(tweet.id, tweet.profileId, myProfileId);
       } else {
@@ -65,7 +65,7 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
         await service.heartTweet(tweet.id, tweet.profileId, myProfileId);
       }
 
-      tweet.isHearted = !tweet.isHearted;
+      tweet.didIHeartIt = !tweet.didIHeartIt;
     } catch (e) {
       print("Error on toggleHeartTweet: " + e.toString());
     }
@@ -76,12 +76,12 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
     String myProfileId,
   ) async {
     try {
-      if (!tweet.isRetweeted) {
+      if (!tweet.didIRetweet) {
         tweet.retweetCount++;
         await service.retweet(tweet.id, tweet.profileId, myProfileId);
       }
 
-      tweet.isRetweeted = true;
+      tweet.didIRetweet = true;
     } catch (e) {
       print("Error on retweet: " + e.toString());
     }

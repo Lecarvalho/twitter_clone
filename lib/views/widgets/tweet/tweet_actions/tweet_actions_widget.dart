@@ -32,12 +32,12 @@ class TweetActionsWidget extends StatelessWidget {
           onComment: () => _onTapComment(context),
         ),
         RetweetIconWidget(
-          isRetweeted: tweet.isRetweeted,
+          didIRetweet: tweet.didIRetweet,
           onRetweet: onRetweet,
           retweetCount: tweet.retweetCount,
         ),
         HeartIconWidget(
-          isHearted: tweet.isHearted,
+          didIHeartIt: tweet.didIHeartIt,
           heartCount: tweet.heartCount,
           onHeart: onHeart,
         ),

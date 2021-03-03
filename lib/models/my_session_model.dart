@@ -23,8 +23,8 @@ class MySessionModel extends ModelBase {
     return MySessionModel(
       profileId: data["id"],
       following: List<String>.from(data["following"]),
-      followingCount: data["followingCount"],
-      followersCount: data["followersCount"],
+      followingCount: data["followingCount"] ?? 0,
+      followersCount: data["followersCount"] ?? 0,
     );
   }
 
