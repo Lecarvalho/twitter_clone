@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/views/resources/colors.dart';
 
 import 'assets.dart';
 
@@ -121,5 +122,8 @@ class ProjectIcons {
         height: 40,
       );
 
-  static Icon get photoIcon => Icon(Icons.photo_camera_outlined);
+  static Icon get photoIcon => Icon(
+        Icons.photo_camera_outlined,
+        color: ProjectColors.black,
+      );
 }

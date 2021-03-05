@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
@@ -13,14 +13,13 @@ class PreloadPage extends StatefulWidget {
 class _PreloadPageState extends State<PreloadPage> {
   @override
   void didChangeDependencies() async {
-    var mySessionController = Di.instanceOf<MySessionController>(context);
+    var userController = Di.instanceOf<UserController>(context);
     var profileController = Di.instanceOf<ProfileController>(context);
 
-    await mySessionController.tryConnect();
+    await userController.tryAutoSigIn();
 
-    if (mySessionController.amILoggedIn) {
-      await profileController.getProfile(mySessionController.mySession.profileId);
-      mySessionController.setMyProfile(profileController.profile);
+    if (userController.amILoggedIn) {
+      await profileController.getMyProfile(userController.user.id);
       Navigator.of(context).pushReplacementNamed(Routes.home);
     } else {
       Navigator.of(context).pushReplacementNamed(Routes.login);

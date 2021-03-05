@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/di/di.dart';
@@ -19,17 +18,15 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   ProfileController _profileController;
   TweetController _tweetController;
-  MySessionController _mySessionController;
   bool _isPageReady = false;
 
   @override
   void didChangeDependencies() async {
     _profileController = Di.instanceOf<ProfileController>(context);
     _tweetController = Di.instanceOf<TweetController>(context);
-    _mySessionController = Di.instanceOf<MySessionController>(context);
 
     var profileId = ModalRoute.of(context).settings.arguments ??
-        _mySessionController.mySession.myProfile.id;
+        _profileController.myProfile.id;
 
     await _profileController.getProfile(profileId);
     await _tweetController.getProfileTweets(profileId);
@@ -44,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   OutlinedButtonWidget _editProfileButton() {
     return OutlinedButtonWidget(
       onPressed: () {
-        Navigator.of(context).pushNamed(Routes.edit_profile);
+        Navigator.of(context).pushNamed(Routes.create_edit_profile);
       },
       text: "Edit profile",
     );
@@ -54,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ButtonWidget(
       onPressed: () {
         setState(() {
-          _mySessionController.unfollow(_profileController.profile.id);
+          _profileController.unfollow(_profileController.profile.id);
         });
       },
       text: "Following",
@@ -65,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return OutlinedButtonWidget(
       onPressed: () {
         setState(() {
-          _mySessionController.follow(_profileController.profile.id);
+          _profileController.follow(_profileController.profile.id);
         });
       },
       text: "Follow",
@@ -73,11 +70,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   BaseButtonWidget _actionButton() {
-    var mySession = _mySessionController.mySession;
+    var myProfile = _profileController.myProfile;
 
-    return _profileController.profile.id == mySession.myProfile.id
+    return _profileController.profile.id == myProfile.id
         ? _editProfileButton()
-        : mySession.following.contains(_profileController.profile.id)
+        : myProfile.following.contains(_profileController.profile.id)
             ? _followingButton()
             : _followButton();
   }

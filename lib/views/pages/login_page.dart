@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
@@ -21,13 +21,13 @@ class _LoginPageState extends State<LoginPage> {
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
 
-  MySessionController _mySessionController;
+  UserController _userController;
   ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
-    _mySessionController = Di.instanceOf<MySessionController>(context);
-    _profileController = Di.instanceOf<ProfileController>(context);
+    _userController = Di.instanceOf(context);
+    _profileController = Di.instanceOf(context);
 
     super.didChangeDependencies();
   }
@@ -67,14 +67,13 @@ class _LoginPageState extends State<LoginPage> {
   void _onPressLogin(BuildContext context) async {
     _closeKeyboard();
 
-    var result = await _mySessionController.signInWithEmailPassword(
+    var result = await _userController.signInWithEmailPassword(
       _emailTextController.text,
       _passwordTextController.text,
     );
 
-    if (_mySessionController.amILoggedIn) {
-      await _profileController.getProfile(_mySessionController.mySession.profileId);
-      _mySessionController.setMyProfile(_profileController.profile);
+    if (_userController.amILoggedIn) {
+      await _profileController.getMyProfile(_userController.user.id);
       Navigator.of(context).pushNamed(Routes.home);
     } else {
       PopMessage.show(result, context);
@@ -82,14 +81,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onPressCreateAccount(BuildContext context) {
-    Navigator.of(context).pushNamed(Routes.create_profile);
+    Navigator.of(context).pushNamed(Routes.create_user);
   }
 
   void _onPressLoginWithGoogle() async {
-    var result = await _mySessionController.signInWithGoogle();
-    if (_mySessionController.amILoggedIn) {
-      await _profileController.getProfile(_mySessionController.mySession.profileId);
-      _mySessionController.setMyProfile(_profileController.profile);
+    var result = await _userController.signInWithGoogle();
+    if (_userController.amILoggedIn) {
+      await _profileController.getMyProfile(_userController.user.id);
       Navigator.of(context).pushReplacementNamed(Routes.home);
     } else {
       PopMessage.show(result, context);

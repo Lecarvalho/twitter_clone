@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/user_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
@@ -12,24 +15,36 @@ import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/multiline_textbox_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/textbox_widget.dart';
 
-class EditProfilePage extends StatefulWidget {
+class CreateEditProfilePage extends StatefulWidget {
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  _CreateEditProfilePageState createState() => _CreateEditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
   bool _isPageReady = false;
 
-  MySessionController _mySessionController;
-  final nameController = TextEditingController();
-  final bioController = TextEditingController();
+  UserController _userController;
+  ProfileController _profileController;
+
+  String _avatarLocalPath;
+
+  final _nameController = TextEditingController();
+  final _bioController = TextEditingController();
 
   @override
   void didChangeDependencies() async {
-    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _userController = Di.instanceOf(context);
+    _profileController = Di.instanceOf(context);
 
-    nameController.text = _mySessionController.mySession.myProfile.name;
-    bioController.text = _mySessionController.mySession.myProfile.bio;
+    await _profileController.getMyProfile(_userController.user.id);
+
+    if (_profileController.hasProfile) {
+      _nameController.text = _profileController.profile.name;
+      _bioController.text = _profileController.profile.bio;
+    }
+    else {
+      _nameController.text = _userController.user.name;
+    }
 
     setState(() {
       _isPageReady = true;
@@ -41,7 +56,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void _onPressSave(BuildContext context) async {
     _closeKeyboard(context);
 
-    var result = await _mySessionController.updateProfile(bioController.text);
+    String result;
+
+    if (_profileController.hasProfile) {
+      result = await _profileController.updateProfile(
+        _bioController.text,
+        _avatarLocalPath,
+      );
+    } else {
+      result = await _profileController.createProfile(
+        avatarLocalPath: _avatarLocalPath,
+        bio: _bioController.text,
+      );
+
+      if (result == "Success"){
+        await _profileController.getMyProfile(_userController.user.id);
+      }
+    }
+
     if (result == "Success") {
       Navigator.of(context).pushNamed(Routes.home);
     } else {
@@ -50,10 +82,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _onPressChangePhoto() async {
-    await _mySessionController.uploadAvatar(
-      _mySessionController.mySession.profileId,
-    );
-
+    _avatarLocalPath = await _profileController.selectAvatar();
     setState(() {});
   }
 
@@ -62,12 +91,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   ImageProvider get avatar {
-    var avatar = _mySessionController?.mySession?.myProfile?.avatar;
 
-    if (avatar?.isEmpty ?? true) {
-      return null;
-    } else
+    if (_avatarLocalPath?.isNotEmpty ?? false){
+      return FileImage(File(_avatarLocalPath));
+    }
+
+    var avatar = _profileController?.profile?.avatar;
+
+    if (avatar?.isNotEmpty ?? false){
       return NetworkImage(avatar);
+    }
+
+    return null;      
   }
 
   @override
@@ -88,18 +123,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 children: [
                   GestureDetector(
                     onTap: _onPressChangePhoto,
-                    child: CircleAvatar(
-                      child: ProjectIcons.photoIcon,
-                      radius: 40,
-                      backgroundColor: ProjectColors.grayBackground,
-                      backgroundImage: avatar,
+                    child: Opacity(
+                      opacity: .60,
+                      child: CircleAvatar(
+                        child: ProjectIcons.photoIcon,
+                        radius: 40,
+                        backgroundColor: ProjectColors.grayBackground,
+                        backgroundImage: avatar,
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
                   TextboxWidget(
                     textboxType: TextboxType.name,
                     maxLength: AppConfig.nameMaxCharacters,
-                    controller: nameController,
+                    controller: _nameController,
                     keyboardEnabled: false,
                     hintText: "Name",
                     labelText: "Name",
@@ -109,7 +147,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     maxLength: AppConfig.bioMaxCharacters,
                     hintText: "Bio",
                     labelText: "Bio",
-                    controller: bioController,
+                    controller: _bioController,
                     withUnderline: true,
                     autoFocus: false,
                   ),

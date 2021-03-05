@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/models/tweet_notification_model.dart';
@@ -14,13 +14,12 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationsPageState extends State<NotificationsPage> {
   TweetNotificationsController _tweetNotificationsController;
-  MySessionController _mySessionController;
+  ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
-    _tweetNotificationsController =
-        Di.instanceOf<TweetNotificationsController>(context);
-    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _tweetNotificationsController = Di.instanceOf(context);
+    _profileController = Di.instanceOf(context);
 
     super.didChangeDependencies();
   }
@@ -33,7 +32,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<TweetNotificationModel>>(
       future: _tweetNotificationsController.getMyTweetsNotifications(
-        _mySessionController.mySession.profileId,
+        _profileController.myProfile.id,
       ),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {

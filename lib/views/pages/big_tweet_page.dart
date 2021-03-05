@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/controllers/comments_controller.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
@@ -22,7 +22,7 @@ class BigTweetPage extends StatefulWidget {
 class _BigTweetPageState extends State<BigTweetPage> {
   TweetController _tweetController;
   CommentController _commentController;
-  MySessionController _mySessionController;
+  ProfileController _profileController;
 
   TweetModel _tweet;
   String _tweetId;
@@ -31,9 +31,9 @@ class _BigTweetPageState extends State<BigTweetPage> {
   @override
   void didChangeDependencies() async {
     _tweetId = ModalRoute.of(context).settings.arguments;
-    _tweetController = Di.instanceOf<TweetController>(context);
-    _commentController = Di.instanceOf<CommentController>(context);
-    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _tweetController = Di.instanceOf(context);
+    _commentController = Di.instanceOf(context);
+    _profileController = Di.instanceOf(context);
 
     await _tweetController.getTweet(_tweetId);
     await _commentController.getComments(_tweetId);
@@ -50,14 +50,14 @@ class _BigTweetPageState extends State<BigTweetPage> {
   void _onPressHeart(TweetModel tweet) async {
     await _tweetController.toggleLikeTweet(
       tweet,
-      _mySessionController.mySession.profileId,
+      _profileController.myProfile.id,
     );
 
     setState(() {});
   }
 
   void _onPressRetweet(TweetModel tweet) {
-    if (_tweet.canRetweet(_mySessionController.mySession.profileId)) {
+    if (_tweet.canRetweet(_profileController.myProfile.id)) {
       showModalBottomSheet(
         context: context,
         shape: RoundedBottomSheet(),
@@ -65,7 +65,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
           onConfirmRetweet: () async {
             await _tweetController.retweet(
               tweet,
-              _mySessionController.mySession.profileId,
+              _profileController.myProfile.id,
             );
             setState(() {});
             Navigator.of(context).pop();

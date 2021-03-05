@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
 import 'package:twitter_clone/controllers/comments_controller.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
@@ -14,7 +14,7 @@ class ReplyPage extends StatefulWidget {
 }
 
 class _ReplyPageState extends State<ReplyPage> {
-  MySessionController _mySessionController;
+  ProfileController _profileController;
   CommentController _commentController;
   TweetModel _commentingTweet;
 
@@ -24,8 +24,8 @@ class _ReplyPageState extends State<ReplyPage> {
 
   @override
   void didChangeDependencies() {
-    _mySessionController = Di.instanceOf<MySessionController>(context);
-    _commentController = Di.instanceOf<CommentController>(context);
+    _profileController = Di.instanceOf(context);
+    _commentController = Di.instanceOf(context);
     _commentingTweet = ModalRoute.of(context).settings.arguments;
 
     _textController.addListener(() {
@@ -47,7 +47,7 @@ class _ReplyPageState extends State<ReplyPage> {
     await _commentController.commentTweet(
       tweetId: _commentingTweet.id,
       commentText: _textController.text,
-      myProfileId: _mySessionController.mySession.myProfile.id,
+      myProfileId: _profileController.myProfile.id,
     );
 
     Navigator.of(context).pushReplacementNamed(
@@ -71,8 +71,8 @@ class _ReplyPageState extends State<ReplyPage> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetReplyToWidget(
-          avatar: _mySessionController.mySession.myProfile.avatar,
-          myProfileId: _mySessionController.mySession.myProfile.id,
+          avatar: _profileController.myProfile.avatar,
+          myProfileId: _profileController.myProfile.id,
           controller: _textController,
           replyingToNickname: _commentingTweet.profile.nickname,
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
@@ -20,12 +20,13 @@ class TweetListWidget extends StatefulWidget {
 
 class _TweetListWidgetState extends State<TweetListWidget> {
   TweetController _tweetController;
-  MySessionController _mySessionController;
+  
+  ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
-    _tweetController = Di.instanceOf<TweetController>(context);
-    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _tweetController = Di.instanceOf(context);
+    _profileController = Di.instanceOf(context);
 
     super.didChangeDependencies();
   }
@@ -33,13 +34,13 @@ class _TweetListWidgetState extends State<TweetListWidget> {
   void _onPressHeart(TweetModel tweet) async {
     await _tweetController.toggleLikeTweet(
       tweet,
-      _mySessionController.mySession.profileId,
+      _profileController.myProfile.id,
     );
     setState(() {});
   }
 
   void _onPressRetweet(TweetModel tweet) async {
-    if (tweet.canRetweet(_mySessionController.mySession.profileId)) {
+    if (tweet.canRetweet(_profileController.myProfile.id)) {
       showModalBottomSheet(
         context: context,
         shape: RoundedBottomSheet(),
@@ -47,7 +48,7 @@ class _TweetListWidgetState extends State<TweetListWidget> {
           onConfirmRetweet: () async {
             await _tweetController.retweet(
               tweet,
-              _mySessionController.mySession.profileId,
+              _profileController.myProfile.id,
             );
             setState(() {});
             Navigator.of(context).pop();

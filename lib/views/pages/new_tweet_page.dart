@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
@@ -13,14 +13,14 @@ class NewTweetPage extends StatefulWidget {
 }
 
 class _NewTweetPageState extends State<NewTweetPage> {
-  MySessionController _mySessionController;
+  ProfileController _profileController;
   TweetController _tweetController;
   final _textController = TextEditingController();
 
   @override
   void didChangeDependencies() {
-    _mySessionController = Di.instanceOf<MySessionController>(context);
-    _tweetController = Di.instanceOf<TweetController>(context);
+    _profileController = Di.instanceOf(context);
+    _tweetController = Di.instanceOf(context);
 
     _textController.addListener(() {
       if (_hasText && _onPressedCreateTweet == null) {
@@ -41,7 +41,7 @@ class _NewTweetPageState extends State<NewTweetPage> {
     if (_textController.text?.isNotEmpty ?? true) {
       await _tweetController.createTweet(
         _textController.text,
-        _mySessionController.mySession.myProfile.id,
+        _profileController.myProfile.id,
       );
 
       Navigator.of(context).pushReplacementNamed(Routes.home);
@@ -67,8 +67,8 @@ class _NewTweetPageState extends State<NewTweetPage> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetCreateNewWidget(
-          avatar: _mySessionController.mySession.myProfile.avatar,
-          myProfileId: _mySessionController.mySession.myProfile.id,
+          avatar: _profileController.myProfile.avatar,
+          myProfileId: _profileController.myProfile.id,
           controller: _textController,
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/pages/notifications_page.dart';
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _pagesSimulation;
 
   TweetController _tweetController;
-  MySessionController _mySessionController;
+  ProfileController _profileController;
 
   bool _isPageReady = false;
 
@@ -42,10 +42,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void didChangeDependencies() async {
-    _tweetController = Di.instanceOf<TweetController>(context);
-    _mySessionController = Di.instanceOf<MySessionController>(context);
+    _tweetController = Di.instanceOf(context);
+    _profileController = Di.instanceOf(context);
 
-    await _tweetController.getTweets(_mySessionController.mySession.profileId);
+    await _tweetController.getTweets(_profileController.myProfile.id);
 
     setState(() {
       _isPageReady = true;

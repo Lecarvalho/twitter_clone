@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/config/routes.dart';
-import 'package:twitter_clone/controllers/my_session_controller.dart';
-import 'package:twitter_clone/controllers/profile_controller.dart';
+import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/di/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
@@ -11,24 +10,22 @@ import 'package:twitter_clone/views/widgets/button/button_widget.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/textbox_widget.dart';
 
-class CreateProfilePage extends StatefulWidget {
+class CreateUserPage extends StatefulWidget {
   @override
-  _CreateProfilePageState createState() => _CreateProfilePageState();
+  _CreateUserPageState createState() => _CreateUserPageState();
 }
 
-class _CreateProfilePageState extends State<CreateProfilePage> {
+class _CreateUserPageState extends State<CreateUserPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _nicknameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  MySessionController _mySessionController;
-  ProfileController _profileController;
+  UserController _userController;
 
   @override
   void didChangeDependencies() {
-    _mySessionController = Di.instanceOf<MySessionController>(context);
-    _profileController = Di.instanceOf<ProfileController>(context);
+    _userController = Di.instanceOf(context);
     super.didChangeDependencies();
   }
 
@@ -39,29 +36,28 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   void _onPressNext(BuildContext context) async {
     _closeKeyboard();
 
-    var result = await _mySessionController.createUserProfile(
+    var result = await _userController.createUserWithEmailPassword(
       email: _emailController.text,
       name: _nameController.text,
       nickname: _nicknameController.text,
       password: _passwordController.text,
     );
 
-    if (result.success) {
-      var result = await _mySessionController.signInWithEmailPassword(
+    if (result == "Success") {
+      var result = await _userController.signInWithEmailPassword(
         _emailController.text,
         _passwordController.text,
       );
 
-      if (_mySessionController.amILoggedIn) {
-        await _profileController.getProfile(_mySessionController.mySession.profileId);
-        _mySessionController.setMyProfile(_profileController.profile);
-        
-        Navigator.of(context).pushReplacementNamed(Routes.edit_profile);
+      if (_userController.amILoggedIn) {
+        PopMessage.show("We are almost done...", context);
+
+        Navigator.of(context).pushReplacementNamed(Routes.create_edit_profile);
       } else {
         PopMessage.show(result, context);
       }
     } else {
-      PopMessage.show(result.message, context);
+      PopMessage.show(result, context);
     }
   }
 
