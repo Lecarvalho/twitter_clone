@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/views/pages/preload_page.dart';
 import 'package:twitter_clone/views/pages/reply_page.dart';
 
 import 'pages/big_tweet_page.dart';
@@ -21,6 +22,7 @@ class Routes {
   static const String reply = "/reply";
   static const String create_user = "/create_user";
   static const String create_edit_profile = "/create_edit_profile";
+  static const String preload = "/preload";
 
   static final routes = <String, WidgetBuilder>{
     home: (BuildContext context) => HomePage(),
@@ -32,5 +34,6 @@ class Routes {
     reply: (BuildContext context) => ReplyPage(),
     create_user: (BuildContext context) => CreateUserPage(),
     create_edit_profile: (BuildContext context) => CreateEditProfilePage(),
+    preload: (BuildContext context) => PreloadPage(),
   };
 }

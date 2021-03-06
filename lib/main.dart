@@ -1,6 +1,5 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/views/pages/preload_page.dart';
 
 import 'config/app_config.dart';
 import 'views/graphical.dart';
@@ -10,15 +9,14 @@ import 'services/init_service.dart';
 import 'views/resources/colors.dart';
 import 'views/resources/styles.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Graphical.setSystemUIOverlayStyle();
-  Graphical.setPreferredOrientations();
+  await Graphical.setPreferredOrientations();
 
-  InitService.init().then(
-    (value) => runApp(Di.init(MyApp())),
-  );
+  await InitService.init();
+  runApp(Di.init(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +39,7 @@ class MyApp extends StatelessWidget {
         ),
         typography: Typography.material2018(),
       ),
-      home: PreloadPage(),
+      initialRoute: Routes.preload
     );
   }
 }
