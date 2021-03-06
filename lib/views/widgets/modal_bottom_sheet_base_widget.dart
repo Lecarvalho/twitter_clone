@@ -7,7 +7,7 @@ import 'button/button_expanded_widget.dart';
 class ModalBottomSheetWidget extends StatelessWidget {
   final List<ActionBottomSheetWidget> actions;
 
-  ModalBottomSheetWidget({@required this.actions});
+  ModalBottomSheetWidget({required this.actions});
 
   Widget _buildTopLine() {
     return Container(

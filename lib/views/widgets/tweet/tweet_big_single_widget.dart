@@ -7,7 +7,7 @@ import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_horiz
 class TweetBigSingleWidget extends StatelessWidget {
   final TweetModel tweet;
 
-  TweetBigSingleWidget({@required this.tweet});
+  TweetBigSingleWidget({required this.tweet});
 
   @override
   Widget build(BuildContext context) {

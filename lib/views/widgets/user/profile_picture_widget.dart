@@ -5,12 +5,12 @@ class ProfilePictureWidget extends StatelessWidget {
   final String avatar;
   final String profileId;
   final ProfilePicSize profilePicSize;
-  final Function onTap;
+  final Function()? onTap;
 
   ProfilePictureWidget({
-    @required this.avatar,
-    @required this.profileId,
-    @required this.profilePicSize,
+    required this.avatar,
+    required this.profileId,
+    required this.profilePicSize,
     this.onTap,
   });
 

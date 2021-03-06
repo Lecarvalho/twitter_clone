@@ -4,12 +4,12 @@ import 'package:twitter_clone/views/resources/styles.dart';
 abstract class ReactIconWidget extends StatelessWidget {
   final int reactCount;
   final bool isReacted;
-  final Function() onTap;
+  final Function()? onTap;
 
   ReactIconWidget({
-    @required this.isReacted,
-    @required this.reactCount,
-    @required this.onTap,
+    required this.isReacted,
+    required this.reactCount,
+    this.onTap,
   });
 
   Widget get icon => isReacted ? reactedIcon : defaultIcon;

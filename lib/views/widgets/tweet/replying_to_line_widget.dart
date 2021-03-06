@@ -3,7 +3,7 @@ import 'package:twitter_clone/views/resources/styles.dart';
 
 class ReplyingToLineWidget extends StatelessWidget {
   final String profileNickname;
-  ReplyingToLineWidget({@required this.profileNickname});
+  ReplyingToLineWidget({required this.profileNickname});
 
   @override
   Widget build(BuildContext context) {

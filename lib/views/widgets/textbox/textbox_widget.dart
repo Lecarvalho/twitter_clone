@@ -5,16 +5,16 @@ import 'package:twitter_clone/views/resources/colors.dart';
 class TextboxWidget extends StatelessWidget {
   final TextboxType textboxType;
   final int maxLength;
-  final String hintText;
-  final String labelText;
+  final String? hintText;
+  final String? labelText;
   final bool showMaxLength;
   final TextEditingController controller;
   final bool keyboardEnabled;
 
   TextboxWidget({
-    @required this.textboxType,
-    @required this.maxLength,
-    @required this.controller,
+    required this.textboxType,
+    required this.maxLength,
+    required this.controller,
     this.labelText,
     this.hintText,
     this.showMaxLength = false,

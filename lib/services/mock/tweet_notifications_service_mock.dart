@@ -5,7 +5,7 @@ import 'mock_tools.dart';
 
 class TweetNotificationsServiceMock implements TweetNotificationsServiceBase {
   @override
-  Future<List<TweetNotificationModel>> getMyTweetsNotifications(String myProfileId) async {
+  Future<List<TweetNotificationModel>?> getMyTweetsNotifications(String myProfileId) async {
 
     await MockTools.simulateQuickRequestDelay();
 

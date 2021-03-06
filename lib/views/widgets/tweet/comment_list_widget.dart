@@ -9,8 +9,8 @@ class CommentListWidget extends StatelessWidget {
   final String replyingToNickname;
 
   CommentListWidget({
-    @required this.comments,
-    @required this.replyingToNickname,
+    required this.comments,
+    required this.replyingToNickname,
   });
 
   @override

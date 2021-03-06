@@ -5,12 +5,12 @@ import 'package:twitter_clone/views/resources/styles.dart';
 import 'base_button_widget.dart';
 
 class ButtonWidget extends BaseButtonWidget {
-  final Function() onPressed;
+  final Function()? onPressed;
   final String text;
 
   ButtonWidget({
-    @required this.onPressed,
-    @required this.text,
+    this.onPressed,
+    required this.text,
   }) : super(
           onPressed: onPressed,
           height: 30,

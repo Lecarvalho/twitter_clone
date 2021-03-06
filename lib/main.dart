@@ -1,10 +1,11 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/pages/preload_page.dart';
 
 import 'config/app_config.dart';
-import 'config/graphical.dart';
-import 'config/routes.dart';
-import 'di/di.dart';
+import 'views/graphical.dart';
+import 'views/routes.dart';
+import 'config/di.dart';
 import 'services/init_service.dart';
 import 'views/resources/colors.dart';
 import 'views/resources/styles.dart';

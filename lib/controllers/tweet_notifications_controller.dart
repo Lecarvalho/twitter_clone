@@ -1,20 +1,19 @@
-import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/models/tweet_notification_model.dart';
 import 'package:twitter_clone/services/tweet_notifications_service_base.dart';
 
 class TweetNotificationsController
     extends ControllerBase<TweetNotificationsServiceBase> {
-  TweetNotificationsController({@required service}) : super(service: service);
+  TweetNotificationsController({required service}) : super(service: service);
 
-  Future<List<TweetNotificationModel>> getMyTweetsNotifications(
+  Future<List<TweetNotificationModel>>? getMyTweetsNotifications(
       String myProfileId) async {
     try {
-      return await service.getMyTweetsNotifications(myProfileId);
+      return await service.getMyTweetsNotifications(myProfileId) ?? List.empty();
     } catch (e) {
-      print("Error on getMyTweetsNotifications: " + e);
+      print("Error on getMyTweetsNotifications: " + e.toString());
     }
 
-    return null;
+    return List.empty();
   }
 }

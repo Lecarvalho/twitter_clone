@@ -11,10 +11,10 @@ class WriteTweetWidget extends StatelessWidget {
   final String hintText;
 
   WriteTweetWidget({
-    @required this.avatar,
-    @required this.myProfileId,
-    @required this.controller,
-    @required this.hintText,
+    required this.avatar,
+    required this.myProfileId,
+    required this.controller,
+    required this.hintText,
   });
 
   @override

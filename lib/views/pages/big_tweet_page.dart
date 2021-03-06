@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/controllers/comments_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/rounded_bottom_sheet.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
@@ -20,17 +20,17 @@ class BigTweetPage extends StatefulWidget {
 }
 
 class _BigTweetPageState extends State<BigTweetPage> {
-  TweetController _tweetController;
-  CommentController _commentController;
-  ProfileController _profileController;
+  late TweetController _tweetController;
+  late CommentController _commentController;
+  late ProfileController _profileController;
 
-  TweetModel _tweet;
-  String _tweetId;
+  late TweetModel _tweet;
+  late String _tweetId;
   bool _isPageReady = false;
 
   @override
   void didChangeDependencies() async {
-    _tweetId = ModalRoute.of(context).settings.arguments;
+    _tweetId = ModalRoute.of(context)!.settings.arguments!.toString();
     _tweetController = Di.instanceOf(context);
     _commentController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
@@ -38,7 +38,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
     await _tweetController.getTweet(_tweetId);
     await _commentController.getComments(_tweetId);
 
-    _tweet = _tweetController.bigTweet;
+    _tweet = _tweetController.bigTweet!;
 
     setState(() {
       _isPageReady = true;
@@ -50,14 +50,14 @@ class _BigTweetPageState extends State<BigTweetPage> {
   void _onPressHeart(TweetModel tweet) async {
     await _tweetController.toggleLikeTweet(
       tweet,
-      _profileController.myProfile.id,
+      _profileController.myProfile!.id,
     );
 
     setState(() {});
   }
 
   void _onPressRetweet(TweetModel tweet) {
-    if (_tweet.canRetweet(_profileController.myProfile.id)) {
+    if (_tweet.canRetweet(_profileController.myProfile!.id)) {
       showModalBottomSheet(
         context: context,
         shape: RoundedBottomSheet(),
@@ -65,7 +65,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
           onConfirmRetweet: () async {
             await _tweetController.retweet(
               tweet,
-              _profileController.myProfile.id,
+              _profileController.myProfile!.id,
             );
             setState(() {});
             Navigator.of(context).pop();
@@ -93,7 +93,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
                   ),
                   DividerWidget(),
                   CommentListWidget(
-                    comments: _commentController.comments,
+                    comments: _commentController.comments!,
                     replyingToNickname: _tweet.profile.nickname,
                   )
                 ],

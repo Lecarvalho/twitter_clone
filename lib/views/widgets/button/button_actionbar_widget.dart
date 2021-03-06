@@ -4,12 +4,12 @@ import 'package:twitter_clone/views/resources/styles.dart';
 
 import 'base_button_widget.dart';
 
-class ButtonActionBar extends StatelessWidget {
-  final Function() onPressed;
+class ButtonActionBarWidget extends StatelessWidget {
+  final Function()? onPressed;
   final String text;
-  ButtonActionBar({
+  ButtonActionBarWidget({
     this.onPressed,
-    this.text,
+    required this.text,
   });
 
   @override
@@ -20,6 +20,7 @@ class ButtonActionBar extends StatelessWidget {
         onPressed: onPressed,
         text: text,
         color: ProjectColors.blueActive,
+        disabledColor: ProjectColors.blueInactive,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

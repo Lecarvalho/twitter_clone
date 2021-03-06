@@ -4,12 +4,12 @@ import 'package:twitter_clone/views/resources/colors.dart';
 class ActionBottomSheetWidget extends StatelessWidget {
   final Widget icon;
   final String text;
-  final Function onPressed;
+  final Function() onPressed;
 
   ActionBottomSheetWidget({
-    @required this.icon,
-    @required this.text,
-    @required this.onPressed,
+    required this.icon,
+    required this.text,
+    required this.onPressed,
   });
 
   @override

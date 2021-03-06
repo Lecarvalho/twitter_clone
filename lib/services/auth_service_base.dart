@@ -4,10 +4,10 @@ import 'service_base.dart';
 
 abstract class AuthServiceBase extends ServiceBase {
   Future<AuthResponse> createUserWithEmailPassword({
-    String email,
-    String password,
-    String name,
-    String nickname,
+    required String email,
+    required String password,
+    required String name,
+    required String nickname,
   });
   Future<AuthResponse> createOrSignInWithGoogle();
   Future<AuthResponse> signInWithEmailPassword(String email, String password);
@@ -17,12 +17,12 @@ abstract class AuthServiceBase extends ServiceBase {
 
 class AuthResponse {
   AuthResponse({
-    this.responseType,
+    required this.responseType,
     this.userAuth,
   });
 
   AuthResponseType responseType;
-  UserModel userAuth;
+  UserModel? userAuth;
 }
 
 enum AuthResponseType {

@@ -8,9 +8,9 @@ class TweetCreateNewWidget extends StatelessWidget {
   final String myProfileId;
 
   TweetCreateNewWidget({
-    @required this.avatar,
-    @required this.myProfileId,
-    @required this.controller,
+    required this.avatar,
+    required this.myProfileId,
+    required this.controller,
   });
 
   @override

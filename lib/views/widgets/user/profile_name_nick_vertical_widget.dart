@@ -9,8 +9,8 @@ class ProfileNameNickVerticalWidget extends StatelessWidget {
   final String profileNickname;
 
   ProfileNameNickVerticalWidget({
-    @required this.profileName,
-    @required this.profileNickname,
+    required this.profileName,
+    required this.profileNickname,
   });
 
   @override

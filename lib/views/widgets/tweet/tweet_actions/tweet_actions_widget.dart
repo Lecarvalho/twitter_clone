@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 
 import 'comment_icon_widget.dart';
@@ -9,11 +9,11 @@ import 'retweet_icon_widget.dart';
 class TweetActionsWidget extends StatelessWidget {
   final TweetModel tweet;
   final Function() onHeart;
-  final Function() onRetweet;
+  final Function()? onRetweet;
 
   TweetActionsWidget({
-    @required this.tweet,
-    @required this.onHeart,
+    required this.tweet,
+    required this.onHeart,
     this.onRetweet,
   });
 

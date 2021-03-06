@@ -4,17 +4,17 @@ import 'tweet_activity_model.dart';
 
 class TweetModel extends AsTweetModelBase {
   TweetModel({
-    String id,
-    String profileId,
-    String text,
-    DateTime creationDate,
-    ProfileModel profile,
-    this.likeCount,
-    this.commentCount,
-    this.retweetCount,
-    this.didILike,
-    this.didIRetweet,
-    this.tweetActivity,
+    required String id,
+    required String profileId,
+    required String text,
+    required DateTime creationDate,
+    required ProfileModel profile,
+    required this.likeCount,
+    required this.commentCount,
+    required this.retweetCount,
+    required this.didILike,
+    required this.didIRetweet,
+    required this.tweetActivity,
   }) : super(
           id: id,
           profileId: profileId,
@@ -28,7 +28,7 @@ class TweetModel extends AsTweetModelBase {
   int retweetCount;
   bool didILike;
   bool didIRetweet;
-  TweetActivityModel tweetActivity;
+  TweetActivityModel? tweetActivity;
 
   bool canRetweet(String myProfileId) =>
       !didIRetweet && profileId != myProfileId;
@@ -48,18 +48,6 @@ class TweetModel extends AsTweetModelBase {
       tweetActivity: data["activity"] != null
           ? TweetActivityModel.fromMap(data["activity"])
           : null,
-    );
-  }
-
-  factory TweetModel.toMap({
-    String profileId,
-    String text,
-    DateTime creationDate,
-  }) {
-    return TweetModel(
-      profileId: profileId,
-      text: text,
-      creationDate: creationDate,
     );
   }
 }

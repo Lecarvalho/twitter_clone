@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
@@ -11,11 +11,11 @@ import 'tweet_activity_widget.dart';
 class TweetSimpleWidget extends StatelessWidget {
   final TweetModel tweet;
   final Function() onHeart;
-  final Function() onRetweet;
+  final Function()? onRetweet;
 
   TweetSimpleWidget({
-    @required this.tweet,
-    this.onHeart,
+    required this.tweet,
+    required this.onHeart,
     this.onRetweet,
   });
 

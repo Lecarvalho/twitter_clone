@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/project_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
@@ -21,8 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
 
-  UserController _userController;
-  ProfileController _profileController;
+  late UserController _userController;
+  late ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (_userController.amILoggedIn) {
-      await _profileController.getMyProfile(_userController.user.id);
+      await _profileController.getMyProfile(_userController.user!.id);
       Navigator.of(context).pushNamed(Routes.home);
     } else {
       PopMessage.show(result, context);
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
   void _onPressLoginWithGoogle() async {
     var result = await _userController.signInWithGoogle();
     if (_userController.amILoggedIn) {
-      await _profileController.getMyProfile(_userController.user.id);
+      await _profileController.getMyProfile(_userController.user!.id);
       Navigator.of(context).pushReplacementNamed(Routes.home);
     } else {
       PopMessage.show(result, context);

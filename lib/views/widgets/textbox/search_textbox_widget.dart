@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class SearchTextboxWidget extends StatelessWidget {
   final TextEditingController controller;
-  SearchTextboxWidget({@required this.controller});
+  SearchTextboxWidget({required this.controller});
 
   @override
   Widget build(BuildContext context) {

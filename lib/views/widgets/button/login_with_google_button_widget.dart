@@ -5,12 +5,12 @@ import 'package:twitter_clone/views/resources/styles.dart';
 
 class LoginWithGoogleButtonWidget extends StatelessWidget {
   final Function() onPressed;
-  LoginWithGoogleButtonWidget({@required this.onPressed});
+  LoginWithGoogleButtonWidget({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: ProjectColors.white,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(primary: ProjectColors.white),
       onPressed: onPressed,
       child: Container(
         height: 60,

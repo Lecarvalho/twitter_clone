@@ -6,9 +6,9 @@ import 'react_icon_widget.dart';
 
 class HeartIconWidget extends ReactIconWidget {
   HeartIconWidget({
-    @required bool didILike,
-    @required int likeCount,
-    @required Function() onHeart,
+    required bool didILike,
+    required int likeCount,
+    required Function() onHeart,
   }) : super(
           isReacted: didILike,
           reactCount: likeCount,

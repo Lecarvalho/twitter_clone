@@ -5,7 +5,7 @@ import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_horiz
 
 class SearchResultWidget extends StatelessWidget {
   final ProfileModel profile;
-  SearchResultWidget({@required this.profile});
+  SearchResultWidget({required this.profile});
 
   @override
   Widget build(BuildContext context) {

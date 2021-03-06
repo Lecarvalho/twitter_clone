@@ -6,8 +6,8 @@ class FollowingFollowersCountWidget extends StatelessWidget {
   final int totalFollowers;
 
   FollowingFollowersCountWidget({
-    @required this.totalFollowers,
-    @required this.totalFollowing,
+    required this.totalFollowers,
+    required this.totalFollowing,
   });
 
   @override

@@ -6,8 +6,8 @@ import '../modal_bottom_sheet_base_widget.dart';
 
 class ConfirmRetweet extends StatelessWidget {
 
-  final Function onConfirmRetweet;
-  ConfirmRetweet({this.onConfirmRetweet});
+  final Function() onConfirmRetweet;
+  ConfirmRetweet({required this.onConfirmRetweet});
 
   @override
   Widget build(BuildContext context) {

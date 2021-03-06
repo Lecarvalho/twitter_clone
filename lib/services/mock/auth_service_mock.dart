@@ -5,10 +5,10 @@ import 'package:twitter_clone/services/mock/mock_tools.dart';
 class AuthServiceMock implements AuthServiceBase {
   @override
   Future<AuthResponse> createUserWithEmailPassword({
-    String email,
-    String password,
-    String name,
-    String nickname,
+    required String email,
+    required String password,
+    required String name,
+    required String nickname,
   }) async {
     print("Create user auth");
     print("name $name");
@@ -23,10 +23,12 @@ class AuthServiceMock implements AuthServiceBase {
 
     await MockTools.simulateRequestDelay();
 
-    return AuthResponse(
-      userAuth: myUserAuth,
+    var authResponse = AuthResponse(
       responseType: AuthResponseType.success,
+      userAuth: myUserAuth
     );
+
+    return authResponse;
   }
 
   @override
@@ -40,16 +42,12 @@ class AuthServiceMock implements AuthServiceBase {
 
     await MockTools.simulateRequestDelay();
 
-    if (myUserAuth != null) {
-      return AuthResponse(
-        userAuth: myUserAuth,
-        responseType: AuthResponseType.success,
-      );
-    } else {
-      return AuthResponse(
-        responseType: AuthResponseType.user_disabled,
-      );
-    }
+    var authResponse = AuthResponse(
+      responseType: AuthResponseType.success,
+      userAuth: myUserAuth
+    );
+
+    return authResponse;
   }
 
   @override
@@ -63,18 +61,12 @@ class AuthServiceMock implements AuthServiceBase {
 
     await MockTools.simulateQuickRequestDelay();
 
-    myUserAuth = null;
+    var authResponse = AuthResponse(
+      responseType: AuthResponseType.success,
+      userAuth: myUserAuth,
+    );
 
-    if (myUserAuth != null) {
-      return AuthResponse(
-        userAuth: myUserAuth,
-        responseType: AuthResponseType.success,
-      );
-    } else {
-      return AuthResponse(
-        responseType: AuthResponseType.general_error,
-      );
-    }
+    return authResponse;
   }
 
   @override
@@ -93,16 +85,12 @@ class AuthServiceMock implements AuthServiceBase {
 
     await MockTools.simulateQuickRequestDelay();
 
-    if (myUserAuth != null) {
-      return AuthResponse(
-        userAuth: myUserAuth,
-        responseType: AuthResponseType.success,
-      );
-    } else {
-      return AuthResponse(
-        responseType: AuthResponseType.general_error,
-      );
-    }
+    var authResponse = AuthResponse(
+      responseType: AuthResponseType.success,
+      userAuth: myUserAuth,
+    );
+
+    return authResponse;
   }
 
   @override

@@ -6,9 +6,9 @@ import 'react_icon_widget.dart';
 
 class RetweetIconWidget extends ReactIconWidget {
   RetweetIconWidget({
-    @required bool didIRetweet,
-    @required int retweetCount,
-    @required Function() onRetweet,
+    required bool didIRetweet,
+    required int retweetCount,
+    Function()? onRetweet,
   }) : super(
           isReacted: didIRetweet,
           reactCount: retweetCount,

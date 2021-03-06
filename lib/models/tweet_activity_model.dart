@@ -6,8 +6,8 @@ class TweetActivityModel extends ModelBase {
   TweetAction tweetAction;
 
   TweetActivityModel({
-    this.profileName,
-    this.tweetAction,
+    required this.profileName,
+    required this.tweetAction,
   });
 
   factory TweetActivityModel.fromMap(Map<String, dynamic> data){

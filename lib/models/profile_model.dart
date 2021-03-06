@@ -4,66 +4,86 @@ import 'user_model.dart';
 
 class ProfileModel extends UserModel {
   ProfileModel({
-    this.avatar,
-    this.bio,
-    this.inscriptionDate,
-    this.followersCount,
-    this.following,
-    String id,
-    String name,
-    String email,
-    String nickname,
+    required String name,
+    String? email,
+    required String nickname,
   }) : super(
-    id: id,
-    name: name,
-    email: email,
-    nickname: nickname,
-  );
+          name: name,
+          email: email,
+          nickname: nickname,
+        );
 
-  String avatar;
-  String bio;
-  DateTime inscriptionDate;
-  List<String> following;
+  late String id;
+  late String avatar;
+  late String bio;
+  late DateTime inscriptionDate;
+  late List<String> following;
+  late int followersCount;
+
   int get followingCount => following.length;
-  int followersCount;
 
   String get inscriptionDateMonthYear =>
       DateFormat.MMMM().add_y().format(inscriptionDate);
 
   factory ProfileModel.fromMapSingleTweet(Map<String, dynamic> data) {
-    return ProfileModel(
-      id: data["id"],
-      avatar: data["avatar"],
+    var profile = ProfileModel(
       name: data["name"],
       nickname: data["nickname"],
     );
+
+    profile.avatar = data["avatar"];
+    profile.id = data["id"];
+
+    return profile;
   }
 
   factory ProfileModel.fromMapGetProfile(Map<String, dynamic> data) {
-    return ProfileModel(
-      id: data["id"],
-      avatar: data["avatar"],
+    var profile = ProfileModel(
       name: data["name"],
       nickname: data["nickname"],
-      bio: data["bio"],
-      inscriptionDate: DateTime.parse(data["inscriptionDate"]),
-      followersCount: data["followersCount"] ?? 0,
-      following:
-          data["following"] != null ? List.from(data["following"]) : List(),
     );
+
+    profile.id = data["id"];
+    profile.avatar = data["avatar"];
+    profile.bio = data["bio"];
+    profile.inscriptionDate = DateTime.parse(data["inscriptionDate"]);
+    profile.followersCount = data["followersCount"] ?? 0;
+    profile.following =
+        data["following"] != null ? List.from(data["following"]) : List.empty();
+
+    return profile;
   }
 
-  factory ProfileModel.toCreateProfile({
-    String name,
-    String nickname,
-    String bio,
-    String avatar,
-  }) {
-    return ProfileModel(
-      name: name,
-      nickname: nickname,
-      bio: bio,
-      avatar: avatar,
-    );
-  }
+  // factory ProfileModel.toCreateProfile({
+  //   required String name,
+  //   required String nickname,
+  //   required String bio,
+  //   required String avatar,
+  //   required DateTime inscriptionDate,
+  // }) {
+  //   var profile = ProfileModel(
+  //     name: name,
+  //     nickname: nickname,
+  //   );
+
+  //   profile.bio = bio;
+  //   profile.avatar = avatar;
+  //   profile.inscriptionDate = inscriptionDate;
+
+  //   return profile;
+  // }
+
+  // factory ProfileModel.toCreateProfile({
+  //   String name,
+  //   String nickname,
+  //   String bio,
+  //   String avatar,
+  // }) {
+  //   return ProfileModel(
+  //     name: name,
+  //     nickname: nickname,
+  //     bio: bio,
+  //     avatar: avatar,
+  //   );
+  // }
 }

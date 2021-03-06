@@ -5,8 +5,8 @@ class ProfileNicknameWidget extends StatelessWidget {
   final TextStyle textStyle;
 
   ProfileNicknameWidget({
-    @required this.profileNickname,
-    @required this.textStyle,
+    required this.profileNickname,
+    required this.textStyle,
   });
 
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/pages/notifications_page.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/resources/project_icons.dart';
@@ -21,10 +21,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  List<Widget> _pagesSimulation;
+  late List<Widget> _pagesSimulation;
 
-  TweetController _tweetController;
-  ProfileController _profileController;
+  late TweetController _tweetController;
+  late ProfileController _profileController;
 
   bool _isPageReady = false;
 
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     _tweetController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
-    await _tweetController.getTweets(_profileController.myProfile.id);
+    await _tweetController.getTweets(_profileController.myProfile!.id);
 
     setState(() {
       _isPageReady = true;

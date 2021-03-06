@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/controllers/search_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
@@ -15,7 +15,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _searchTextController = TextEditingController();
-  SearchController _searchController;
+  late SearchController _searchController;
 
   @override
   void didChangeDependencies() {
@@ -26,8 +26,8 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _handleTextSearch() {
-    _searchTextController.addListener(() {
-      _searchController.searchProfiles(_searchTextController.text);
+    _searchTextController.addListener(() async {
+      await _searchController.searchProfiles(_searchTextController.text);
       setState(() {});
     });
   }
@@ -41,10 +41,10 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildResult() {
     return ListView.separated(
       itemBuilder: (_, index) => SearchResultWidget(
-        profile: _searchController.profilesFound[index],
+        profile: _searchController.profilesFound![index],
       ),
       separatorBuilder: (_, __) => DividerWidget(),
-      itemCount: _searchController.profilesFound.length,
+      itemCount: _searchController.profilesFound!.length,
     );
   }
 

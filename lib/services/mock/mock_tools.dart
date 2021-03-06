@@ -7,14 +7,14 @@ class MockTools {
 
   MockTools._();
 
-  static Future<Model> jsonToModel<Model extends ModelBase>(
+  static Future<Model?> jsonToModel<Model extends ModelBase>(
       String jsonPath, Function(Map<String, dynamic> data) fromMap) async {
     var jsonObject = await _getJsonObject(jsonPath);
 
     return fromMap(jsonObject);
   }
 
-  static Future<List<Model>> jsonToModelList<Model extends ModelBase>(
+  static Future<List<Model>?> jsonToModelList<Model extends ModelBase>(
       String jsonPath, Function(Map<String, dynamic> data) fromMap) async {
     var jsonObject = await _getJsonObject(jsonPath);
 

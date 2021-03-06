@@ -8,8 +8,8 @@ class OutlinedButtonWidget extends BaseButtonWidget {
   final String text;
 
   OutlinedButtonWidget({
-    @required this.onPressed,
-    @required this.text,
+    required this.onPressed,
+    required this.text,
   }) : super(
           height: 30,
           text: text,

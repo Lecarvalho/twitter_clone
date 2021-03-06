@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/views/pages/big_tweet_page.dart';
-import 'package:twitter_clone/views/pages/create_user_page.dart';
-import 'package:twitter_clone/views/pages/create_edit_profile_page.dart';
-import 'package:twitter_clone/views/pages/home_page.dart';
-import 'package:twitter_clone/views/pages/login_page.dart';
-import 'package:twitter_clone/views/pages/new_tweet_page.dart';
-import 'package:twitter_clone/views/pages/profile_page.dart';
 import 'package:twitter_clone/views/pages/reply_page.dart';
-import 'package:twitter_clone/views/pages/search_page.dart';
+
+import 'pages/big_tweet_page.dart';
+import 'pages/create_edit_profile_page.dart';
+import 'pages/create_user_page.dart';
+import 'pages/home_page.dart';
+import 'pages/login_page.dart';
+import 'pages/new_tweet_page.dart';
+import 'pages/profile_page.dart';
+import 'pages/search_page.dart';
 
 class Routes {
   

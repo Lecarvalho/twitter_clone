@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/tweet_notification_model.dart';
 import 'package:twitter_clone/views/resources/project_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
@@ -7,7 +7,7 @@ import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
 class TweetNotificationWidget extends StatelessWidget {
   final TweetNotificationModel tweetNotification;
-  TweetNotificationWidget({@required this.tweetNotification});
+  TweetNotificationWidget({required this.tweetNotification});
 
   @override
   Widget build(BuildContext context) {

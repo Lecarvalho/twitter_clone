@@ -1,14 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/services/auth_service_base.dart';
 
 import 'controller_base.dart';
 
 class UserController extends ControllerBase<AuthServiceBase> {
-  UserController({@required service}) : super(service: service);
+  UserController({required service}) : super(service: service);
 
-  UserModel _user;
-  UserModel get user => _user;
+  late UserModel? _user;
+  UserModel? get user => _user;
 
   bool get amILoggedIn => _user != null;
 
@@ -64,10 +63,10 @@ class UserController extends ControllerBase<AuthServiceBase> {
   }
 
   Future<String> createUserWithEmailPassword({
-    String name,
-    String email,
-    String nickname,
-    String password,
+    required String name,
+    required String email,
+    required String nickname,
+    required String password,
   }) async {
     if (UserModel.isValidEmailPassword(email, password)) {
       var authResponse = await service.createUserWithEmailPassword(
@@ -102,8 +101,8 @@ class UserController extends ControllerBase<AuthServiceBase> {
 
 class ResponseProfile {
   ResponseProfile({
-    @required this.message,
-    @required this.success,
+    required this.message,
+    required this.success,
   });
   String message;
   bool success;

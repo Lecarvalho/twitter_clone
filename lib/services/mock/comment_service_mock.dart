@@ -5,7 +5,7 @@ import 'mock_tools.dart';
 
 class CommentServiceMock implements CommentServiceBase {
   @override
-  Future<List<CommentModel>> getComments(String tweetId) async {
+  Future<List<CommentModel>?> getComments(String tweetId) async {
     var comments = await MockTools.jsonToModelList<CommentModel>(
       "assets/json/comments.json",
       (Map<String, dynamic> data) => CommentModel.fromMap(data),
@@ -13,7 +13,7 @@ class CommentServiceMock implements CommentServiceBase {
 
     await MockTools.simulateRequestDelay();
 
-    return comments.where((comment) => comment.tweetId == tweetId).toList();
+    return comments?.where((comment) => comment.tweetId == tweetId).toList();
   }
 
   @override

@@ -5,7 +5,7 @@ import 'mock_tools.dart';
 
 class ProfileServiceMock implements ProfileServiceBase {
   @override
-  Future<ProfileModel> getProfile(String profileId) async {
+  Future<ProfileModel?> getProfile(String profileId) async {
     var profiles = await MockTools.jsonToModelList<ProfileModel>(
       "assets/json/profiles.json",
       (data) => ProfileModel.fromMapGetProfile(data),
@@ -13,16 +13,24 @@ class ProfileServiceMock implements ProfileServiceBase {
 
     await MockTools.simulateRequestDelay();
 
-    return profiles.firstWhere((profile) => profile.id == profileId);
+    return profiles?.firstWhere((profile) => profile.id == profileId);
   }
 
   @override
-  Future<ProfileResponseType> createProfile(ProfileModel myProfile) async {
-    print("name: ${myProfile.name}");
-    print("email: ${myProfile.email}");
-    print("nickname: ${myProfile.nickname}");
-    print("followingCount: ${myProfile.followingCount}");
-    print("followersCount: ${myProfile.followersCount}");
+  Future<ProfileResponseType> createProfile({
+    required String userId,
+    required String bio,
+    required String avatar,
+    required DateTime inscriptionDate,
+    required String name,
+    required String nickname,
+  }) async {
+    print("name: $name");
+    print("userId: $userId");
+    print("avatar: $avatar");
+    print("inscriptionDate: ${inscriptionDate.toString()}");
+    print("bio: $bio");
+    print("nickname: $nickname");
 
     await MockTools.simulateRequestDelay();
 

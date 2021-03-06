@@ -6,9 +6,9 @@ import 'react_icon_widget.dart';
 
 class CommentIconWidget extends ReactIconWidget {
   CommentIconWidget({
-    @required bool isCommented,
-    @required int commentCount,
-    @required onComment,
+    required bool isCommented,
+    required int commentCount,
+    required onComment,
   }) : super(
           isReacted: isCommented,
           reactCount: commentCount,

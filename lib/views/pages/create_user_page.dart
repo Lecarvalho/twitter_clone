@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/user_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
@@ -21,7 +21,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
   final _nicknameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  UserController _userController;
+  late UserController _userController;
 
   @override
   void didChangeDependencies() {

@@ -6,15 +6,15 @@ class MultilineTextboxWidget extends StatelessWidget {
   final int maxLength;
   final String hintText;
   final TextEditingController controller;
-  final String labelText;
-  final TextStyle hintStyle;
+  final String? labelText;
+  final TextStyle? hintStyle;
   final bool withUnderline;
   final bool autoFocus;
 
   MultilineTextboxWidget({
-    @required this.maxLength,
-    @required this.hintText,
-    @required this.controller,
+    required this.maxLength,
+    required this.hintText,
+    required this.controller,
     this.labelText,
     this.hintStyle,
     this.withUnderline = false,

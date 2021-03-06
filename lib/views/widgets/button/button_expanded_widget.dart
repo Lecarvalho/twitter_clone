@@ -4,11 +4,11 @@ import 'package:twitter_clone/views/resources/styles.dart';
 
 class ButtonExpandedWidget extends StatelessWidget {
   final String text;
-  final Function onPressed;
+  final Function()? onPressed;
 
   ButtonExpandedWidget({
-    @required this.text,
-    @required this.onPressed,
+    required this.text,
+    required this.onPressed,
   });
 
   @override

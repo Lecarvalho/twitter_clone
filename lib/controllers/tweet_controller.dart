@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/tweets_service_base.dart';
 
 class TweetController extends ControllerBase<TweetsServiceBase> {
-  TweetController({@required service}) : super(service: service);
+  TweetController({required service}) : super(service: service);
 
-  TweetModel _bigTweet;
-  TweetModel get bigTweet => _bigTweet;
+  TweetModel? _bigTweet;
+  TweetModel? get bigTweet => _bigTweet;
 
-  List<TweetModel> _tweets;
-  List<TweetModel> get tweets => _tweets;
+  List<TweetModel>? _tweets;
+  List<TweetModel>? get tweets => _tweets;
 
   Future<void> getTweets(String myProfileId) async {
     try {
@@ -32,13 +31,12 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
 
   Future<void> createTweet(String text, String myProfileId) async {
     try {
-      var tweetModel = TweetModel.toMap(
+
+      await service.createTweet(
         text: text,
-        profileId: myProfileId,
+        myProfileId: myProfileId,
         creationDate: DateTime.now(),
       );
-
-      await service.createTweet(tweetModel);
     } catch (e) {
       print("Error on createTweet: " + e.toString());
     }

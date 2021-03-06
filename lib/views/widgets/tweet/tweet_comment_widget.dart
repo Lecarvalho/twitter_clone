@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/comment_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
@@ -10,8 +10,8 @@ class TweetCommentWidget extends StatelessWidget {
   final CommentModel comment;
   final String replyingToNickname;
   TweetCommentWidget({
-    @required this.comment,
-    @required this.replyingToNickname,
+    required this.comment,
+    required this.replyingToNickname,
   });
 
   @override

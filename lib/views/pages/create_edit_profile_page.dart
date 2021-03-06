@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/project_icons.dart';
@@ -23,10 +23,10 @@ class CreateEditProfilePage extends StatefulWidget {
 class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
   bool _isPageReady = false;
 
-  UserController _userController;
-  ProfileController _profileController;
+  late UserController _userController;
+  late ProfileController _profileController;
 
-  String _avatarLocalPath;
+  String? _avatarLocalPath;
 
   final _nameController = TextEditingController();
   final _bioController = TextEditingController();
@@ -36,14 +36,14 @@ class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
     _userController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
-    await _profileController.getMyProfile(_userController.user.id);
+    await _profileController.getMyProfile(_userController.user!.id);
 
     if (_profileController.hasProfile) {
-      _nameController.text = _profileController.profile.name;
-      _bioController.text = _profileController.profile.bio;
+      _nameController.text = _profileController.profile!.name;
+      _bioController.text = _profileController.profile!.bio;
     }
     else {
-      _nameController.text = _userController.user.name;
+      _nameController.text = _userController.user!.name;
     }
 
     setState(() {
@@ -67,10 +67,13 @@ class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
       result = await _profileController.createProfile(
         avatarLocalPath: _avatarLocalPath,
         bio: _bioController.text,
+        name: _userController.user!.name,
+        nickname: _userController.user!.nickname,
+        userId: _userController.user!.id,
       );
 
       if (result == "Success"){
-        await _profileController.getMyProfile(_userController.user.id);
+        await _profileController.getMyProfile(_userController.user!.id);
       }
     }
 
@@ -90,15 +93,15 @@ class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
     FocusScope.of(context).requestFocus(new FocusNode());
   }
 
-  ImageProvider get avatar {
+  ImageProvider? get avatar {
 
     if (_avatarLocalPath?.isNotEmpty ?? false){
-      return FileImage(File(_avatarLocalPath));
+      return FileImage(File(_avatarLocalPath!));
     }
 
-    var avatar = _profileController?.profile?.avatar;
+    var avatar = _profileController.profile!.avatar;
 
-    if (avatar?.isNotEmpty ?? false){
+    if (avatar.isNotEmpty){
       return NetworkImage(avatar);
     }
 
@@ -109,7 +112,7 @@ class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        action: ButtonActionBar(
+        action: ButtonActionBarWidget(
           onPressed: () => _onPressSave(context),
           text: "Save",
         ),

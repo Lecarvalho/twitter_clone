@@ -1,27 +1,27 @@
-import 'package:flutter/foundation.dart';
-
 import 'model_base.dart';
 
 class UserModel extends ModelBase {
-  String id;
+  late String id;
   String name;
-  String email;
+  String? email;
   String nickname;
 
   UserModel({
-    @required this.id,
-    @required this.name,
-    @required this.email,
-    @required this.nickname,
+    required this.name,
+    required this.email,
+    required this.nickname,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> data) {
-    return UserModel(
-      id: data["id"],
+    var user = UserModel(
       name: data["name"],
       email: data["email"],
       nickname: data["nickname"],
     );
+
+    user.id = data["id"];
+    
+    return user;
   }
 
   static bool isValidEmailPassword(String email, String password) {

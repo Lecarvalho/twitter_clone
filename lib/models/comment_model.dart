@@ -3,15 +3,14 @@ import 'profile_model.dart';
 
 class CommentModel extends AsTweetModelBase {
   CommentModel({
-    String id,
-    String text,
-    String profileId,
-    DateTime creationDate,
-    ProfileModel profile,
-    this.tweetId,
-    this.replyingProfileId,
+    required String text,
+    required String profileId,
+    required DateTime creationDate,
+    required ProfileModel profile,
+    required this.tweetId,
+    required this.replyingToProfileId,
   }) : super(
-          id: id,
+          id: tweetId,
           text: text,
           profileId: profileId,
           creationDate: creationDate,
@@ -19,29 +18,50 @@ class CommentModel extends AsTweetModelBase {
         );
 
   String tweetId;
-  String replyingProfileId;
+  String replyingToProfileId;
 
   factory CommentModel.fromMap(Map<String, dynamic> data) {
-    return CommentModel(
-      id: data["id"],
+    var comment = CommentModel(
       profileId: data["profileId"],
       text: data["text"],
       creationDate: DateTime.parse(data["creationDate"]),
       tweetId: data["tweetId"],
-      replyingProfileId: data["replyingProfileId"],
+      replyingToProfileId: data["replyingToProfileId"],
       profile: ProfileModel.fromMapSingleTweet(data["profile"]),
+    );
+
+    comment.id = data["id"];
+
+    return comment;
+  }
+
+  factory CommentModel.toCreateComment({
+    required text,
+    required profileId,
+    required creationDate,
+    required profile,
+    required tweetId,
+    required replyingToProfileId,
+  }){
+    return CommentModel(
+      text: text,
+      profileId: profileId,
+      creationDate: creationDate,
+      profile: profile,
+      tweetId: tweetId,
+      replyingToProfileId: replyingToProfileId,
     );
   }
 
-  factory CommentModel.toMap({
-    String tweetId,
-    String commentText,
-    String myProfileId,
-  }) {
-    return CommentModel(
-      tweetId: tweetId,
-      text: commentText,
-      profileId: myProfileId,
-    );
-  }
+  // factory CommentModel.toMap({
+  //   required String tweetId,
+  //   required String commentText,
+  //   required String myProfileId,
+  // }) {
+  //   return CommentModel(
+  //     tweetId: tweetId,
+  //     text: commentText,
+  //     profileId: myProfileId,
+  //   );
+  // }
 }

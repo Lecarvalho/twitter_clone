@@ -4,17 +4,17 @@ import 'package:twitter_clone/views/resources/project_icons.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 class TweetActivityWidget extends StatelessWidget {
-  final TweetActivityModel tweetActivity;
+  final TweetActivityModel? tweetActivity;
 
   TweetActivityWidget({
-    @required this.tweetActivity,
+    required this.tweetActivity,
   });
 
   Widget _getActionDescription() {
     Image icon;
     String action;
 
-    switch (tweetActivity.tweetAction) {
+    switch (tweetActivity!.tweetAction) {
       case TweetAction.liked:
         icon = ProjectIcons.heartSolidDarken;
         action = "liked";
@@ -31,7 +31,7 @@ class TweetActivityWidget extends StatelessWidget {
         children: [
           icon,
           SizedBox(width: 7),
-          Text(tweetActivity.profileName + " " + action,
+          Text(tweetActivity!.profileName + " " + action,
               style: Styles.subtitle2Gray),
         ],
       ),

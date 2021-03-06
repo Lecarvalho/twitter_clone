@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/profile_model.dart';
 
 import 'profile_name_nick_vertical_widget.dart';
@@ -8,7 +8,7 @@ import 'profile_picture_widget.dart';
 class ProfilePictureNameNickVerticalWidget extends StatelessWidget {
   final ProfileModel profile;
 
-  ProfilePictureNameNickVerticalWidget({@required this.profile});
+  ProfilePictureNameNickVerticalWidget({required this.profile});
 
   @override
   Widget build(BuildContext context) {

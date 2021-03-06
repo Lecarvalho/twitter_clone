@@ -5,7 +5,7 @@ import 'mock_tools.dart';
 
 class TweetsServiceMock implements TweetsServiceBase {
   @override
-  Future<List<TweetModel>> getTweets(String myProfileId) async {
+  Future<List<TweetModel>?> getTweets(String myProfileId) async {
 
     await MockTools.simulateRequestDelay();
 
@@ -16,7 +16,7 @@ class TweetsServiceMock implements TweetsServiceBase {
   }
 
   @override
-  Future<List<TweetModel>> getProfileTweets(String profileId) async {
+  Future<List<TweetModel>?> getProfileTweets(String profileId) async {
     await MockTools.simulateRequestDelay();
 
     return MockTools.jsonToModelList<TweetModel>(
@@ -26,16 +26,20 @@ class TweetsServiceMock implements TweetsServiceBase {
   }
 
   @override
-  Future<void> createTweet(TweetModel tweet) async {
-    print("${tweet.text}");
-    print("${tweet.profileId}");
-    print("${tweet.creationDate.toString()}");
+  Future<void> createTweet({
+    required String text,
+    required String myProfileId,
+    required DateTime creationDate,
+  }) async {
+    print("$text");
+    print("$myProfileId");
+    print("${creationDate.toString()}");
 
     await MockTools.simulateQuickRequestDelay();
   }
 
   @override
-  Future<TweetModel> getTweet(String tweetId) async {
+  Future<TweetModel?> getTweet(String tweetId) async {
     var tweets = await MockTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
@@ -43,7 +47,7 @@ class TweetsServiceMock implements TweetsServiceBase {
 
     await MockTools.simulateRequestDelay();
 
-    return tweets.firstWhere((_tweet) => _tweet.id == tweetId);
+    return tweets?.firstWhere((_tweet) => _tweet.id == tweetId);
   }
 
   @override

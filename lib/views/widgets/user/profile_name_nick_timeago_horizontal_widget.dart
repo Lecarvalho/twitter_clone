@@ -10,9 +10,9 @@ class ProfileNameNickTimeAgoHorizontalWidget extends StatelessWidget {
   final String timeAgo;
 
   ProfileNameNickTimeAgoHorizontalWidget({
-    @required this.profileName,
-    @required this.profileNickname,
-    @required this.timeAgo,
+    required this.profileName,
+    required this.profileNickname,
+    required this.timeAgo,
   });
 
   @override

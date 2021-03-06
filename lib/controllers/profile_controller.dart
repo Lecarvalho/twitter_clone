@@ -7,11 +7,11 @@ import 'package:twitter_clone/services/profile_service_base.dart';
 class ProfileController extends ControllerBase<ProfileServiceBase> {
   ProfileController({@required service}) : super(service: service);
 
-  ProfileModel get profile => _profile;
-  ProfileModel _profile;
+  ProfileModel? get profile => _profile;
+  ProfileModel? _profile;
 
-  ProfileModel _myProfile;
-  ProfileModel get myProfile => _myProfile;
+  ProfileModel? _myProfile;
+  ProfileModel? get myProfile => _myProfile;
 
   bool get hasProfile => _myProfile != null;
 
@@ -34,8 +34,8 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
 
   Future<void> follow(String toFollowUserId) async {
     try {
-      _myProfile.following.add(toFollowUserId);
-      service.follow(_myProfile.id, toFollowUserId);
+      _myProfile!.following.add(toFollowUserId);
+      service.follow(_myProfile!.id, toFollowUserId);
     } catch (e) {
       print("Error on follow: " + e.toString());
     }
@@ -43,14 +43,14 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
 
   Future<void> unfollow(String toUnfollowUserId) async {
     try {
-      _myProfile.following.remove(toUnfollowUserId);
-      service.unfollow(_myProfile.id, toUnfollowUserId);
+      _myProfile!.following.remove(toUnfollowUserId);
+      service.unfollow(_myProfile!.id, toUnfollowUserId);
     } catch (e) {
       print("Error on unfollow: " + e.toString());
     }
   }
 
-  String _getResponseMessage(ProfileResponseType responseType) {
+  String _getResponseMessage(ProfileResponseType? responseType) {
     switch (responseType) {
       case ProfileResponseType.invalid_information:
         return "Invalid information";
@@ -61,7 +61,7 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
     }
   }
 
-  Future<String> selectAvatar() async {
+  Future<String?> selectAvatar() async {
     var pickImageService = PickImageService();
 
     var imagePath = await pickImageService.pickImagePath();
@@ -74,25 +74,28 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
   }
 
   Future<String> createProfile({
-    @required String bio,
-    @required String avatarLocalPath,
+    required String bio,
+    String? avatarLocalPath,
+    required String name,
+    required String nickname,
+    required String userId,
   }) async {
     try {
       var msgValidation = validateProfile(bio, avatarLocalPath);
 
-      if (msgValidation?.isNotEmpty ?? false) {
+      if (msgValidation != "Success") {
         return msgValidation;
       }
 
-      var avatarUrl = await service.uploadAvatar(avatarLocalPath);
-
-      var profile = ProfileModel.toCreateProfile(
-        bio: bio,
-        avatar: avatarUrl,
-      );
+      var avatarUrl = await service.uploadAvatar(avatarLocalPath!);
 
       var response = await service.createProfile(
-        profile,
+        avatar: avatarUrl,
+        bio: bio,
+        inscriptionDate: DateTime.now(),
+        name: name,
+        nickname: nickname,
+        userId: userId,
       );
 
       return _getResponseMessage(response);
@@ -103,27 +106,25 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
     return _getResponseMessage(null);
   }
 
-  Future<String> updateProfile(String bio, String avatarLocalPath) async {
+  Future<String> updateProfile(String bio, String? avatarLocalPath) async {
     try {
       var msgValidation =
-          validateProfile(bio, avatarLocalPath ?? _myProfile.avatar);
+          validateProfile(bio, avatarLocalPath ?? _myProfile!.avatar);
 
-      if (msgValidation?.isNotEmpty ?? false) {
+      if (msgValidation != "Success") {
         return msgValidation;
       }
 
       var hasChangePicture = avatarLocalPath?.isNotEmpty ?? false;
 
       if (hasChangePicture) {
-        var avatarUrl = await service.uploadAvatar(avatarLocalPath);
+        var avatarUrl = await service.uploadAvatar(avatarLocalPath!);
 
-        if (avatarUrl?.isNotEmpty ?? false) {
-          _myProfile.avatar = avatarUrl;
-        }
+        _myProfile!.avatar = avatarUrl;
       }
 
-      _myProfile.bio = bio;
-      var response = await service.updateProfile(_myProfile);
+      _myProfile!.bio = bio;
+      var response = await service.updateProfile(_myProfile!);
       return _getResponseMessage(response);
     } catch (e) {
       print("Error on updateProfile: " + e.toString());
@@ -132,13 +133,13 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
     return _getResponseMessage(null);
   }
 
-  String validateProfile(String bio, String avatar) {
+  String validateProfile(String? bio, String? avatar) {
     if (avatar?.isEmpty ?? true) {
       return "Please set a picture for your profile";
     } else if (bio?.isEmpty ?? true) {
       return "Please provide a bio for your profile";
+    } else {
+      return "Success";
     }
-
-    return null;
   }
 }

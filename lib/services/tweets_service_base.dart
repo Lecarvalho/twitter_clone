@@ -3,17 +3,23 @@ import 'package:twitter_clone/models/tweet_model.dart';
 import 'service_base.dart';
 
 abstract class TweetsServiceBase extends ServiceBase {
-  Future<List<TweetModel>> getTweets(String myProfileId);
+  Future<List<TweetModel>?> getTweets(String myProfileId);
 
-  Future<List<TweetModel>> getProfileTweets(String profileId);
+  Future<List<TweetModel>?> getProfileTweets(String profileId);
 
-  Future<void> createTweet(TweetModel tweet);
+  Future<void> createTweet({
+    required String text,
+    required String myProfileId,
+    required DateTime creationDate,
+  });
 
-  Future<TweetModel> getTweet(String tweetId);
+  Future<TweetModel?> getTweet(String tweetId);
 
-  Future<void> likeTweet(String tweetId, String ofProfileId, String myProfileId);
+  Future<void> likeTweet(
+      String tweetId, String ofProfileId, String myProfileId);
 
-  Future<void> unlikeTweet(String tweetId, String ofProfileId, String myProfileId);
+  Future<void> unlikeTweet(
+      String tweetId, String ofProfileId, String myProfileId);
 
   Future<void> retweet(String tweetId, String ofProfileId, String myProfileId);
 }

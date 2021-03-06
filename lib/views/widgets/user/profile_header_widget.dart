@@ -11,8 +11,8 @@ class ProfileHeaderWidget extends StatelessWidget {
   final ProfileModel profile;
   final BaseButtonWidget actionButton;
   ProfileHeaderWidget({
-    @required this.profile,
-    @required this.actionButton,
+    required this.profile,
+    required this.actionButton,
   });
 
   Widget _underflowAppBar() {

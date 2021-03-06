@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/comments_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/button/button_widget.dart';
+import 'package:twitter_clone/views/widgets/button/button_actionbar_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_reply_to_widget.dart';
 
 class ReplyPage extends StatefulWidget {
@@ -14,19 +14,19 @@ class ReplyPage extends StatefulWidget {
 }
 
 class _ReplyPageState extends State<ReplyPage> {
-  ProfileController _profileController;
-  CommentController _commentController;
-  TweetModel _commentingTweet;
+  late ProfileController _profileController;
+  late CommentController _commentController;
+  late TweetModel _commentingTweet;
 
   final _textController = TextEditingController();
-  bool get _hasText => _textController.text?.isNotEmpty ?? false;
-  Function _onPressedReplyTweet;
+  bool get _hasText => _textController.text.isNotEmpty;
+  Function()? _onPressedReplyTweet;
 
   @override
   void didChangeDependencies() {
     _profileController = Di.instanceOf(context);
     _commentController = Di.instanceOf(context);
-    _commentingTweet = ModalRoute.of(context).settings.arguments;
+    _commentingTweet = ModalRoute.of(context)!.settings.arguments! as TweetModel;
 
     _textController.addListener(() {
       if (_hasText && _onPressedReplyTweet == null) {
@@ -47,7 +47,8 @@ class _ReplyPageState extends State<ReplyPage> {
     await _commentController.commentTweet(
       tweetId: _commentingTweet.id,
       commentText: _textController.text,
-      myProfileId: _profileController.myProfile.id,
+      myProfile: _profileController.myProfile!,
+      replyingToProfileId: _commentingTweet.profileId
     );
 
     Navigator.of(context).pushReplacementNamed(
@@ -60,19 +61,16 @@ class _ReplyPageState extends State<ReplyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        action: Padding(
-          padding: const EdgeInsets.all(10),
-          child: ButtonWidget(
-            onPressed: _onPressedReplyTweet,
-            text: "Reply",
-          ),
+        action: ButtonActionBarWidget(
+          onPressed: _onPressedReplyTweet,
+          text: "Reply",
         ),
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetReplyToWidget(
-          avatar: _profileController.myProfile.avatar,
-          myProfileId: _profileController.myProfile.id,
+          avatar: _profileController.myProfile!.avatar,
+          myProfileId: _profileController.myProfile!.id,
           controller: _textController,
           replyingToNickname: _commentingTweet.profile.nickname,
         ),

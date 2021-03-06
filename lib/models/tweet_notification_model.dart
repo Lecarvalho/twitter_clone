@@ -7,9 +7,9 @@ class TweetNotificationModel extends ModelBase {
   TweetModel tweet;
 
   TweetNotificationModel({
-    this.id,
-    this.tweetId,
-    this.tweet,
+    required this.id,
+    required this.tweetId,
+    required this.tweet,
   });
 
   factory TweetNotificationModel.fromMap(Map<String, dynamic> data) {

@@ -6,8 +6,8 @@ class BottomNavigationWidget extends BottomNavigationBar {
   final int selectedIndex;
 
   BottomNavigationWidget({
-    @required this.onNavigationTapped,
-    @required this.selectedIndex,
+    required this.onNavigationTapped,
+    required this.selectedIndex,
   }) : super(
           showSelectedLabels: false,
           showUnselectedLabels: false,

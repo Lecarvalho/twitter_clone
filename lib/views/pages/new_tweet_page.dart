@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
-import 'package:twitter_clone/di/di.dart';
+import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
-import 'package:twitter_clone/views/widgets/button/button_widget.dart';
+import 'package:twitter_clone/views/widgets/button/button_actionbar_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_create_new_widget.dart';
 
 class NewTweetPage extends StatefulWidget {
@@ -13,8 +13,10 @@ class NewTweetPage extends StatefulWidget {
 }
 
 class _NewTweetPageState extends State<NewTweetPage> {
-  ProfileController _profileController;
-  TweetController _tweetController;
+  late ProfileController _profileController;
+  late TweetController _tweetController;
+  Function()? _onPressedCreateTweet;
+
   final _textController = TextEditingController();
 
   @override
@@ -38,37 +40,32 @@ class _NewTweetPageState extends State<NewTweetPage> {
   }
 
   void _onCreateTweet() async {
-    if (_textController.text?.isNotEmpty ?? true) {
+    if (_textController.text.isNotEmpty) {
       await _tweetController.createTweet(
         _textController.text,
-        _profileController.myProfile.id,
+        _profileController.myProfile!.id,
       );
 
       Navigator.of(context).pushReplacementNamed(Routes.home);
     }
   }
 
-  bool get _hasText => _textController.text?.isNotEmpty ?? false;
-
-  Function _onPressedCreateTweet;
+  bool get _hasText => _textController.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(
-        action: Padding(
-          padding: const EdgeInsets.all(10),
-          child: ButtonWidget(
-            onPressed: _onPressedCreateTweet,
-            text: "Tweet",
-          ),
+        action: ButtonActionBarWidget(
+          onPressed: _onPressedCreateTweet,
+          text: "Tweet",
         ),
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetCreateNewWidget(
-          avatar: _profileController.myProfile.avatar,
-          myProfileId: _profileController.myProfile.id,
+          avatar: _profileController.myProfile!.avatar,
+          myProfileId: _profileController.myProfile!.id,
           controller: _textController,
         ),
       ),
