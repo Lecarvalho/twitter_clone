@@ -4,10 +4,10 @@ import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_horizontal_widget.dart';
 
-class TweetBigSingleWidget extends StatelessWidget {
+class OpenedTweetWidget extends StatelessWidget {
   final TweetModel tweet;
 
-  TweetBigSingleWidget({required this.tweet});
+  OpenedTweetWidget({required this.tweet});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class TweetBigSingleWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                tweet.creationDateLong,
+                tweet.createdAtLong,
                 style: Styles.body2Gray,
               ),
               Text("-", style: Styles.body2Gray),

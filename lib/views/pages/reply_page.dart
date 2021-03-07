@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/routes.dart';
-import 'package:twitter_clone/controllers/comments_controller.dart';
+import 'package:twitter_clone/controllers/reply_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/button/button_actionbar_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet/tweet_reply_to_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet/write_reply_widget.dart';
 
 class ReplyPage extends StatefulWidget {
   @override
@@ -15,8 +15,8 @@ class ReplyPage extends StatefulWidget {
 
 class _ReplyPageState extends State<ReplyPage> {
   late ProfileController _profileController;
-  late CommentController _commentController;
-  late TweetModel _commentingTweet;
+  late ReplyController _replyController;
+  late TweetModel _replyingTweet;
 
   final _textController = TextEditingController();
   bool get _hasText => _textController.text.isNotEmpty;
@@ -25,8 +25,8 @@ class _ReplyPageState extends State<ReplyPage> {
   @override
   void didChangeDependencies() {
     _profileController = Di.instanceOf(context);
-    _commentController = Di.instanceOf(context);
-    _commentingTweet = ModalRoute.of(context)!.settings.arguments! as TweetModel;
+    _replyController = Di.instanceOf(context);
+    _replyingTweet = ModalRoute.of(context)!.settings.arguments! as TweetModel;
 
     _textController.addListener(() {
       if (_hasText && _onPressedReplyTweet == null) {
@@ -44,16 +44,16 @@ class _ReplyPageState extends State<ReplyPage> {
   }
 
   void _onCommentTweet() async {
-    await _commentController.commentTweet(
-      tweetId: _commentingTweet.id,
-      commentText: _textController.text,
-      myProfile: _profileController.myProfile!,
-      replyingToProfileId: _commentingTweet.profileId
+    await _replyController.replyTweet(
+      replyingToTweetId: _replyingTweet.id,
+      text: _textController.text,
+      myProfileId: _profileController.myProfile!.id,
+      replyingToProfileId: _replyingTweet.profileId
     );
 
     Navigator.of(context).pushReplacementNamed(
-      Routes.big_tweet,
-      arguments: _commentingTweet.id,
+      Routes.opened_tweet,
+      arguments: _replyingTweet.id,
     );
   }
 
@@ -68,11 +68,11 @@ class _ReplyPageState extends State<ReplyPage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: TweetReplyToWidget(
+        child: WriteReplyWidget(
           avatar: _profileController.myProfile!.avatar,
           myProfileId: _profileController.myProfile!.id,
           controller: _textController,
-          replyingToNickname: _commentingTweet.profile.nickname,
+          replyingToNickname: _replyingTweet.profile.nickname,
         ),
       ),
     );

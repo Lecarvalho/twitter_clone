@@ -1,7 +1,7 @@
 [
     {
         "id": "1",
-        "creationDate": "2021-02-21T07:53:00.782Z",
+        "createdAt": "2021-02-21T07:53:00.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
@@ -15,8 +15,8 @@
     },
     {
         "id": "2",
-        "commentCount": 1,
-        "creationDate": "2021-02-20T23:28:56.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-20T23:28:56.782Z",
         "likeCount": 1,
         "text": "I wanted a genesis so bad so I could play",
         "profileId": "2",
@@ -30,8 +30,8 @@
     },
     {
         "id": "3",
-        "commentCount": 1,
-        "creationDate": "2021-02-20T23:28:56.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-20T23:28:56.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "É imensurável a contribuição desse cara pra nossa cultura chamada Hip-Hop... Hoje ele estaria completando 47 anos de vida e pra gente celebrar, tá no ar o #DillasTape Vol. 2! Muito Obrigado J. Dilla! We Miss You.\n\nArte: @lucasbonifacio\n\ndjnyack.com\n\n#JDilla #DillaDay",
@@ -51,7 +51,7 @@
     },
     {
         "id": "4",
-        "creationDate": "2021-02-20T23:28:56.782Z",
+        "createdAt": "2021-02-20T23:28:56.782Z",
         "text": "Hodl the rainforests!!",
         "profileId": "4",
         "profile": {
@@ -63,8 +63,8 @@
     },
     {
         "id": "5",
-        "commentCount": 1,
-        "creationDate": "2021-02-01T23:28:56.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-01T23:28:56.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "Children have been located and are safe! Medical attention summoned just as a precaution.",
@@ -83,8 +83,8 @@
     },
     {
         "id": "6",
-        "commentCount": 1,
-        "creationDate": "2021-02-01T23:28:56.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-01T23:28:56.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "Y’all ready for this next post?",

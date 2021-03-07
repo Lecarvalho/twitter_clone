@@ -17,7 +17,7 @@ class AssetsIcons {
 
   static final addTweet = _assetsBasePath + "add-tweet.png";
   static const appIcon = _assetsBasePath + "app-icon.png";
-  static const comment = _assetsBasePath + "comment.png";
+  static const reply = _assetsBasePath + "reply.png";
   static const feature = _assetsBasePath + "feature.png";
   static const heartSolidDarken = _assetsBasePath + "heart-solid-darken.png";
   static const heartSolid = _assetsBasePath + "heart-solid.png";

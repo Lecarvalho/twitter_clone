@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BaseButtonWidget extends FlatButton {
+class BaseButtonWidget extends MaterialButton {
   final Function()? onPressed;
   final String text;
   final ShapeBorder shape;
@@ -24,5 +24,6 @@ class BaseButtonWidget extends FlatButton {
           onPressed: onPressed,
           disabledColor: disabledColor,
           minWidth: 70,
+          elevation: 0,
         );
 }

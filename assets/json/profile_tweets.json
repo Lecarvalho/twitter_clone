@@ -1,8 +1,8 @@
 [
     {
         "id": "1",
-        "commentCount": 1,
-        "creationDate": "2021-02-21T07:53:00.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-21T07:53:00.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
@@ -16,8 +16,8 @@
     },
     {
         "id": "1",
-        "commentCount": 1,
-        "creationDate": "2021-02-21T07:53:00.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-21T07:53:00.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "2 Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
@@ -32,8 +32,8 @@
     },
     {
         "id": "1",
-        "commentCount": 1,
-        "creationDate": "2021-02-21T07:53:00.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-21T07:53:00.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
@@ -48,8 +48,8 @@
     },
     {
         "id": "1",
-        "commentCount": 1,
-        "creationDate": "2021-02-21T07:53:00.782Z",
+        "repliesCount": 1,
+        "createdAt": "2021-02-21T07:53:00.782Z",
         "likeCount": 1,
         "retweetCount": 1,
         "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",

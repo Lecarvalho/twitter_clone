@@ -7,10 +7,10 @@ class TweetModel extends AsTweetModelBase {
     required String id,
     required String profileId,
     required String text,
-    required DateTime creationDate,
+    required DateTime createdAt,
     required ProfileModel profile,
     required this.likeCount,
-    required this.commentCount,
+    required this.repliesCount,
     required this.retweetCount,
     required this.didILike,
     required this.didIRetweet,
@@ -19,12 +19,12 @@ class TweetModel extends AsTweetModelBase {
           id: id,
           profileId: profileId,
           text: text,
-          creationDate: creationDate,
+          createdAt: createdAt,
           profile: profile,
         );
 
   int likeCount;
-  int commentCount;
+  int repliesCount;
   int retweetCount;
   bool didILike;
   bool didIRetweet;
@@ -38,9 +38,9 @@ class TweetModel extends AsTweetModelBase {
       id: data["id"],
       profileId: data["profileId"],
       text: data["text"],
-      creationDate: DateTime.parse(data["creationDate"]),
+      createdAt: DateTime.parse(data["createdAt"]),
       likeCount: data["likeCount"] ?? 0,
-      commentCount: data["commentCount"] ?? 0,
+      repliesCount: data["repliesCount"] ?? 0,
       retweetCount: data["retweetCount"] ?? 0,
       profile: ProfileModel.fromMapSingleTweet(data["profile"]),
       didILike: data["didILike"] ?? false,

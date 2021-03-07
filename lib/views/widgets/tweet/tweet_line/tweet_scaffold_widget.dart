@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/views/routes.dart';
-import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
-import 'tweet_actions/tweet_actions_widget.dart';
-import 'tweet_activity_widget.dart';
+abstract class TweetScaffoldWidget extends StatelessWidget {
+  final String avatar;
+  final String tweetId;
+  final String profileId;
+  final String profileName;
+  final String profileNickname;
+  final String tweetCreationTimeAgo;
+  final String text;
 
-class TweetSimpleWidget extends StatelessWidget {
-  final TweetModel tweet;
-  final Function() onHeart;
-  final Function()? onRetweet;
-
-  TweetSimpleWidget({
-    required this.tweet,
-    required this.onHeart,
-    this.onRetweet,
+  TweetScaffoldWidget({
+    required this.avatar,
+    required this.tweetId,
+    required this.profileId,
+    required this.profileName,
+    required this.profileNickname,
+    required this.tweetCreationTimeAgo,
+    required this.text,
   });
+
+  Widget get activity => Container();
+  Widget get replyingTo => Container();
+  Widget get actions => Container();
 
   @override
   Widget build(BuildContext context) {
@@ -27,19 +35,19 @@ class TweetSimpleWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 10),
-        TweetActivityWidget(tweetActivity: tweet.tweetActivity),
+        activity,
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfilePictureWidget(
-              avatar: tweet.profile.avatar,
+              avatar: avatar,
               profilePicSize: ProfilePicSize.small2,
-              profileId: tweet.profileId,
+              profileId: profileId,
               onTap: () => Navigator.of(context).pushNamed(
                 Routes.profile,
-                arguments: tweet.id,
+                arguments: tweetId,
               ),
             ),
             SizedBox(width: 8),
@@ -49,18 +57,15 @@ class TweetSimpleWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ProfileNameNickTimeAgoHorizontalWidget(
-                    profileName: tweet.profile.name,
-                    profileNickname: tweet.profile.nickname,
-                    timeAgo: tweet.creationTimeAgo,
+                    profileName: profileName,
+                    profileNickname: profileNickname,
+                    timeAgo: tweetCreationTimeAgo,
                   ),
                   SizedBox(height: 5),
-                  Text(tweet.text, style: Styles.body2),
+                  replyingTo,
+                  Text(text, style: Styles.body2),
                   SizedBox(height: 5),
-                  TweetActionsWidget(
-                    tweet: tweet,
-                    onHeart: onHeart,
-                    onRetweet: onRetweet,
-                  ),
+                  actions,
                 ],
               ),
             ),

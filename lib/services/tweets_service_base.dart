@@ -10,7 +10,7 @@ abstract class TweetsServiceBase extends ServiceBase {
   Future<void> createTweet({
     required String text,
     required String myProfileId,
-    required DateTime creationDate,
+    required DateTime createdAt,
   });
 
   Future<TweetModel?> getTweet(String tweetId);

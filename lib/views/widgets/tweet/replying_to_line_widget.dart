@@ -7,16 +7,19 @@ class ReplyingToLineWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: "Replying to ",
-        style: Styles.body2Gray,
-        children: [
-          TextSpan(
-            text: profileNickname,
-            style: Styles.body2Blue,
-          ),
-        ],
+    return Padding(
+      padding: EdgeInsets.only(bottom: 5),
+      child: RichText(
+        text: TextSpan(
+          text: "Replying to ",
+          style: Styles.body2Gray,
+          children: [
+            TextSpan(
+              text: profileNickname,
+              style: Styles.body2Blue,
+            ),
+          ],
+        ),
       ),
     );
   }

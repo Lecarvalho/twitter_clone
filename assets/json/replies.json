@@ -1,10 +1,10 @@
 [
     {
         "id": "1",
-        "tweetId": "1",
         "text": "I spent all of my school money on doge and I sold at a loss. Please dont trick others like you tricked me",
         "profileId": "6",
-        "creationDate": "2021-02-26T05:28:56.782Z",
+        "createdAt": "2021-02-26T05:28:56.782Z",
+        "replyingToTweetId": "1",
         "replyingToProfileId": "1",
         "profile": {
             "id": "6",

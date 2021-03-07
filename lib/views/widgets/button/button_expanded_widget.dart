@@ -17,7 +17,7 @@ class ButtonExpandedWidget extends StatelessWidget {
       width: double.infinity,
       height: 40,
       padding: EdgeInsets.only(left: 10, right: 10),
-      child: FlatButton(
+      child: MaterialButton(
         onPressed: onPressed,
         color: ProjectColors.grayBackground,
         disabledColor: ProjectColors.blueInactive,

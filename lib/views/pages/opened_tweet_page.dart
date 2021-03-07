@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/controllers/comments_controller.dart';
+import 'package:twitter_clone/controllers/reply_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/config/di.dart';
@@ -9,19 +9,19 @@ import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet/comment_list_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet/reply_list_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/confirm_retweet.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_actions/tweet_actions_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet/tweet_big_single_widget.dart';
+import 'package:twitter_clone/views/widgets/tweet/opened_tweet_widget.dart';
 
-class BigTweetPage extends StatefulWidget {
+class OpenedTweetPage extends StatefulWidget {
   @override
-  _BigTweetPageState createState() => _BigTweetPageState();
+  _OpenedTweetPageState createState() => _OpenedTweetPageState();
 }
 
-class _BigTweetPageState extends State<BigTweetPage> {
+class _OpenedTweetPageState extends State<OpenedTweetPage> {
   late TweetController _tweetController;
-  late CommentController _commentController;
+  late ReplyController _replyController;
   late ProfileController _profileController;
 
   late TweetModel _tweet;
@@ -32,11 +32,11 @@ class _BigTweetPageState extends State<BigTweetPage> {
   void didChangeDependencies() async {
     _tweetId = ModalRoute.of(context)!.settings.arguments!.toString();
     _tweetController = Di.instanceOf(context);
-    _commentController = Di.instanceOf(context);
+    _replyController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
     await _tweetController.getTweet(_tweetId);
-    await _commentController.getComments(_tweetId);
+    await _replyController.getReplies(_tweetId);
 
     _tweet = _tweetController.bigTweet!;
 
@@ -84,7 +84,7 @@ class _BigTweetPageState extends State<BigTweetPage> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  TweetBigSingleWidget(tweet: _tweet),
+                  OpenedTweetWidget(tweet: _tweet),
                   DividerWidget(),
                   TweetActionsWidget(
                     tweet: _tweet,
@@ -92,8 +92,8 @@ class _BigTweetPageState extends State<BigTweetPage> {
                     onRetweet: () => _onPressRetweet(_tweet),
                   ),
                   DividerWidget(),
-                  CommentListWidget(
-                    comments: _commentController.comments!,
+                  ReplyListWidget(
+                    replies: _replyController.replies,
                     replyingToNickname: _tweet.profile.nickname,
                   )
                 ],

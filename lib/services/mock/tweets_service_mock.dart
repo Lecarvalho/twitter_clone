@@ -29,11 +29,11 @@ class TweetsServiceMock implements TweetsServiceBase {
   Future<void> createTweet({
     required String text,
     required String myProfileId,
-    required DateTime creationDate,
+    required DateTime createdAt,
   }) async {
     print("$text");
     print("$myProfileId");
-    print("${creationDate.toString()}");
+    print("${createdAt.toString()}");
 
     await MockTools.simulateQuickRequestDelay();
   }

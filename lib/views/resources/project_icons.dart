@@ -8,8 +8,8 @@ class ProjectIcons {
   static const double _smallIconSize = 18;
   static const double _bigIconSize = 23;
 
-  static Image get comment => Image.asset(
-        AssetsIcons.comment,
+  static Image get reply => Image.asset(
+        AssetsIcons.reply,
         width: _microIconSize,
         height: _microIconSize,
       );

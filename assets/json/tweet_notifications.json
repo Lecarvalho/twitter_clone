@@ -4,7 +4,7 @@
         "tweetId": "1",
         "tweet": {
             "id": "1",
-            "creationDate": "2021-02-21T07:53:00.782Z",
+            "createdAt": "2021-02-21T07:53:00.782Z",
             "text": "Even fortnite team put theirs microservices on downtime and theirs 200 million users on hold so they can repair some big issues.",
             "profileId": "1",
             "profile": {
@@ -20,7 +20,7 @@
         "tweetId": "4",
         "tweet": {
             "id": "4",
-            "creationDate": "2021-02-20T23:28:56.782Z",
+            "createdAt": "2021-02-20T23:28:56.782Z",
             "text": "Hodl the rainforests!!",
             "profileId": "4",
             "profile": {
@@ -36,7 +36,7 @@
         "tweetId": "6",
         "tweet": {
             "id": "6",
-            "creationDate": "2021-02-01T23:28:56.782Z",
+            "createdAt": "2021-02-01T23:28:56.782Z",
             "text": "Y’all ready for this next post?",
             "profileId": "6",
             "profile": {

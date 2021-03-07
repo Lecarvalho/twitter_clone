@@ -5,10 +5,10 @@ import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/rounded_bottom_sheet.dart';
-import 'package:twitter_clone/views/widgets/divider_widget.dart';
-import 'package:twitter_clone/views/widgets/tweet/tweet_simple_widget.dart';
 
+import '../divider_widget.dart';
 import 'confirm_retweet.dart';
+import 'tweet_line/single_tweet_widget.dart';
 
 class TweetListWidget extends StatefulWidget {
   final List<TweetModel>? tweets;
@@ -73,10 +73,10 @@ class _TweetListWidgetState extends State<TweetListWidget> {
           padding: EdgeInsets.only(left: 10, right: 10),
           child: GestureDetector(
             onTap: () => Navigator.of(context).pushNamed(
-              Routes.big_tweet,
+              Routes.opened_tweet,
               arguments: tweet.id,
             ),
-            child: TweetSimpleWidget(
+            child: SingleTweetWidget(
               tweet: tweet,
               onHeart: () => _onPressHeart(tweet),
               onRetweet: () => _onPressRetweet(tweet),

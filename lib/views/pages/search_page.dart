@@ -56,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
         title: SearchTextboxWidget(
           controller: _searchTextController,
         ),
-        action: FlatButton(
+        action: MaterialButton(
           onPressed: () => Navigator.pop(context),
           textColor: ProjectColors.blueActive,
           child: Text("Cancel"),

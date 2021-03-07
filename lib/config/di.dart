@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:twitter_clone/controllers/comments_controller.dart';
+import 'package:twitter_clone/controllers/reply_controller.dart';
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/controllers/search_controller.dart';
 import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
-import 'package:twitter_clone/services/mock/comment_service_mock.dart';
+import 'package:twitter_clone/services/mock/reply_service_mock.dart';
 import 'package:twitter_clone/services/mock/search_service_mock.dart';
 import 'package:twitter_clone/services/mock/auth_service_mock.dart';
 import 'package:twitter_clone/services/mock/profile_service_mock.dart';
@@ -34,8 +34,8 @@ class Di {
             service: TweetNotificationsServiceMock(),
           ),
         ),
-        Provider<CommentController>(
-          create: (_) => CommentController(service: CommentServiceMock()),
+        Provider<ReplyController>(
+          create: (_) => ReplyController(service: ReplyServiceMock()),
         ),
         Provider<SearchController>(
           create: (_) => SearchController(service: SearchServiceMock()),

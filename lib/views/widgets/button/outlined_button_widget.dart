@@ -14,6 +14,7 @@ class OutlinedButtonWidget extends BaseButtonWidget {
           height: 30,
           text: text,
           textStyle: Styles.subtitle2Blue,
+          color: ProjectColors.white,
           onPressed: onPressed,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

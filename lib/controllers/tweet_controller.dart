@@ -35,7 +35,7 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
       await service.createTweet(
         text: text,
         myProfileId: myProfileId,
-        creationDate: DateTime.now(),
+        createdAt: DateTime.now(),
       );
     } catch (e) {
       print("Error on createTweet: " + e.toString());

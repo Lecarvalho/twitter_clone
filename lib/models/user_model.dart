@@ -1,25 +1,25 @@
 import 'model_base.dart';
 
 class UserModel extends ModelBase {
-  late String id;
+  String id;
   String name;
-  String? email;
   String nickname;
+  late String email;
 
   UserModel({
+    required this.id,
     required this.name,
-    required this.email,
     required this.nickname,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> data) {
     var user = UserModel(
+      id: data["id"],
       name: data["name"],
-      email: data["email"],
       nickname: data["nickname"],
     );
 
-    user.id = data["id"];
+    user.email = data["email"];
     
     return user;
   }

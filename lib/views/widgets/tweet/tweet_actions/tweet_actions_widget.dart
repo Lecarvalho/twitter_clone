@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 
-import 'comment_icon_widget.dart';
+import 'reply_icon_widget.dart';
 import 'heart_icon_widget.dart';
 import 'retweet_icon_widget.dart';
 
@@ -26,10 +26,10 @@ class TweetActionsWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CommentIconWidget(
-          isCommented: false,
-          commentCount: tweet.commentCount,
-          onComment: () => _onTapComment(context),
+        ReplyIconWidget(
+          isReplyed: false,
+          repliesCount: tweet.repliesCount,
+          onReply: () => _onTapComment(context),
         ),
         RetweetIconWidget(
           didIRetweet: tweet.didIRetweet,
