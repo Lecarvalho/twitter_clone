@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'service_provider_base.dart';
 
-class ServiceProvider extends ServiceProviderBase {
+class DatabaseProvider extends ServiceProviderBase {
 
   final firestore = FirebaseFirestore.instance;
 

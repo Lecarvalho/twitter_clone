@@ -13,8 +13,7 @@ void main() async {
 
   Graphical.setSystemUIOverlayStyle();
   await Graphical.setPreferredOrientations();
-
-  // await InitService.init();
+  
   runApp(Di.init(MyApp()));
 }
 

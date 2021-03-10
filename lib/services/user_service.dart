@@ -1,15 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_clone/models/user_model.dart';
-import 'package:twitter_clone/services/service_provider_base.dart';
+import 'package:twitter_clone/services/auth_provider.dart';
 
 import 'user_service_base.dart';
 
 class UserService extends UserServiceBase {
-  
-  final _firebaseAuth = FirebaseAuth.instance;
 
-  UserService(ServiceProviderBase provider) : super(provider);
+  late AuthProvider _provider;
+
+  UserService(AuthProvider provider) : super(provider){
+    _provider = provider;
+  }
 
   @override
   Future<UserServiceResponse> createOrSignInWithGoogle() async {
@@ -29,7 +31,7 @@ class UserService extends UserServiceBase {
       );
 
       final userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
+          await _provider.firebaseAuth.signInWithCredential(credential);
 
       return _returnSuccess(userCredential);
     } on FirebaseAuthException catch (e) {
@@ -49,7 +51,7 @@ class UserService extends UserServiceBase {
     required String password,
   }) async {
     try {
-      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+      final userCredential = await _provider.firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -73,7 +75,7 @@ class UserService extends UserServiceBase {
     String password,
   ) async {
     try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      final userCredential = await _provider.firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -91,12 +93,12 @@ class UserService extends UserServiceBase {
 
   @override
   Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+    await _provider.firebaseAuth.signOut();
   }
 
   @override
   Future<UserServiceResponse> tryAutoSigIn() async {
-    if (_firebaseAuth.currentUser == null) {
+    if (_provider.firebaseAuth.currentUser == null) {
       return UserServiceResponse(
         message: "",
       );
@@ -104,9 +106,9 @@ class UserService extends UserServiceBase {
 
     return UserServiceResponse.success(
       UserModel(
-        displayName: _firebaseAuth.currentUser!.displayName!,
-        email: _firebaseAuth.currentUser!.email!,
-        uid: _firebaseAuth.currentUser!.uid,
+        displayName: _provider.firebaseAuth.currentUser!.displayName!,
+        email: _provider.firebaseAuth.currentUser!.email!,
+        uid: _provider.firebaseAuth.currentUser!.uid,
       ),
     );
   }
