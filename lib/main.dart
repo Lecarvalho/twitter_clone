@@ -5,7 +5,6 @@ import 'config/app_config.dart';
 import 'views/graphical.dart';
 import 'views/routes.dart';
 import 'config/di.dart';
-import 'services/init_service.dart';
 import 'views/resources/colors.dart';
 import 'views/resources/styles.dart';
 
@@ -15,7 +14,7 @@ void main() async {
   Graphical.setSystemUIOverlayStyle();
   await Graphical.setPreferredOrientations();
 
-  await InitService.init();
+  // await InitService.init();
   runApp(Di.init(MyApp()));
 }
 

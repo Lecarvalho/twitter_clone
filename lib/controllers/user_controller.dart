@@ -141,11 +141,11 @@ class UserController extends ControllerBase<UserServiceBase> {
     );
   }
 
-  Future<void> signOff() async {
+  Future<void> signOut() async {
     try {
-      service.signOff();
+      service.signOut();
     } catch (e) {
-      print("Error on signOff: ${e.toString()}");
+      print("Error on signOut: ${e.toString()}");
     }
   }
 

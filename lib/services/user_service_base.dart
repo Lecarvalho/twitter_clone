@@ -1,8 +1,11 @@
 import 'package:twitter_clone/models/user_model.dart';
+import 'package:twitter_clone/services/service_provider_base.dart';
 
 import 'service_base.dart';
 
 abstract class UserServiceBase extends ServiceBase {
+  UserServiceBase(ServiceProviderBase provider) : super(provider);
+
   Future<UserServiceResponse> createOrSignInWithGoogle();
 
   Future<UserServiceResponse> createWithEmailAndPassword({
@@ -16,7 +19,7 @@ abstract class UserServiceBase extends ServiceBase {
     String password,
   );
 
-  Future<void> signOff();
+  Future<void> signOut();
 
   Future<UserServiceResponse> tryAutoSigIn();
 }
@@ -38,6 +41,10 @@ class UserServiceResponse {
       user: user,
     );
   }
+
+  factory UserServiceResponse.cancel() {
+    return UserServiceResponse(message: "");
+  }
 }
 
 class UserServiceResponseMessage {
@@ -49,5 +56,5 @@ class UserServiceResponseMessage {
   static const String general_error =
       "We cannot make this right now, please try again later";
   static const String success = "Success";
-  static const String welcome_please_login = "Welcome! Please login.";
+  static const String user_not_found = "User not found, please try again";
 }

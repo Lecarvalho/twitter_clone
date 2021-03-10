@@ -2,8 +2,11 @@ import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/tweets_service_base.dart';
 
 import 'mock_tools.dart';
+import 'service_provider_mock.dart';
 
-class TweetsServiceMock implements TweetsServiceBase {
+class TweetsServiceMock extends TweetsServiceBase {
+  TweetsServiceMock(ServiceProviderMock provider) : super(provider);
+
   @override
   Future<List<TweetModel>?> getTweets(String myProfileId) async {
 

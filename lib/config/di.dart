@@ -10,37 +10,43 @@ import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
 import 'package:twitter_clone/services/mock/profile_service_mock.dart';
 import 'package:twitter_clone/services/mock/reply_service_mock.dart';
 import 'package:twitter_clone/services/mock/search_service_mock.dart';
+import 'package:twitter_clone/services/mock/service_provider_mock.dart';
 import 'package:twitter_clone/services/mock/tweet_notifications_service_mock.dart';
 import 'package:twitter_clone/services/mock/tweets_service_mock.dart';
-import 'package:twitter_clone/services/mock/user_service_mock.dart';
+import 'package:twitter_clone/services/service_provider.dart';
+import 'package:twitter_clone/services/user_service.dart';
 
 class Di {
   Di._();
 
   static init<T>(child) {
+
+    final providerMock = ServiceProviderMock();
+    final providerFirebase = ServiceProvider();
+    
     return MultiProvider(
       providers: [
         Provider<TweetController>(
-          create: (_) => TweetController(service: TweetsServiceMock()),
+          create: (_) => TweetController(service: TweetsServiceMock(providerMock)),
         ),
         Provider<ProfileController>(
-          create: (_) => ProfileController(service: ProfileServiceMock()),
+          create: (_) => ProfileController(service: ProfileServiceMock(providerMock)),
         ),
         Provider<TweetNotificationsController>(
           create: (_) => TweetNotificationsController(
-            service: TweetNotificationsServiceMock(),
+            service: TweetNotificationsServiceMock(providerMock),
           ),
         ),
         Provider<ReplyController>(
-          create: (_) => ReplyController(service: ReplyServiceMock()),
+          create: (_) => ReplyController(service: ReplyServiceMock(providerMock)),
         ),
         Provider<SearchController>(
-          create: (_) => SearchController(service: SearchServiceMock()),
+          create: (_) => SearchController(service: SearchServiceMock(providerMock)),
         ),
         Provider<UserController>(
           create: (_) => UserController(
-            service: UserServiceMock(),
-            profileService: ProfileServiceMock(),
+            service: UserService(providerFirebase),
+            profileService: ProfileServiceMock(providerMock),
           ),
         )
       ],

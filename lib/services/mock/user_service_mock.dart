@@ -2,8 +2,11 @@ import 'package:twitter_clone/models/user_model.dart';
 
 import '../user_service_base.dart';
 import 'mock_tools.dart';
+import 'service_provider_mock.dart';
 
-class UserServiceMock implements UserServiceBase {
+class UserServiceMock extends UserServiceBase {
+  UserServiceMock(ServiceProviderMock provider) : super(provider);
+
   @override
   Future<UserServiceResponse> createOrSignInWithGoogle() async {
     UserServiceResponse response;
@@ -96,10 +99,10 @@ class UserServiceMock implements UserServiceBase {
   }
 
   @override
-  Future<void> signOff() async {
+  Future<void> signOut() async {
     await MockTools.simulateQuickRequestDelay();
 
-    print("Signoff!");
+    print("signOut!");
   }
 
   @override
@@ -124,7 +127,7 @@ class UserServiceMock implements UserServiceBase {
 
       if (user == null)
         response = UserServiceResponse(
-          message: UserServiceResponseMessage.welcome_please_login,
+          message: "",
         );
       else {
         response = UserServiceResponse.success(user);

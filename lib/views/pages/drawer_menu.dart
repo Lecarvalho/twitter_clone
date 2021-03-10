@@ -41,7 +41,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
               SizedBox(height: 25),
               GestureDetector(
                 onTap: () {
-                  _userController.signOff();
+                  _userController.signOut();
                   Navigator.of(context).pushNamedAndRemoveUntil(Routes.login, (route) => false);
                 },
                 child: Text("Logoff"),

@@ -2,8 +2,11 @@ import 'package:twitter_clone/models/reply_model.dart';
 
 import '../reply_service_base.dart';
 import 'mock_tools.dart';
+import 'service_provider_mock.dart';
 
-class ReplyServiceMock implements ReplyServiceBase {
+class ReplyServiceMock extends ReplyServiceBase {
+  ReplyServiceMock(ServiceProviderMock provider) : super(provider);
+
   @override
   Future<List<ReplyModel>?> getReplies(String tweetId) async {
     var replies = await MockTools.jsonToModelList<ReplyModel>(

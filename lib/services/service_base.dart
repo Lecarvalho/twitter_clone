@@ -1,5 +1,9 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'service_provider_base.dart';
 
 abstract class ServiceBase {
-  // final firestore = FirebaseFirestore.instance;
+  ServiceProviderBase provider;
+
+  ServiceBase(this.provider) {
+    provider.init();
+  }
 }

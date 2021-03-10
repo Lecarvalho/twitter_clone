@@ -5,11 +5,12 @@ class PopMessage {
   PopMessage._();
 
   static void show(String message, BuildContext context) {
-    Toast.show(
-      message,
-      context,
-      duration: Toast.LENGTH_LONG,
-      gravity: Toast.BOTTOM,
-    );
+    if (message.isNotEmpty)
+      Toast.show(
+        message,
+        context,
+        duration: Toast.LENGTH_LONG,
+        gravity: Toast.BOTTOM,
+      );
   }
 }

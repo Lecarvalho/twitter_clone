@@ -2,8 +2,11 @@ import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/services/mock/mock_tools.dart';
 
 import '../profile_service_base.dart';
+import 'service_provider_mock.dart';
 
-class ProfileServiceMock implements ProfileServiceBase {
+class ProfileServiceMock extends ProfileServiceBase {
+  ProfileServiceMock(ServiceProviderMock provider) : super(provider);
+
   @override
   Future<ProfileModel> createProfile(String id, String name) async {
     var profile = await MockTools.jsonToModel<ProfileModel>(
