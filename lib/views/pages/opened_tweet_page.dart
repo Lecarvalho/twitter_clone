@@ -50,14 +50,14 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
   void _onPressHeart(TweetModel tweet) async {
     await _tweetController.toggleLikeTweet(
       tweet,
-      _profileController.myProfile!.id,
+      _profileController.myProfile.id,
     );
 
     setState(() {});
   }
 
   void _onPressRetweet(TweetModel tweet) {
-    if (_tweet.canRetweet(_profileController.myProfile!.id)) {
+    if (_tweet.canRetweet(_profileController.myProfile.id)) {
       showModalBottomSheet(
         context: context,
         shape: RoundedBottomSheet(),
@@ -65,7 +65,7 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
           onConfirmRetweet: () async {
             await _tweetController.retweet(
               tweet,
-              _profileController.myProfile!.id,
+              _profileController.myProfile.id,
             );
             setState(() {});
             Navigator.of(context).pop();
@@ -94,7 +94,7 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
                   DividerWidget(),
                   ReplyListWidget(
                     replies: _replyController.replies,
-                    replyingToNickname: _tweet.profile.nickname,
+                    replyingToNickname: _tweet.profile.nickname!,
                   )
                 ],
               ),

@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _tweetController = Di.instanceOf<TweetController>(context);
 
     var profileId = ModalRoute.of(context)!.settings.arguments?.toString() ??
-        _profileController.myProfile!.id;
+        _profileController.myProfile.id;
 
     await _profileController.getProfile(profileId);
     await _tweetController.getProfileTweets(profileId);
@@ -41,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   OutlinedButtonWidget _editProfileButton() {
     return OutlinedButtonWidget(
       onPressed: () {
-        Navigator.of(context).pushNamed(Routes.create_edit_profile);
+        Navigator.of(context).pushNamed(Routes.edit_profile);
       },
       text: "Edit profile",
     );
@@ -72,11 +72,15 @@ class _ProfilePageState extends State<ProfilePage> {
   BaseButtonWidget _actionButton() {
     var myProfile = _profileController.myProfile;
 
-    return _profileController.profile!.id == myProfile!.id
-        ? _editProfileButton()
-        : myProfile.following.contains(_profileController.profile!.id)
-            ? _followingButton()
-            : _followButton();
+    if (_profileController.profile!.id == myProfile.id) {
+      return _editProfileButton();
+    }
+
+    if (myProfile.following?.contains(_profileController.profile!.id) ?? false){
+      return _followingButton();
+    }
+
+    return _followButton();
   }
 
   @override

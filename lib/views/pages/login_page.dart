@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
-import 'package:twitter_clone/views/routes.dart';
-import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
+import 'package:twitter_clone/controllers/user_controller.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/project_icons.dart';
@@ -67,17 +67,12 @@ class _LoginPageState extends State<LoginPage> {
   void _onPressLogin(BuildContext context) async {
     _closeKeyboard();
 
-    var result = await _userController.signInWithEmailPassword(
+    var response = await _userController.signInWithEmailAndPassword(
       _emailTextController.text,
       _passwordTextController.text,
     );
 
-    if (_userController.amILoggedIn) {
-      await _profileController.getMyProfile(_userController.user!.id);
-      Navigator.of(context).pushNamed(Routes.home);
-    } else {
-      PopMessage.show(result, context);
-    }
+    _handleLoginResponse(response);
   }
 
   void _onPressCreateAccount(BuildContext context) {
@@ -85,12 +80,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onPressLoginWithGoogle() async {
-    var result = await _userController.signInWithGoogle();
-    if (_userController.amILoggedIn) {
-      await _profileController.getMyProfile(_userController.user!.id);
-      Navigator.of(context).pushReplacementNamed(Routes.home);
-    } else {
-      PopMessage.show(result, context);
+    var response = await _userController.createOrSignInWithGoogle();
+
+    _handleLoginResponse(response);
+  }
+
+  void _handleLoginResponse(MyProfileResponse response) {
+    if (response.type == ProfileStatusType.error) {
+      PopMessage.show(response.message, context);
+      return;
+    }
+
+    if (response.type == ProfileStatusType.complete) {
+      _profileController.setMyProfile = _userController.myProfile;
+      Navigator.of(context).pushNamed(Routes.home);
+      return;
+    }
+
+    if (response.type == ProfileStatusType.incomplete) {
+      _profileController.setMyProfile = _userController.myProfile;
+      Navigator.of(context).pushNamed(Routes.edit_profile);
+      return;
     }
   }
 

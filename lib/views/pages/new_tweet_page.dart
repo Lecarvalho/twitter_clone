@@ -43,7 +43,7 @@ class _NewTweetPageState extends State<NewTweetPage> {
     if (_textController.text.isNotEmpty) {
       await _tweetController.createTweet(
         _textController.text,
-        _profileController.myProfile!.id,
+        _profileController.myProfile.id,
       );
 
       Navigator.of(context).pushReplacementNamed(Routes.home);
@@ -64,8 +64,8 @@ class _NewTweetPageState extends State<NewTweetPage> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: TweetCreateNewWidget(
-          avatar: _profileController.myProfile!.avatar,
-          myProfileId: _profileController.myProfile!.id,
+          avatar: _profileController.myProfile.avatar!,
+          myProfileId: _profileController.myProfile.id,
           controller: _textController,
         ),
       ),

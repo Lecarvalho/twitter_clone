@@ -1,40 +1,55 @@
 import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/services/mock/mock_tools.dart';
 
 import '../profile_service_base.dart';
-import 'mock_tools.dart';
 
 class ProfileServiceMock implements ProfileServiceBase {
   @override
-  Future<ProfileModel?> getProfile(String profileId) async {
-    var profiles = await MockTools.jsonToModelList<ProfileModel>(
-      "assets/json/profiles.json",
-      (data) => ProfileModel.fromMapGetProfile(data),
+  Future<ProfileModel> createProfile(String id, String name) async {
+    var profile = await MockTools.jsonToModel<ProfileModel>(
+      "assets/json/incomplete_profile.json",
+      (data) => ProfileModel.fromCreation(data),
     );
 
-    await MockTools.simulateRequestDelay();
-
-    return profiles?.firstWhere((profile) => profile.id == profileId);
+    return profile!;
   }
 
   @override
-  Future<ProfileResponseType> createProfile({
-    required String userId,
-    required String bio,
-    required String avatar,
-    required DateTime inscriptionDate,
-    required String name,
-    required String nickname,
-  }) async {
-    print("name: $name");
-    print("userId: $userId");
-    print("avatar: $avatar");
-    print("inscriptionDate: ${inscriptionDate.toString()}");
-    print("bio: $bio");
-    print("nickname: $nickname");
+  Future<ProfileModel?> getProfile(String id) async {
+    // return null; path 1: to create a new profile
+    // return null;
 
-    await MockTools.simulateRequestDelay();
+    // return uncomplete; path 2: to redirect to complete profile page
+    // return await MockTools.jsonToModel<ProfileModel2>(
+    //   "assets/json/incomplete_profile.json",
+    //   (data) => ProfileModel2.fromFullInfo(data),
+    // );
 
-    return ProfileResponseType.success;
+    // return complete; to redirect to login (when on login screen)
+    var profiles = await MockTools.jsonToModelList<ProfileModel>(
+      "assets/json/profiles.json",
+      (data) => ProfileModel.fromFullInfo(data),
+    );
+
+    if (profiles != null) {
+      var profilesFound = profiles.where((profile) => profile.id == id);
+      if (profilesFound.length == 0)
+        return null;
+      else
+        return profilesFound.first;
+    }
+  }
+
+  @override
+  Future<ProfileModel> updateProfile(ProfileModel profile) async {
+    print("id: ${profile.id}");
+    print("avatar: ${profile.avatar}");
+    print("bio: ${profile.bio}");
+    print("nickname: ${profile.nickname}");
+
+    await MockTools.simulateQuickRequestDelay();
+
+    return (await getProfile(profile.id))!;
   }
 
   @override
@@ -48,23 +63,12 @@ class ProfileServiceMock implements ProfileServiceBase {
   }
 
   @override
-  Future<ProfileResponseType> updateProfile(ProfileModel myProfile) async {
-    print("id: ${myProfile.id}");
-    print("avatar: ${myProfile.avatar}");
-    print("bio: ${myProfile.bio}");
-
-    await MockTools.simulateQuickRequestDelay();
-    
-    return ProfileResponseType.success;
-  }
-
-  @override
   Future<void> follow(String myProfileId, String toFollowUserId) async {
     print("myProfileId $myProfileId");
     print("update followingCount +1");
     print("update toFollowUser followingCount +1");
     print("following $toFollowUserId");
-    
+
     await MockTools.simulateQuickRequestDelay();
   }
 

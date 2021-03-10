@@ -15,13 +15,7 @@ class SingleTweetWidget extends TweetScaffoldWidget {
     required this.onHeart,
     this.onRetweet,
   }) : super(
-          avatar: tweet.profile.avatar,
-          profileId: tweet.profileId,
-          profileName: tweet.profile.name,
-          profileNickname: tweet.profile.nickname,
-          tweetCreationTimeAgo: tweet.creationTimeAgo,
-          tweetId: tweet.id,
-          text: tweet.text,
+          asTweet: tweet,
         );
 
   @override

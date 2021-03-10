@@ -8,15 +8,20 @@ class SearchServiceMock implements SearchServiceBase {
   Future<List<ProfileModel>?> searchProfiles(String searchTerm) async {
     var profiles = await MockTools.jsonToModelList<ProfileModel>(
       "assets/json/profiles.json",
-      (data) => ProfileModel.fromMapSingleTweet(data),
+      (data) => ProfileModel.fromBasicInfo(data),
     );
 
     await MockTools.simulateQuickRequestDelay();
 
     print(searchTerm);
 
-    return profiles?.where((ProfileModel profile) =>
-        profile.name.toLowerCase().startsWith(searchTerm) ||
-        profile.nickname.toLowerCase().startsWith(searchTerm)).toList();
+    return profiles
+        ?.where(
+          (ProfileModel profile) =>
+              profile.isProfileComplete &&
+              (profile.name.toLowerCase().startsWith(searchTerm) ||
+                  profile.nickname!.toLowerCase().startsWith(searchTerm)),
+        )
+        .toList();
   }
 }

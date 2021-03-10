@@ -47,7 +47,7 @@ class _ReplyPageState extends State<ReplyPage> {
     await _replyController.replyTweet(
       replyingToTweetId: _replyingTweet.id,
       text: _textController.text,
-      myProfileId: _profileController.myProfile!.id,
+      myProfileId: _profileController.myProfile.id,
       replyingToProfileId: _replyingTweet.profileId
     );
 
@@ -69,10 +69,10 @@ class _ReplyPageState extends State<ReplyPage> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: WriteReplyWidget(
-          avatar: _profileController.myProfile!.avatar,
-          myProfileId: _profileController.myProfile!.id,
+          avatar: _profileController.myProfile.avatar!,
+          myProfileId: _profileController.myProfile.id,
           controller: _textController,
-          replyingToNickname: _replyingTweet.profile.nickname,
+          replyingToNickname: _replyingTweet.profile.nickname!,
         ),
       ),
     );

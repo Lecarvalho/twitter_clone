@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 import 'profile_name_widget.dart';
@@ -19,7 +19,7 @@ class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ProfilePictureWidget(
-          avatar: profile.avatar,
+          avatar: profile.avatar!,
           profilePicSize: ProfilePicSize.small2,
           profileId: profile.id,
           onTap: () => Navigator.of(context).pushNamed(
@@ -38,7 +38,7 @@ class ProfilePictureNameNickHorizontalWidget extends StatelessWidget {
             ),
             SizedBox(height: 5),
             ProfileNicknameWidget(
-              profileNickname: profile.nickname,
+              profileNickname: profile.nickname!,
               textStyle: Styles.subtitle1Gray,
             )
           ],

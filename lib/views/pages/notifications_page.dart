@@ -32,7 +32,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<TweetNotificationModel>>(
       future: _tweetNotificationsController.getMyTweetsNotifications(
-        _profileController.myProfile!.id,
+        _profileController.myProfile.id,
       ),
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {

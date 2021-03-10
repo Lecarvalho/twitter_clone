@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
-import 'package:twitter_clone/views/routes.dart';
+import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/user_controller.dart';
+import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
@@ -18,14 +19,16 @@ class CreateUserPage extends StatefulWidget {
 class _CreateUserPageState extends State<CreateUserPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _nicknameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   late UserController _userController;
+  late ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
     _userController = Di.instanceOf(context);
+    _profileController = Di.instanceOf(context);
+
     super.didChangeDependencies();
   }
 
@@ -36,28 +39,18 @@ class _CreateUserPageState extends State<CreateUserPage> {
   void _onPressNext(BuildContext context) async {
     _closeKeyboard();
 
-    var result = await _userController.createUserWithEmailPassword(
+    var response = await _userController.createWithEmailAndPassword(
       email: _emailController.text,
       name: _nameController.text,
-      nickname: _nicknameController.text,
       password: _passwordController.text,
     );
 
-    if (result == "Success") {
-      var result = await _userController.signInWithEmailPassword(
-        _emailController.text,
-        _passwordController.text,
-      );
-
-      if (_userController.amILoggedIn) {
-        PopMessage.show("We are almost done...", context);
-
-        Navigator.of(context).pushReplacementNamed(Routes.create_edit_profile);
-      } else {
-        PopMessage.show(result, context);
-      }
+    if (response.type == ProfileStatusType.error) {
+      PopMessage.show(response.message, context);
     } else {
-      PopMessage.show(result, context);
+      PopMessage.show("We are almost done...", context);
+      _profileController.setMyProfile = _userController.myProfile;
+      Navigator.of(context).pushReplacementNamed(Routes.edit_profile);
     }
   }
 
@@ -89,12 +82,6 @@ class _CreateUserPageState extends State<CreateUserPage> {
                     controller: _emailController,
                   ),
                   SizedBox(height: 20),
-                  TextboxWidget(
-                    textboxType: TextboxType.nickname,
-                    hintText: "Nickname",
-                    maxLength: AppConfig.nicknameMaxCharacters,
-                    controller: _nicknameController,
-                  ),
                   SizedBox(height: 20),
                   TextboxWidget(
                     textboxType: TextboxType.password,

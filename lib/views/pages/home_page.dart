@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     _tweetController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
-    await _tweetController.getTweets(_profileController.myProfile!.id);
+    await _tweetController.getTweets(_profileController.myProfile.id);
 
     setState(() {
       _isPageReady = true;

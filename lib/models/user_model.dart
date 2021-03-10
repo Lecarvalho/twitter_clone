@@ -1,36 +1,26 @@
 import 'model_base.dart';
 
 class UserModel extends ModelBase {
-  String id;
-  String name;
-  String nickname;
-  late String email;
-
+  String uid;
+  String email;
+  String displayName;
   UserModel({
-    required this.id,
-    required this.name,
-    required this.nickname,
+    required this.uid,
+    required this.email,
+    required this.displayName,
   });
 
-  factory UserModel.fromMap(Map<String, dynamic> data) {
-    var user = UserModel(
-      id: data["id"],
-      name: data["name"],
-      nickname: data["nickname"],
-    );
-
-    user.email = data["email"];
-    
-    return user;
+  static bool checkFields(String _email, String _password, String _name){
+    return _name.isNotEmpty && isValidEmailPassword(_email, _password);
   }
 
-  static bool isValidEmailPassword(String email, String password) {
-    var isValidPwd = password.isNotEmpty && password.length > 3;
+  static bool isValidEmailPassword(String _email, String _password) {
+    var isValidPwd = _password.isNotEmpty && _password.length > 3;
 
-    return _isValidEmail(email) && isValidPwd;
+    return _isValidEmail(_email) && isValidPwd;
   }
 
-  static bool _isValidEmail(String email) {
-    return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+  static bool _isValidEmail(String _email) {
+    return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(_email);
   }
 }

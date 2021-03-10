@@ -9,21 +9,21 @@ class MockTools {
 
   static Future<Model?> jsonToModel<Model extends ModelBase>(
       String jsonPath, Function(Map<String, dynamic> data) fromMap) async {
-    var jsonObject = await _getJsonObject(jsonPath);
+    var jsonObject = await getJsonObject(jsonPath);
 
     return fromMap(jsonObject);
   }
 
   static Future<List<Model>?> jsonToModelList<Model extends ModelBase>(
       String jsonPath, Function(Map<String, dynamic> data) fromMap) async {
-    var jsonObject = await _getJsonObject(jsonPath);
+    var jsonObject = await getJsonObject(jsonPath);
 
     var listObjects = jsonObject.map((itemJson) => fromMap(itemJson));
 
     return List<Model>.from(listObjects);
   }
 
-  static Future<dynamic> _getJsonObject(String jsonPath) async {
+  static Future<dynamic> getJsonObject(String jsonPath) async {
     var jsonString = await rootBundle.loadString(jsonPath);
     return json.decode(jsonString);
   }

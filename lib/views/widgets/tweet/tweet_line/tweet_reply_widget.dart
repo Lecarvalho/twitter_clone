@@ -12,13 +12,7 @@ final String replyingToNickname;
     required this.reply,
     required this.replyingToNickname,
   }) : super(
-          avatar: reply.profile.avatar,
-          profileId: reply.profileId,
-          profileName: reply.profile.name,
-          profileNickname: reply.profile.nickname,
-          tweetCreationTimeAgo: reply.creationTimeAgo,
-          tweetId: reply.id,
-          text: reply.text,
+          asTweet: reply,
         );
 
   @override

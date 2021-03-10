@@ -24,7 +24,7 @@ class TweetNotificationWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProfilePictureWidget(
-                avatar: tweetNotification.tweet.profile.avatar,
+                avatar: tweetNotification.tweet.profile.avatar!,
                 profileId: tweetNotification.tweet.profileId,
                 profilePicSize: ProfilePicSize.small2,
                 onTap: () => Navigator.of(context).pushNamed(

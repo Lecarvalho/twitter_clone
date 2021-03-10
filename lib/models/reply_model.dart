@@ -28,7 +28,7 @@ class ReplyModel extends AsTweetModelBase {
       profileId: data["profileId"],
       text: data["text"],
       createdAt: DateTime.parse(data["createdAt"]),
-      profile: ProfileModel.fromMapSingleTweet(data["profile"]),
+      profile: ProfileModel.fromBasicInfo(data["profile"]),
       replyingToProfileId: data["replyingToProfileId"],
       replyingToTweetId: data["replyingToTweetId"],
     );

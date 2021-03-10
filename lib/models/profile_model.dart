@@ -1,33 +1,59 @@
 import 'package:intl/intl.dart';
+import 'package:twitter_clone/models/model_base.dart';
 
-import 'user_model.dart';
+class ProfileModel extends ModelBase {
+  String id;
+  String name;
+  DateTime? createdAt;
+  String? nickname;
+  String? avatar;
+  String? bio;
+  int? followersCount;
+  List<String>? following;
 
-class ProfileModel extends UserModel {
   ProfileModel({
     required this.id,
-    required String name,
-    required this.avatar,
-    required String nickname,
-  }) : super(
-          name: name,
-          id: id,
-          nickname: nickname,
-        );
+    required this.name,
+    this.createdAt,
+    this.nickname,
+    this.avatar,
+    this.bio,
+    this.followersCount,
+    this.following,
+  });
 
-  String id;
-  String avatar;
-  
-  late String bio;
-  late DateTime inscriptionDate;
-  late List<String> following;
-  late int followersCount;
+  bool get isProfileComplete =>
+      nickname != null && avatar != null && bio != null;
 
-  int get followingCount => following.length;
+  int get followingCount => following?.length ?? 0;
 
-  String get inscriptionDateMonthYear =>
-      DateFormat.MMMM().add_y().format(inscriptionDate);
+  String get createdAtDateMonthYear =>
+      DateFormat.MMMM().add_y().format(createdAt!);
 
-  factory ProfileModel.fromMapSingleTweet(Map<String, dynamic> data) {
+  factory ProfileModel.fromCreation(Map<String, dynamic> data) {
+    return ProfileModel(
+      id: data["id"],
+      name: data["name"],
+      createdAt: DateTime.parse(data["createdAt"]),
+    );
+  }
+
+  factory ProfileModel.fromFullInfo(Map<String, dynamic> data) {
+    return ProfileModel(
+      id: data["id"],
+      name: data["name"],
+      avatar: data["avatar"],
+      nickname: data["nickname"],
+      bio: data["bio"],
+      createdAt: DateTime.parse(data["createdAt"]),
+      followersCount: data["followersCount"] ?? 0,
+      following: data["following"] != null
+          ? List.from(data["following"])
+          : List.empty(),
+    );
+  }
+
+  factory ProfileModel.fromBasicInfo(Map<String, dynamic> data) {
     return ProfileModel(
       id: data["id"],
       name: data["name"],
@@ -36,20 +62,19 @@ class ProfileModel extends UserModel {
     );
   }
 
-  factory ProfileModel.fromMapGetProfile(Map<String, dynamic> data) {
-    var profile = ProfileModel(
-      id: data["id"],
-      name: data["name"],
-      avatar: data["avatar"],
-      nickname: data["nickname"],
-    );
+  static String checkFields(
+    String? newBio,
+    String? newNickname,
+    String? newAvatar,
+  ) {
+    if (newBio?.isEmpty ?? true) return "Please set a bio for your profile";
 
-    profile.bio = data["bio"];
-    profile.inscriptionDate = DateTime.parse(data["inscriptionDate"]);
-    profile.followersCount = data["followersCount"] ?? 0;
-    profile.following =
-        data["following"] != null ? List.from(data["following"]) : List.empty();
+    if (newNickname?.isEmpty ?? true)
+      return "Please set a nickname for your profile";
 
-    return profile;
+    if (newAvatar?.isEmpty ?? true)
+      return "Please set a picture for your profile";
+
+    return "Success";
   }
 }

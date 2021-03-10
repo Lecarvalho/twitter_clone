@@ -5,7 +5,6 @@ class Graphical {
   static void setSystemUIOverlayStyle() {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        // systemNavigationBarDividerColor: ProjectColors.grayDivider,
         systemNavigationBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: ProjectColors.white,
         statusBarBrightness: Brightness.light,

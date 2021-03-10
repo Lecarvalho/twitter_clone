@@ -43,7 +43,7 @@ class ProfileHeaderWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ProfilePictureWidget(
-                    avatar: profile.avatar,
+                    avatar: profile.avatar!,
                     profilePicSize: ProfilePicSize.large,
                     profileId: profile.id,
                   ),
@@ -56,17 +56,17 @@ class ProfileHeaderWidget extends StatelessWidget {
               SizedBox(height: 10),
               ProfileNameNickVerticalWidget(
                 profileName: profile.name,
-                profileNickname: profile.nickname,
+                profileNickname: profile.nickname!,
               ),
               SizedBox(height: 10),
-              Text(profile.bio),
+              Text(profile.bio!),
               SizedBox(height: 10),
               Row(
                 children: [
                   Icon(Icons.date_range, color: ProjectColors.gray),
                   SizedBox(width: 5),
                   Text(
-                    "Joined ${profile.inscriptionDateMonthYear}",
+                    "Joined ${profile.createdAtDateMonthYear}",
                     style: Styles.body2Gray,
                   ),
                 ],

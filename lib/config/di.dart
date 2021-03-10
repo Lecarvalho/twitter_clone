@@ -7,12 +7,12 @@ import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
+import 'package:twitter_clone/services/mock/profile_service_mock.dart';
 import 'package:twitter_clone/services/mock/reply_service_mock.dart';
 import 'package:twitter_clone/services/mock/search_service_mock.dart';
-import 'package:twitter_clone/services/mock/auth_service_mock.dart';
-import 'package:twitter_clone/services/mock/profile_service_mock.dart';
 import 'package:twitter_clone/services/mock/tweet_notifications_service_mock.dart';
 import 'package:twitter_clone/services/mock/tweets_service_mock.dart';
+import 'package:twitter_clone/services/mock/user_service_mock.dart';
 
 class Di {
   Di._();
@@ -20,9 +20,6 @@ class Di {
   static init<T>(child) {
     return MultiProvider(
       providers: [
-        Provider<UserController>(
-          create: (_) => UserController(service: AuthServiceMock()),
-        ),
         Provider<TweetController>(
           create: (_) => TweetController(service: TweetsServiceMock()),
         ),
@@ -39,13 +36,19 @@ class Di {
         ),
         Provider<SearchController>(
           create: (_) => SearchController(service: SearchServiceMock()),
+        ),
+        Provider<UserController>(
+          create: (_) => UserController(
+            service: UserServiceMock(),
+            profileService: ProfileServiceMock(),
+          ),
         )
       ],
       child: child,
     );
   }
 
-  static T instanceOf<T extends ControllerBase>(BuildContext context){
+  static T instanceOf<T extends ControllerBase>(BuildContext context) {
     return Provider.of<T>(context, listen: false);
   }
 }

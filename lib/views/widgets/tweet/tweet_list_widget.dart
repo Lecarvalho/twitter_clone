@@ -34,13 +34,13 @@ class _TweetListWidgetState extends State<TweetListWidget> {
   void _onPressHeart(TweetModel tweet) async {
     await _tweetController.toggleLikeTweet(
       tweet,
-      _profileController.myProfile!.id,
+      _profileController.myProfile.id,
     );
     setState(() {});
   }
 
   void _onPressRetweet(TweetModel tweet) async {
-    if (tweet.canRetweet(_profileController.myProfile!.id)) {
+    if (tweet.canRetweet(_profileController.myProfile.id)) {
       showModalBottomSheet(
         context: context,
         shape: RoundedBottomSheet(),
@@ -48,7 +48,7 @@ class _TweetListWidgetState extends State<TweetListWidget> {
           onConfirmRetweet: () async {
             await _tweetController.retweet(
               tweet,
-              _profileController.myProfile!.id,
+              _profileController.myProfile.id,
             );
             setState(() {});
             Navigator.of(context).pop();

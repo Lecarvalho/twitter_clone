@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/views/routes.dart';
-import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
@@ -15,36 +14,32 @@ import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/multiline_textbox_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/textbox_widget.dart';
 
-class CreateEditProfilePage extends StatefulWidget {
+class EditProfilePage extends StatefulWidget {
   @override
-  _CreateEditProfilePageState createState() => _CreateEditProfilePageState();
+  _EditProfilePageState createState() => _EditProfilePageState();
 }
 
-class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> {
   bool _isPageReady = false;
 
-  late UserController _userController;
   late ProfileController _profileController;
 
   String? _avatarLocalPath;
+  late bool _isProfileComplete;
 
   final _nameController = TextEditingController();
+  final _nicknameController = TextEditingController();
   final _bioController = TextEditingController();
 
   @override
   void didChangeDependencies() async {
-    _userController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
-    await _profileController.getMyProfile(_userController.user!.id);
+    _nameController.text = _profileController.myProfile.name;
+    _nicknameController.text = _profileController.myProfile.nickname ?? "";
+    _bioController.text = _profileController.myProfile.bio ?? "";
 
-    if (_profileController.hasProfile) {
-      _nameController.text = _profileController.profile!.name;
-      _bioController.text = _profileController.profile!.bio;
-    }
-    else {
-      _nameController.text = _userController.user!.name;
-    }
+    _isProfileComplete = _profileController.myProfile.isProfileComplete;
 
     setState(() {
       _isPageReady = true;
@@ -56,25 +51,15 @@ class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
   void _onPressSave(BuildContext context) async {
     _closeKeyboard(context);
 
-    String result;
+    String result = await _profileController.updateProfile(
+      bio: _bioController.text,
+      nickname: _nicknameController.text,
+      avatarLocalPath: _avatarLocalPath,
+    );
 
-    if (_profileController.hasProfile) {
-      result = await _profileController.updateProfile(
-        _bioController.text,
-        _avatarLocalPath,
-      );
-    } else {
-      result = await _profileController.createProfile(
-        avatarLocalPath: _avatarLocalPath,
-        bio: _bioController.text,
-        name: _userController.user!.name,
-        nickname: _userController.user!.nickname,
-        userId: _userController.user!.id,
-      );
-
-      if (result == "Success"){
-        await _profileController.getMyProfile(_userController.user!.id);
-      }
+    if (result != "Success"){
+      PopMessage.show(result, context);
+      return;
     }
 
     if (result == "Success") {
@@ -94,18 +79,17 @@ class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
   }
 
   ImageProvider? get avatar {
-
-    if (_avatarLocalPath?.isNotEmpty ?? false){
+    if (_avatarLocalPath?.isNotEmpty ?? false) {
       return FileImage(File(_avatarLocalPath!));
     }
 
-    var avatar = _profileController.profile!.avatar;
+    var avatar = _profileController.myProfile.avatar;
 
-    if (avatar.isNotEmpty){
+    if (avatar != null) {
       return NetworkImage(avatar);
     }
 
-    return null;      
+    return null;
   }
 
   @override
@@ -146,6 +130,15 @@ class _CreateEditProfilePageState extends State<CreateEditProfilePage> {
                     labelText: "Name",
                     showMaxLength: true,
                   ),
+                  TextboxWidget(
+                    textboxType: TextboxType.nickname,
+                    hintText: "Nickname",
+                    labelText: "Nickname",
+                    maxLength: AppConfig.nicknameMaxCharacters,
+                    controller: _nicknameController,
+                    keyboardEnabled: !_isProfileComplete,
+                  ),
+                  SizedBox(height: 20),
                   MultilineTextboxWidget(
                     maxLength: AppConfig.bioMaxCharacters,
                     hintText: "Bio",

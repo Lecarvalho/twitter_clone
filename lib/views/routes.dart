@@ -3,7 +3,7 @@ import 'package:twitter_clone/views/pages/preload_page.dart';
 import 'package:twitter_clone/views/pages/reply_page.dart';
 
 import 'pages/opened_tweet_page.dart';
-import 'pages/create_edit_profile_page.dart';
+import 'pages/edit_profile_page.dart';
 import 'pages/create_user_page.dart';
 import 'pages/home_page.dart';
 import 'pages/login_page.dart';
@@ -21,7 +21,7 @@ class Routes {
   static const String opened_tweet = "/opened_tweet";
   static const String reply = "/reply";
   static const String create_user = "/create_user";
-  static const String create_edit_profile = "/create_edit_profile";
+  static const String edit_profile = "/edit_profile";
   static const String preload = "/preload";
 
   static final routes = <String, WidgetBuilder>{
@@ -33,7 +33,7 @@ class Routes {
     opened_tweet: (BuildContext context) => OpenedTweetPage(),
     reply: (BuildContext context) => ReplyPage(),
     create_user: (BuildContext context) => CreateUserPage(),
-    create_edit_profile: (BuildContext context) => CreateEditProfilePage(),
+    edit_profile: (BuildContext context) => EditProfilePage(),
     preload: (BuildContext context) => PreloadPage(),
   };
 }

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/models/as_tweet_model_base.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horizontal_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
 abstract class TweetScaffoldWidget extends StatelessWidget {
-  final String avatar;
-  final String tweetId;
-  final String profileId;
-  final String profileName;
-  final String profileNickname;
-  final String tweetCreationTimeAgo;
-  final String text;
+  // final String avatar;
+  // final String tweetId;
+  // final String profileId;
+  // final String profileName;
+  // final String profileNickname;
+  // final String tweetCreationTimeAgo;
+  // final String text;
+
+  final AsTweetModelBase asTweet;
 
   TweetScaffoldWidget({
-    required this.avatar,
-    required this.tweetId,
-    required this.profileId,
-    required this.profileName,
-    required this.profileNickname,
-    required this.tweetCreationTimeAgo,
-    required this.text,
+    required this.asTweet
   });
 
   Widget get activity => Container();
@@ -42,12 +39,12 @@ abstract class TweetScaffoldWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProfilePictureWidget(
-              avatar: avatar,
+              avatar: asTweet.profile.avatar!,
               profilePicSize: ProfilePicSize.small2,
-              profileId: profileId,
+              profileId: asTweet.profileId,
               onTap: () => Navigator.of(context).pushNamed(
                 Routes.profile,
-                arguments: tweetId,
+                arguments: asTweet.id,
               ),
             ),
             SizedBox(width: 8),
@@ -57,13 +54,13 @@ abstract class TweetScaffoldWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ProfileNameNickTimeAgoHorizontalWidget(
-                    profileName: profileName,
-                    profileNickname: profileNickname,
-                    timeAgo: tweetCreationTimeAgo,
+                    profileName: asTweet.profile.name,
+                    profileNickname: asTweet.profile.nickname!,
+                    timeAgo: asTweet.creationTimeAgo,
                   ),
                   SizedBox(height: 5),
                   replyingTo,
-                  Text(text, style: Styles.body2),
+                  Text(asTweet.text, style: Styles.body2),
                   SizedBox(height: 5),
                   actions,
                 ],

@@ -42,7 +42,7 @@ class TweetModel extends AsTweetModelBase {
       likeCount: data["likeCount"] ?? 0,
       repliesCount: data["repliesCount"] ?? 0,
       retweetCount: data["retweetCount"] ?? 0,
-      profile: ProfileModel.fromMapSingleTweet(data["profile"]),
+      profile: ProfileModel.fromBasicInfo(data["profile"]),
       didILike: data["didILike"] ?? false,
       didIRetweet: data["didIRetweet"] ?? false,
       tweetActivity: data["activity"] != null
