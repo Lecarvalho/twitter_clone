@@ -11,7 +11,7 @@
             "id": "1",
             "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
-            "nickname": "@dev_lecarvalho"
+            "nickname": "dev_lecarvalho"
         }
     },
     {
@@ -26,7 +26,7 @@
             "id": "1",
             "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
-            "nickname": "@dev_lecarvalho"
+            "nickname": "dev_lecarvalho"
         },
         "didIRetweet": true
     },
@@ -42,7 +42,7 @@
             "id": "1",
             "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
-            "nickname": "@dev_lecarvalho"
+            "nickname": "dev_lecarvalho"
         },
         "didILike": true
     },
@@ -58,7 +58,7 @@
             "id": "1",
             "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
             "name": "Leandro Carvalho",
-            "nickname": "@dev_lecarvalho"
+            "nickname": "dev_lecarvalho"
         }
     }
 ]

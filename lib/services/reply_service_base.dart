@@ -1,5 +1,5 @@
 import 'package:twitter_clone/models/reply_model.dart';
-import 'package:twitter_clone/services/service_provider_base.dart';
+import 'package:twitter_clone/services/providers/service_provider_base.dart';
 
 import 'service_base.dart';
 

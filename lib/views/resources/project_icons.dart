@@ -126,4 +126,18 @@ class ProjectIcons {
         Icons.photo_camera_outlined,
         color: ProjectColors.black,
       );
+
+  static Icon get isNotConfirmedYet => Icon(
+      Icons.check
+  );
+
+  static Icon get isConfirmedSolid => Icon(
+    Icons.check,
+    color: ProjectColors.blueActive,
+  );
+
+  static Icon get notConfirmedSolid => Icon(
+    Icons.error,
+    color: ProjectColors.red,
+  );
 }

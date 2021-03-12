@@ -1,22 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_clone/models/user_model.dart';
-import 'package:twitter_clone/services/auth_provider.dart';
-
+import 'package:twitter_clone/services/providers/auth_provider.dart';
 import 'user_service_base.dart';
 
 class UserService extends UserServiceBase {
-
   late AuthProvider _provider;
 
-  UserService(AuthProvider provider) : super(provider){
+  UserService(AuthProvider provider) : super(provider) {
     _provider = provider;
   }
 
   @override
   Future<UserServiceResponse> createOrSignInWithGoogle() async {
     try {
-            
       final googleUser = await GoogleSignIn().signIn();
 
       if (googleUser == null) {
@@ -51,7 +48,8 @@ class UserService extends UserServiceBase {
     required String password,
   }) async {
     try {
-      final userCredential = await _provider.firebaseAuth.createUserWithEmailAndPassword(
+      final userCredential =
+          await _provider.firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -75,7 +73,8 @@ class UserService extends UserServiceBase {
     String password,
   ) async {
     try {
-      final userCredential = await _provider.firebaseAuth.signInWithEmailAndPassword(
+      final userCredential =
+          await _provider.firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

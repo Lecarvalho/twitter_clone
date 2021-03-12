@@ -56,7 +56,7 @@ class ProfileHeaderWidget extends StatelessWidget {
               SizedBox(height: 10),
               ProfileNameNickVerticalWidget(
                 profileName: profile.name,
-                profileNickname: profile.nickname!,
+                profileNickname: profile.nicknameWithAt,
               ),
               SizedBox(height: 10),
               Text(profile.bio!),

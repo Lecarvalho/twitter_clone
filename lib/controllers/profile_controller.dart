@@ -52,6 +52,10 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
     throw UnimplementedError();
   }
 
+  Future<bool> isNicknameAvailable(String nickname) async {
+    return await service.isNicknameAvailable(nickname);
+  }
+
   Future<String> updateProfile({
     required String bio,
     required String nickname,
@@ -71,7 +75,8 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
       var hasChangePicture = avatarLocalPath?.isNotEmpty ?? false;
 
       if (hasChangePicture) {
-        var avatarUrl = await service.uploadAvatar(avatarLocalPath!);
+        var filename = _getAvatarFilename(avatarLocalPath!, nickname);
+        var avatarUrl = await service.uploadAvatar(avatarLocalPath, filename);
 
         _myProfile.avatar = avatarUrl;
       }
@@ -85,5 +90,10 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
       print("Error on updateProfile: ${e.toString()}");
       return "We cannot make this right now, please try again later";
     }
+  }
+
+  String _getAvatarFilename(String selectedPicture, String nickname) {
+    final fileExtension = selectedPicture.split('/').last.split(".").last;
+    return nickname + DateTime.now().toUtc().toString() + "." + fileExtension;
   }
 }

@@ -94,7 +94,7 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
                   DividerWidget(),
                   ReplyListWidget(
                     replies: _replyController.replies,
-                    replyingToNickname: _tweet.profile.nickname!,
+                    replyingToNickname: _tweet.profile.nicknameWithAt,
                   )
                 ],
               ),

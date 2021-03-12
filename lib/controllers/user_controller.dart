@@ -63,6 +63,7 @@ class UserController extends ControllerBase<UserServiceBase> {
         _myProfile = await profileService.createProfile(
           userServiceResponse.user!.uid,
           userServiceResponse.user!.displayName,
+          DateTime.now().toUtc()
         );
       }
 
@@ -128,6 +129,7 @@ class UserController extends ControllerBase<UserServiceBase> {
       _profile = await profileService.createProfile(
         userServiceResponse.user!.uid,
         userServiceResponse.user!.displayName,
+        DateTime.now().toUtc(),
       );
     }
 

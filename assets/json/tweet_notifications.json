@@ -11,7 +11,7 @@
                 "id": "1",
                 "avatar": "https://www.nme.com/wp-content/uploads/2019/10/at-696x442.jpg",
                 "name": "Leandro Carvalho",
-                "nickname": "@dev_lecarvalho"
+                "nickname": "dev_lecarvalho"
             }
         }
     },
@@ -27,7 +27,7 @@
                 "id": "4",
                 "avatar": "https://observer.com/wp-content/uploads/sites/2/2021/02/GettyImages-1236403254.jpg?quality=80&w=970",
                 "name": "Elon Musk",
-                "nickname": "@elonmusk"
+                "nickname": "elonmusk"
             }
         }
     },
@@ -43,7 +43,7 @@
                 "id": "6",
                 "avatar": "https://thesource.com/wp-content/uploads/2018/06/Marsha-Ambrosius.jpg",
                 "name": "Marsha Ambrosius",
-                "nickname": "@maxjacobson"
+                "nickname": "maxjacobson"
             }
         }
     }

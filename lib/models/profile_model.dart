@@ -30,6 +30,8 @@ class ProfileModel extends ModelBase {
   String get createdAtDateMonthYear =>
       DateFormat.MMMM().add_y().format(createdAt!);
 
+  String get nicknameWithAt => "@$nickname";
+
   factory ProfileModel.fromCreation(Map<String, dynamic> data) {
     return ProfileModel(
       id: data["id"],
@@ -60,6 +62,14 @@ class ProfileModel extends ModelBase {
       avatar: data["avatar"],
       nickname: data["nickname"],
     );
+  }
+
+  Map<String, dynamic> getMapForChangeableFields(){
+    return {
+      "nickname" : nickname,
+      "avatar": avatar,
+      "bio": bio,
+    };
   }
 
   static String checkFields(

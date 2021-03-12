@@ -6,7 +6,7 @@
         "emailAddress": "leandro@lecarvalho.net",
         "createdAt": "2021-01-01T15:56:56.782Z",
         "name": "Leandro Carvalho",
-        "nickname": "@dev_lecarvalho",
+        "nickname": "dev_lecarvalho",
         "followersCount": 2,
         "following": [
             "2",
@@ -21,7 +21,7 @@
         "emailAddress": "leandro@lecarvalho.net",
         "createdAt": "2021-01-01T15:56:56.782Z",
         "name": "steveklabnik",
-        "nickname": "@steveklabnik"
+        "nickname": "steveklabnik"
     },
     {
         "id": "3",
@@ -30,7 +30,7 @@
         "emailAddress": "leandro@lecarvalho.net",
         "createdAt": "2021-01-01T15:56:56.782Z",
         "name": "Dj Nyack",
-        "nickname": "@djnyack"
+        "nickname": "djnyack"
     },
     {
         "id": "4",
@@ -39,7 +39,7 @@
         "emailAddress": "leandro@lecarvalho.net",
         "createdAt": "2021-01-01T15:56:56.782Z",
         "name": "Elon Musk",
-        "nickname": "@elonmusk"
+        "nickname": "elonmusk"
     },
     {
         "id": "5",
@@ -48,7 +48,7 @@
         "emailAddress": "leandro@lecarvalho.net",
         "createdAt": "2021-01-01T15:56:56.782Z",
         "name": "David Lazar",
-        "nickname": "@SPFDDCLazar"
+        "nickname": "SPFDDCLazar"
     },
     {
         "id": "6",
@@ -57,7 +57,7 @@
         "emailAddress": "leandro@lecarvalho.net",
         "createdAt": "2021-01-01T15:56:56.782Z",
         "name": "Marsha Ambrosius",
-        "nickname": "@maxjacobson"
+        "nickname": "maxjacobson"
     },
     {
         "id": "7",
@@ -66,6 +66,6 @@
         "emailAddress": "test@test.com",
         "createdAt": "2021-01-01T15:56:56.782Z",
         "name": "Test test",
-        "nickname": "@test"
+        "nickname": "test"
     }
 ]

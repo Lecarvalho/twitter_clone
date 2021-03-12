@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
+import 'package:twitter_clone/views/resources/project_icons.dart';
 
 class TextboxWidget extends StatelessWidget {
   final TextboxType textboxType;
@@ -10,6 +11,9 @@ class TextboxWidget extends StatelessWidget {
   final bool showMaxLength;
   final TextEditingController controller;
   final bool keyboardEnabled;
+  final Function()? onLostFocus;
+  final bool? isValid;
+  final bool showValidIcon;
 
   TextboxWidget({
     required this.textboxType,
@@ -19,7 +23,22 @@ class TextboxWidget extends StatelessWidget {
     this.hintText,
     this.showMaxLength = false,
     this.keyboardEnabled = true,
+    this.onLostFocus,
+    this.isValid,
+    this.showValidIcon = false,
   });
+
+  final FocusNode focusNode = FocusNode();
+
+  _buildOnLostFocusListenerIfNeeded() {
+    if (onLostFocus != null) {
+      focusNode.addListener(() {
+        if (!focusNode.hasFocus) {
+          onLostFocus!();
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +47,20 @@ class TextboxWidget extends StatelessWidget {
     var isObscure = false;
     var maxLines = 3;
     var restriction = FilteringTextInputFormatter.allow(RegExp("[\\w|\\s|-]"));
+    Icon? suffixIcon;
 
+    if (showValidIcon){
+      if (isValid == null){
+        suffixIcon = ProjectIcons.isNotConfirmedYet;
+      }
+      else if (isValid!){
+        suffixIcon = ProjectIcons.isConfirmedSolid;
+      }
+      else {
+        suffixIcon = ProjectIcons.notConfirmedSolid;
+      }
+    }
+    
     switch (textboxType) {
       case TextboxType.name:
         textCapitalization = TextCapitalization.words;
@@ -50,7 +82,10 @@ class TextboxWidget extends StatelessWidget {
         keyboardType = TextInputType.text;
     }
 
+    _buildOnLostFocusListenerIfNeeded();
+
     return TextField(
+      focusNode: focusNode,
       textCapitalization: textCapitalization,
       keyboardType: keyboardType,
       obscureText: isObscure,
@@ -65,6 +100,7 @@ class TextboxWidget extends StatelessWidget {
       textAlignVertical: TextAlignVertical.center,
       controller: controller,
       decoration: InputDecoration(
+        suffixIcon: suffixIcon,
         labelText: labelText,
         hintText: hintText,
         border: UnderlineInputBorder(

@@ -55,7 +55,7 @@ abstract class TweetScaffoldWidget extends StatelessWidget {
                 children: [
                   ProfileNameNickTimeAgoHorizontalWidget(
                     profileName: asTweet.profile.name,
-                    profileNickname: asTweet.profile.nickname!,
+                    profileNickname: asTweet.profile.nicknameWithAt,
                     timeAgo: asTweet.creationTimeAgo,
                   ),
                   SizedBox(height: 5),

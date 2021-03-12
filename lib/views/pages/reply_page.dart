@@ -72,7 +72,7 @@ class _ReplyPageState extends State<ReplyPage> {
           avatar: _profileController.myProfile.avatar!,
           myProfileId: _profileController.myProfile.id,
           controller: _textController,
-          replyingToNickname: _replyingTweet.profile.nickname!,
+          replyingToNickname: _replyingTweet.profile.nicknameWithAt,
         ),
       ),
     );

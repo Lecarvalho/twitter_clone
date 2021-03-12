@@ -14,7 +14,7 @@ void main() async {
   Graphical.setSystemUIOverlayStyle();
   await Graphical.setPreferredOrientations();
   
-  runApp(Di.init(MyApp()));
+  runApp(await Di.init(MyApp()));
 }
 
 class MyApp extends StatelessWidget {

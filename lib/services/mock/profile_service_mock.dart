@@ -8,7 +8,7 @@ class ProfileServiceMock extends ProfileServiceBase {
   ProfileServiceMock(ServiceProviderMock provider) : super(provider);
 
   @override
-  Future<ProfileModel> createProfile(String id, String name) async {
+  Future<ProfileModel> createProfile(String id, String name, DateTime createdAt) async {
     var profile = await MockTools.jsonToModel<ProfileModel>(
       "assets/json/incomplete_profile.json",
       (data) => ProfileModel.fromCreation(data),
@@ -56,7 +56,7 @@ class ProfileServiceMock extends ProfileServiceBase {
   }
 
   @override
-  Future<String> uploadAvatar(String selectedImagePath) async {
+  Future<String> uploadAvatar(String selectedImagePath, String filename) async {
     print("selectedImagePath: $selectedImagePath");
 
     await MockTools.simulateRequestDelay();
@@ -83,5 +83,10 @@ class ProfileServiceMock extends ProfileServiceBase {
     print("Unfollowing $toUnfollowUserId");
 
     await MockTools.simulateQuickRequestDelay();
+  }
+
+  @override
+  Future<bool> isNicknameAvailable(String nickname) async {
+    return true;
   }
 }

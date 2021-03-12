@@ -25,6 +25,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late ProfileController _profileController;
 
   String? _avatarLocalPath;
+  bool? _isNicknameAvailable;
+
   late bool _isProfileComplete;
 
   final _nameController = TextEditingController();
@@ -50,14 +52,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void _onPressSave(BuildContext context) async {
     _closeKeyboard(context);
-
+    if (!(_isNicknameAvailable ?? true)){
+      return;
+    }
     String result = await _profileController.updateProfile(
       bio: _bioController.text,
       nickname: _nicknameController.text,
       avatarLocalPath: _avatarLocalPath,
     );
 
-    if (result != "Success"){
+    if (result != "Success") {
       PopMessage.show(result, context);
       return;
     }
@@ -67,6 +71,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
     } else {
       PopMessage.show(result, context);
     }
+  }
+
+  void _onSetNickname() async {
+    bool? isNicknameAvailable;
+    if (_nicknameController.text.isNotEmpty) {
+      isNicknameAvailable = await _profileController
+          .isNicknameAvailable(_nicknameController.text);
+      if (!isNicknameAvailable) {
+        _closeKeyboard(context);
+        PopMessage.show("Sorry but this nickname is not available", context);
+      }
+    }
+
+    setState(() {
+      _isNicknameAvailable = isNicknameAvailable;
+    });
   }
 
   void _onPressChangePhoto() async {
@@ -137,6 +157,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     maxLength: AppConfig.nicknameMaxCharacters,
                     controller: _nicknameController,
                     keyboardEnabled: !_isProfileComplete,
+                    onLostFocus: _onSetNickname,
+                    showValidIcon: true,
+                    isValid: _isNicknameAvailable,
                   ),
                   SizedBox(height: 20),
                   MultilineTextboxWidget(

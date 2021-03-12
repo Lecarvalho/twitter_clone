@@ -1,5 +1,4 @@
-import 'package:twitter_clone/services/service_base.dart';
-import 'package:twitter_clone/services/service_provider_base.dart';
+import 'package:twitter_clone/services/providers/service_provider_base.dart';
 
 class ServiceProviderMock implements ServiceProviderBase {
   @override
