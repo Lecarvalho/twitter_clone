@@ -1,24 +1,24 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/services/providers/database_storage_provider.dart';
-import 'package:twitter_clone/services/providers/storage_provider.dart';
 
 import 'profile_service_base.dart';
+import 'providers/database_provider.dart';
+import 'providers/storage_provider.dart';
 
 class ProfileService extends ProfileServiceBase {
-  late Collections _collections;
   late StorageProvider _storage;
+  late DatabaseProvider _database;
 
   ProfileService(DatabaseStorageProvider provider) : super(provider) {
-    _collections = Collections(provider.database.firestore);
     _storage = provider.storage;
+    _database = provider.database;
   }
 
   @override
   Future<bool> isNicknameAvailable(String nickname) async {
-    final profilesFound = await _collections.profiles
+    final profilesFound = await _database.collections.profiles
         .where("nickname", isEqualTo: nickname)
         .get();
 
@@ -26,18 +26,16 @@ class ProfileService extends ProfileServiceBase {
   }
 
   @override
-  Future<ProfileModel> createProfile(String id, String name, DateTime createdAt) async {
-    await _collections.profiles.doc(id).set({
-      "id": id,
-      "name": name,
-      "createdAt": createdAt.toString(),
-    });
+  Future<ProfileModel> createProfile(
+    String id,
+    Map<String, dynamic> profileMap,
+  ) async {
+    await _database.collections.getProfileRef(id).set(profileMap);
 
-    final myProfileMap = await _getMyProfileMap(id);
+    final myProfileMap = await _database.collections.getProfileMap(id);
 
     if (myProfileMap == null)
-      throw Exception(
-          "Profile doesn't exists after creation. id: $id");
+      throw Exception("Profile doesn't exists after creation. id: $id");
 
     return ProfileModel.fromCreation(myProfileMap);
   }
@@ -54,25 +52,27 @@ class ProfileService extends ProfileServiceBase {
 
   @override
   Future<ProfileModel?> getProfile(String id) async {
-    final myProfileMap = await _getMyProfileMap(id);
+    final myProfileMap = await _database.collections.getProfileMap(id);
 
-    if (myProfileMap == null)
-      return null;
+    if (myProfileMap == null) return null;
 
     return ProfileModel.fromFullInfo(myProfileMap);
   }
 
   @override
-  Future<ProfileModel> updateProfile(ProfileModel profile) async {
-    final myProfileDoc = await _getMyProfileDoc(profile.id);
+  Future<ProfileModel> updateProfile(
+    String id,
+    Map<String, dynamic> profileMap,
+  ) async {
+    final myProfileRef = _database.collections.getProfileRef(id);
 
-    await myProfileDoc.reference.update(profile.getMapForChangeableFields());
+    await myProfileRef.update(profileMap);
 
-    final myProfileMap = await _getMyProfileMap(profile.id);
+    final myProfileMap = await _database.collections.getProfileMap(id);
 
     if (myProfileMap == null)
       throw Exception(
-          "Trying to update a profile that doesn't exists. id: ${profile.id}");
+          "Trying to update a profile that doesn't exists. id: $id");
 
     return ProfileModel.fromFullInfo(myProfileMap);
   }
@@ -88,22 +88,12 @@ class ProfileService extends ProfileServiceBase {
     return await task.ref.getDownloadURL();
   }
 
-  Future<Map<String, dynamic>?> _getMyProfileMap(
-    String myProfileId,
-  ) async {
-    return (await _getMyProfileDoc(myProfileId)).data();
-  }
-
-  Future<DocumentSnapshot> _getMyProfileDoc(String myProfileId) async {
-    return await _collections.profiles.doc(myProfileId).get();
-  }
-
   Future<void> _toggleFollowingUnfollowing(
     String myProfileId,
     String toFollowOrUnfollowProfileId,
   ) async {
-    final myProfileDoc = await _getMyProfileDoc(myProfileId);
-    final myProfileMap = myProfileDoc.data();
+    final myProfileRef = _database.collections.getProfileRef(myProfileId);
+    final myProfileMap = (await myProfileRef.get()).data();
 
     if (myProfileMap == null)
       throw Exception(
@@ -117,13 +107,6 @@ class ProfileService extends ProfileServiceBase {
         ? following.remove(toFollowOrUnfollowProfileId)
         : following.add(toFollowOrUnfollowProfileId);
 
-    await myProfileDoc.reference.update({"following": following});
+    await myProfileRef.update({"following": following});
   }
-}
-
-class Collections {
-  FirebaseFirestore _firestore;
-  Collections(this._firestore);
-
-  CollectionReference get profiles => _firestore.collection('profiles');
 }

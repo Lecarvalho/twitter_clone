@@ -84,7 +84,14 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
       _myProfile.bio = bio;
       _myProfile.nickname = nickname;
 
-      _myProfile = await service.updateProfile(_myProfile);
+      _myProfile = await service.updateProfile(
+        _myProfile.id,
+        ProfileModel.getMapForUpdateProfile(
+          nickname: nickname,
+          avatar: _myProfile.avatar!,
+          bio: bio,
+        ),
+      );
       return "Success";
     } catch (e) {
       print("Error on updateProfile: ${e.toString()}");

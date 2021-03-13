@@ -1,4 +1,5 @@
 import 'package:twitter_clone/controllers/controller_base.dart';
+import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/tweets_service_base.dart';
 
@@ -29,14 +30,13 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
     return null;
   }
 
-  Future<void> createTweet(String text, String myProfileId) async {
+  Future<void> createTweet(String text, ProfileModel myProfile) async {
     try {
-
-      await service.createTweet(
+      await service.createTweet(TweetModel.getMapForCreateTweet(
         text: text,
-        myProfileId: myProfileId,
-        createdAt: DateTime.now(),
-      );
+        myProfile: myProfile,
+        createdAt: DateTime.now().toUtc(),
+      ));
     } catch (e) {
       print("Error on createTweet: " + e.toString());
     }

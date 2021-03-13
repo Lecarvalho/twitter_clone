@@ -10,11 +10,7 @@ abstract class TweetsServiceBase extends ServiceBase {
 
   Future<List<TweetModel>?> getProfileTweets(String profileId);
 
-  Future<void> createTweet({
-    required String text,
-    required String myProfileId,
-    required DateTime createdAt,
-  });
+  Future<void> createTweet(Map<String, dynamic> map);
 
   Future<TweetModel?> getTweet(String tweetId);
 

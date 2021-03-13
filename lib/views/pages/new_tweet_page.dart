@@ -43,7 +43,7 @@ class _NewTweetPageState extends State<NewTweetPage> {
     if (_textController.text.isNotEmpty) {
       await _tweetController.createTweet(
         _textController.text,
-        _profileController.myProfile.id,
+        _profileController.myProfile,
       );
 
       Navigator.of(context).pushReplacementNamed(Routes.home);

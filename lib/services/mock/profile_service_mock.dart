@@ -8,7 +8,7 @@ class ProfileServiceMock extends ProfileServiceBase {
   ProfileServiceMock(ServiceProviderMock provider) : super(provider);
 
   @override
-  Future<ProfileModel> createProfile(String id, String name, DateTime createdAt) async {
+  Future<ProfileModel> createProfile(String id, Map<String, dynamic> profileMap)async {
     var profile = await MockTools.jsonToModel<ProfileModel>(
       "assets/json/incomplete_profile.json",
       (data) => ProfileModel.fromCreation(data),
@@ -44,15 +44,15 @@ class ProfileServiceMock extends ProfileServiceBase {
   }
 
   @override
-  Future<ProfileModel> updateProfile(ProfileModel profile) async {
-    print("id: ${profile.id}");
-    print("avatar: ${profile.avatar}");
-    print("bio: ${profile.bio}");
-    print("nickname: ${profile.nickname}");
+  Future<ProfileModel> updateProfile(String id, Map<String, dynamic> profileMap) async {
+    print("id: ${profileMap["id"]}");
+    print("avatar: ${profileMap["avatar"]}");
+    print("bio: ${profileMap["bio"]}");
+    print("nickname: ${profileMap["nickname"]}");
 
     await MockTools.simulateQuickRequestDelay();
 
-    return (await getProfile(profile.id))!;
+    return (await getProfile(id))!;
   }
 
   @override

@@ -50,4 +50,22 @@ class TweetModel extends AsTweetModelBase {
           : null,
     );
   }
+
+  static Map<String, dynamic> getMapForCreateTweet({
+    required String text,
+    required DateTime createdAt,
+    required ProfileModel myProfile,
+  }) {
+    return {
+      "text": text,
+      "profileId": myProfile.id,
+      "createdAt": createdAt.toString(),
+      "profile": ProfileModel.getMapForCreateTweet(
+        id: myProfile.id,
+        avatar: myProfile.avatar!,
+        name: myProfile.name,
+        nickname: myProfile.nickname!,
+      )
+    };
+  }
 }

@@ -9,7 +9,6 @@ class TweetsServiceMock extends TweetsServiceBase {
 
   @override
   Future<List<TweetModel>?> getTweets(String myProfileId) async {
-
     await MockTools.simulateRequestDelay();
 
     return await MockTools.jsonToModelList<TweetModel>(
@@ -29,14 +28,10 @@ class TweetsServiceMock extends TweetsServiceBase {
   }
 
   @override
-  Future<void> createTweet({
-    required String text,
-    required String myProfileId,
-    required DateTime createdAt,
-  }) async {
-    print("$text");
-    print("$myProfileId");
-    print("${createdAt.toString()}");
+  Future<void> createTweet(Map<String, dynamic> map) async {
+    print("${map["text"]}");
+    print("${map["profileId"]}");
+    print("${map["createdAt"]}");
 
     await MockTools.simulateQuickRequestDelay();
   }
@@ -65,14 +60,14 @@ class TweetsServiceMock extends TweetsServiceBase {
   }
 
   @override
-  Future<void> retweet(String tweetId, String ofProfileId, String myProfileId) async {
+  Future<void> retweet(
+      String tweetId, String ofProfileId, String myProfileId) async {
     print("retweet !");
     print("tweetId $tweetId");
     print("ofProfileId $ofProfileId");
     print("myProfileId $myProfileId");
 
     await MockTools.simulateQuickRequestDelay();
-  
   }
 
   @override
@@ -85,7 +80,7 @@ class TweetsServiceMock extends TweetsServiceBase {
     print("tweetId $tweetId");
     print("ofProfileId $ofProfileId");
     print("myProfileId $myProfileId");
-    
+
     await MockTools.simulateQuickRequestDelay();
   }
 }

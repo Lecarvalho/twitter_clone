@@ -45,10 +45,10 @@ class UserController extends ControllerBase<UserServiceBase> {
   }) async {
     MyProfileResponse response;
     try {
-
       if (!UserModel.checkFields(email, password, name)) {
         return MyProfileResponse(
-          message: "Invalid information. Please verify all the fields and try again.",
+          message:
+              "Invalid information. Please verify all the fields and try again.",
           type: ProfileStatusType.error,
         );
       }
@@ -62,8 +62,11 @@ class UserController extends ControllerBase<UserServiceBase> {
       if (userServiceResponse.success) {
         _myProfile = await profileService.createProfile(
           userServiceResponse.user!.uid,
-          userServiceResponse.user!.displayName,
-          DateTime.now().toUtc()
+          ProfileModel.getMapForCreateProfile(
+            id: userServiceResponse.user!.uid,
+            name: userServiceResponse.user!.displayName,
+            createdAt: DateTime.now().toUtc(),
+          ),
         );
       }
 
@@ -89,7 +92,8 @@ class UserController extends ControllerBase<UserServiceBase> {
     try {
       if (!UserModel.isValidEmailPassword(email, password)) {
         return MyProfileResponse(
-          message: "Invalid information. Please verify all the fields and try again.",
+          message:
+              "Invalid information. Please verify all the fields and try again.",
           type: ProfileStatusType.error,
         );
       }
@@ -128,8 +132,11 @@ class UserController extends ControllerBase<UserServiceBase> {
     if (_profile == null) {
       _profile = await profileService.createProfile(
         userServiceResponse.user!.uid,
-        userServiceResponse.user!.displayName,
-        DateTime.now().toUtc(),
+        ProfileModel.getMapForCreateProfile(
+          id: userServiceResponse.user!.uid,
+          name: userServiceResponse.user!.displayName,
+          createdAt: DateTime.now().toUtc(),
+        ),
       );
     }
 

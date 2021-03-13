@@ -64,11 +64,41 @@ class ProfileModel extends ModelBase {
     );
   }
 
-  Map<String, dynamic> getMapForChangeableFields(){
+  static Map<String, dynamic> getMapForUpdateProfile({
+    required String nickname,
+    required String avatar,
+    required String bio,
+  }) {
     return {
-      "nickname" : nickname,
+      "nickname": nickname,
       "avatar": avatar,
       "bio": bio,
+    };
+  }
+
+  static Map<String, dynamic> getMapForCreateProfile({
+    required String id,
+    required String name,
+    required DateTime createdAt,
+  }) {
+    return {
+      "id": id,
+      "name": name,
+      "createdAt": createdAt.toString(),
+    };
+  }
+
+  static Map<String, dynamic> getMapForCreateTweet({
+    required String id,
+    required String avatar,
+    required String name,
+    required String nickname,
+  }) {
+    return {
+      "id": id,
+      "avatar": avatar,
+      "name": name,
+      "nickname": nickname,
     };
   }
 

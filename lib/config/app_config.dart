@@ -6,4 +6,5 @@ class AppConfig {
   static const int passwordMaxCharacters = 50;
   static const int bioMaxCharacters = 240;
   static const String projectName = "Twitter Clone";
+  static const int maxTweetsHome = 20;
 }
