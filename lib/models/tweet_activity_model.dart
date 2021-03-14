@@ -1,5 +1,5 @@
 import 'model_base.dart';
-import 'extensions.dart';
+import 'package:twitter_clone/extensions/enum_extensions.dart';
 
 class TweetActivityModel extends ModelBase {
   String profileName;
@@ -13,7 +13,7 @@ class TweetActivityModel extends ModelBase {
   factory TweetActivityModel.fromMap(Map<String, dynamic> data){
     return TweetActivityModel(
       profileName: data["profileName"],
-      tweetAction: data["action"].toString().toEnum(TweetAction.values),
+      tweetAction: data["reactionType"].toString().toEnum(TweetAction.values),
     );
   }
 }

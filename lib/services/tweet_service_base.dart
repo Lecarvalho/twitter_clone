@@ -3,8 +3,8 @@ import 'package:twitter_clone/services/providers/service_provider_base.dart';
 
 import 'service_base.dart';
 
-abstract class TweetsServiceBase extends ServiceBase {
-  TweetsServiceBase(ServiceProviderBase provider) : super(provider);
+abstract class TweetServiceBase extends ServiceBase {
+  TweetServiceBase(ServiceProviderBase provider) : super(provider);
 
   Future<List<TweetModel>?> getTweets(String myProfileId);
 
@@ -15,10 +15,22 @@ abstract class TweetsServiceBase extends ServiceBase {
   Future<TweetModel?> getTweet(String tweetId);
 
   Future<void> likeTweet(
-      String tweetId, String ofProfileId, String myProfileId);
+    String tweetId,
+    String ofProfileId,
+    String myProfileId,
+    String myProfileName,
+  );
 
   Future<void> unlikeTweet(
-      String tweetId, String ofProfileId, String myProfileId);
+    String tweetId,
+    String ofProfileId,
+    String myProfileId,
+  );
 
-  Future<void> retweet(String tweetId, String ofProfileId, String myProfileId);
+  Future<void> retweet(
+    String tweetId,
+    String ofProfileId,
+    String myProfileId,
+    String myProfileName,
+  );
 }

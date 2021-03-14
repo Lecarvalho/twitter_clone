@@ -41,13 +41,80 @@ class ProfileService extends ProfileServiceBase {
   }
 
   @override
-  Future<void> follow(String myProfileId, String toFollowUserId) async {
-    await _toggleFollowingUnfollowing(myProfileId, toFollowUserId);
+  Future<void> follow(String myProfileId, String toFollowProfileId) async {
+    final batch = _database.firestore.batch();
+    final startingAt = DateTime.now().toUtc();
+    final myFollowingListRef = _database.collections.following.doc(myProfileId);
+    final myProfileRef = _database.collections.profiles.doc(myProfileId);
+    final toFollowProfileRef =
+        _database.collections.profiles.doc(toFollowProfileId);
+    final toFollowFollowersRef =
+        _database.collections.followers.doc(toFollowProfileId);
+
+    //1. insert a new entry in my following collection
+    final myFollowingList = await myFollowingListRef.toMap();
+
+    if (myFollowingList == null) {
+      // your new follwing !
+      batch.set(myFollowingListRef, {toFollowProfileId: startingAt});
+    } else {
+      // one more person to follow !
+      myFollowingList.putIfAbsent(toFollowProfileId, () => startingAt);
+      batch.update(myFollowingListRef, myFollowingList);
+    }
+
+    //2. update the following count on my profile
+    batch.update(
+        myProfileRef, {Fields.followingCount: myFollowingList?.length ?? 1});
+
+    //3. insert a new entry on the following follower collection
+    final toFollowFollowerList = await toFollowFollowersRef.toMap();
+
+    // maybe you are the first one that's following him/she
+    if (toFollowFollowerList == null) {
+      batch.set(toFollowFollowersRef, {myProfileId: startingAt});
+    } else {
+      // or maybe he/she is famous :)
+      toFollowFollowerList.putIfAbsent(myProfileId, () => startingAt);
+      batch.update(toFollowFollowersRef, toFollowFollowerList);
+    }
+
+    //4. update the follower count on the following profile
+    batch.update(toFollowProfileRef,
+        {Fields.followerCount: toFollowFollowerList?.length ?? 1});
+
+    await batch.commit();
   }
 
   @override
-  Future<void> unfollow(String myProfileId, String toUnfollowUserId) async {
-    await _toggleFollowingUnfollowing(myProfileId, toUnfollowUserId);
+  Future<void> unfollow(String myProfileId, String toUnfollowProfileId) async {
+    final batch = _database.firestore.batch();
+    final myFollowingListRef = _database.collections.following.doc(myProfileId);
+    final myProfileRef = _database.collections.profiles.doc(myProfileId);
+    final toUnfollowProfileRef =
+        _database.collections.profiles.doc(toUnfollowProfileId);
+    final toUnfollowFollowersRef =
+        _database.collections.followers.doc(toUnfollowProfileId);
+
+    //1. remove the entry on my following list
+    final myFollowingList = await myFollowingListRef.toMap();
+
+    myFollowingList!.remove(toUnfollowFollowersRef);
+    batch.set(myFollowingListRef, myFollowingList);
+
+    //2. update the following count on my profile
+    batch.update(myProfileRef, {Fields.followingCount: myFollowingList.length});
+
+    //3. remove the entry on the ex-following follower collection
+    final toUnfollowFollowerList = await toUnfollowFollowersRef.toMap();
+
+    toUnfollowFollowerList!.remove(myProfileId);
+
+    //4. update the follower count on the ex-following profile
+    batch.update(toUnfollowProfileRef,
+        {Fields.followerCount: toUnfollowFollowerList.length});
+
+    await batch.commit();
   }
 
   @override
@@ -86,27 +153,5 @@ class ProfileService extends ProfileServiceBase {
         .putFile(file);
 
     return await task.ref.getDownloadURL();
-  }
-
-  Future<void> _toggleFollowingUnfollowing(
-    String myProfileId,
-    String toFollowOrUnfollowProfileId,
-  ) async {
-    final myProfileRef = _database.collections.getProfileRef(myProfileId);
-    final myProfileMap = (await myProfileRef.get()).data();
-
-    if (myProfileMap == null)
-      throw Exception(
-          "Trying to follow or unfollow someone but my profile doesn't exists. id: $myProfileId");
-
-    final following = myProfileMap["following"] != null
-        ? List.from(myProfileMap["following"])
-        : List.empty();
-
-    following.contains(toFollowOrUnfollowProfileId)
-        ? following.remove(toFollowOrUnfollowProfileId)
-        : following.add(toFollowOrUnfollowProfileId);
-
-    await myProfileRef.update({"following": following});
   }
 }

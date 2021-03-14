@@ -3,13 +3,13 @@ import 'package:twitter_clone/models/model_base.dart';
 import 'service_provider_base.dart';
 
 class DatabaseProvider extends ServiceProviderBase {
-  late FirebaseFirestore _firestore;
+  late FirebaseFirestore firestore;
   late Collections collections;
 
   @override
   Future<void> init() async {
-    _firestore = FirebaseFirestore.instance;
-    collections = Collections(_firestore);
+    firestore = FirebaseFirestore.instance;
+    collections = Collections(firestore);
   }
 }
 
@@ -26,11 +26,13 @@ class Collections {
   /// Collection with the likes by tweet. TweetId is the key
   CollectionReference get likes => _firestore.collection('likes');
 
-
   CollectionReference get retweets => _firestore.collection('retweets');
 
-  /// Collection with people that I'm following with the date of the last tweet. MyProfileId is the key
-  CollectionReference get followingList => _firestore.collection('followingList');
+  CollectionReference get following => _firestore.collection('following');
+
+  CollectionReference get followers => _firestore.collection("followers");
+
+  CollectionReference get feed => _firestore.collection("feed");
 
   DocumentReference getProfileRef(String profileId) {
     return profiles.doc(profileId);
@@ -43,14 +45,28 @@ class Collections {
 
 class Fields {
   Fields._();
-  static String get  id => "id";
-  static String get  profileId => "profileId";
-  static String get  likeCount => "likeCount";
-  static String get  retweetCount => "retweetCount";
+  static String get id => "id";
+  static String get profileId => "profileId";
+  static String get likeCount => "likeCount";
+  static String get retweetCount => "retweetCount";
+  static String get tweetId => "tweetId";
+  static String get concernedProfileId => "concernedProfileId";
+  static String get creatorTweetProfileId => "creatorTweetProfileId";
+  static String get followingCount => "followingCount";
+  static String get followerCount => "followerCount";
+  static String get reactionType => "reactionType";
+  static String get profileName => "profileName";
+  static String get reactedByProfileId => "reactedByProfileId";
+}
+
+class ReactionTypes {
+  ReactionTypes._();
+  static const retweet = "retweet";
+  static const like = "like";
 }
 
 extension DocQueryExtension on Query {
-  Future<List<Model>> toModelList<Model extends ModelBase>(
+  Future<List<Model>?> toModelList<Model extends ModelBase>(
     Function(Map<String, dynamic> data) fromMap,
   ) async {
     var snapshot = await this.get();
@@ -58,7 +74,8 @@ extension DocQueryExtension on Query {
     return List<Model>.from(iterable);
   }
 
-  Future<List<Map<String, dynamic>>> toMapList<Model extends ModelBase>() async {
+  Future<List<Map<String, dynamic>>?>
+      toMapList<Model extends ModelBase>() async {
     var snapshot = await this.get();
     return List.from(snapshot.docs.map((doc) => doc.data()!));
   }

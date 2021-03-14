@@ -1,9 +1,9 @@
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/services/tweets_service_base.dart';
+import 'package:twitter_clone/services/tweet_service_base.dart';
 
-class TweetController extends ControllerBase<TweetsServiceBase> {
+class TweetController extends ControllerBase<TweetServiceBase> {
   TweetController({required service}) : super(service: service);
 
   TweetModel? _bigTweet;
@@ -53,6 +53,7 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
   Future<void> toggleLikeTweet(
     TweetModel tweet,
     String myProfileId,
+    String myProfileName,
   ) async {
     try {
       if (tweet.didILike) {
@@ -60,7 +61,12 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
         await service.unlikeTweet(tweet.id, tweet.profileId, myProfileId);
       } else {
         tweet.likeCount++;
-        await service.likeTweet(tweet.id, tweet.profileId, myProfileId);
+        await service.likeTweet(
+          tweet.id,
+          tweet.profileId,
+          myProfileId,
+          myProfileName,
+        );
       }
 
       tweet.didILike = !tweet.didILike;
@@ -72,11 +78,17 @@ class TweetController extends ControllerBase<TweetsServiceBase> {
   Future<void> retweet(
     TweetModel tweet,
     String myProfileId,
+    String myProfileName,
   ) async {
     try {
       if (!tweet.didIRetweet) {
         tweet.retweetCount++;
-        await service.retweet(tweet.id, tweet.profileId, myProfileId);
+        await service.retweet(
+          tweet.id,
+          tweet.profileId,
+          myProfileId,
+          myProfileName,
+        );
       }
 
       tweet.didIRetweet = true;

@@ -1,10 +1,10 @@
 import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/services/tweets_service_base.dart';
+import 'package:twitter_clone/services/tweet_service_base.dart';
 
 import 'mock_tools.dart';
 import 'service_provider_mock.dart';
 
-class TweetsServiceMock extends TweetsServiceBase {
+class TweetsServiceMock extends TweetServiceBase {
   TweetsServiceMock(ServiceProviderMock provider) : super(provider);
 
   @override
@@ -50,7 +50,11 @@ class TweetsServiceMock extends TweetsServiceBase {
 
   @override
   Future<void> likeTweet(
-      String tweetId, String ofProfileId, String myProfileId) async {
+    String tweetId,
+    String ofProfileId,
+    String myProfileId,
+    String myProfileName,
+  ) async {
     print("likeTweet !");
     print("tweetId $tweetId");
     print("ofProfileId $ofProfileId");
@@ -61,7 +65,11 @@ class TweetsServiceMock extends TweetsServiceBase {
 
   @override
   Future<void> retweet(
-      String tweetId, String ofProfileId, String myProfileId) async {
+    String tweetId,
+    String ofProfileId,
+    String myProfileId,
+    String myProfileName,
+  ) async {
     print("retweet !");
     print("tweetId $tweetId");
     print("ofProfileId $ofProfileId");

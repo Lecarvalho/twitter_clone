@@ -20,7 +20,7 @@ class TweetListWidget extends StatefulWidget {
 
 class _TweetListWidgetState extends State<TweetListWidget> {
   late TweetController _tweetController;
-  
+
   late ProfileController _profileController;
 
   @override
@@ -31,10 +31,11 @@ class _TweetListWidgetState extends State<TweetListWidget> {
     super.didChangeDependencies();
   }
 
-  void _onPressHeart(TweetModel tweet) async {
+  void _onPressLike(TweetModel tweet) async {
     await _tweetController.toggleLikeTweet(
       tweet,
       _profileController.myProfile.id,
+      _profileController.myProfile.name,
     );
     setState(() {});
   }
@@ -49,6 +50,7 @@ class _TweetListWidgetState extends State<TweetListWidget> {
             await _tweetController.retweet(
               tweet,
               _profileController.myProfile.id,
+              _profileController.myProfile.name,
             );
             setState(() {});
             Navigator.of(context).pop();
@@ -78,7 +80,7 @@ class _TweetListWidgetState extends State<TweetListWidget> {
             ),
             child: SingleTweetWidget(
               tweet: tweet,
-              onHeart: () => _onPressHeart(tweet),
+              onHeart: () => _onPressLike(tweet),
               onRetweet: () => _onPressRetweet(tweet),
             ),
           ),

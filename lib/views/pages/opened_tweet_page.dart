@@ -51,6 +51,7 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
     await _tweetController.toggleLikeTweet(
       tweet,
       _profileController.myProfile.id,
+      _profileController.myProfile.name,
     );
 
     setState(() {});
@@ -66,6 +67,7 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
             await _tweetController.retweet(
               tweet,
               _profileController.myProfile.id,
+              _profileController.myProfile.name,
             );
             setState(() {});
             Navigator.of(context).pop();
