@@ -82,9 +82,8 @@ class ProfileModel extends ModelBase {
     required DateTime createdAt,
   }) {
     return {
-      "id": id,
       "name": name,
-      "createdAt": createdAt.toString(),
+      "createdAt": createdAt,
     };
   }
 

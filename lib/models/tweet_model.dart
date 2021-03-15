@@ -59,7 +59,7 @@ class TweetModel extends AsTweetModelBase {
     return {
       "text": text,
       "profileId": myProfile.id,
-      "createdAt": createdAt.toString(),
+      "createdAt": createdAt,
       "profile": ProfileModel.getMapForCreateTweet(
         id: myProfile.id,
         avatar: myProfile.avatar!,

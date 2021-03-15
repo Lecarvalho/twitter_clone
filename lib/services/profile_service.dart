@@ -30,14 +30,17 @@ class ProfileService extends ProfileServiceBase {
     String id,
     Map<String, dynamic> profileMap,
   ) async {
-    await _database.collections.getProfileRef(id).set(profileMap);
+    final profileRef = _database.collections.profiles.doc(id);
+    await profileRef.set(profileMap);
 
-    final myProfileMap = await _database.collections.getProfileMap(id);
+    final myProfile = await profileRef.toModel<ProfileModel>(
+      (data) => ProfileModel.fromCreation(data),
+    );
 
-    if (myProfileMap == null)
+    if (myProfile == null)
       throw Exception("Profile doesn't exists after creation. id: $id");
 
-    return ProfileModel.fromCreation(myProfileMap);
+    return myProfile;
   }
 
   @override
@@ -119,11 +122,9 @@ class ProfileService extends ProfileServiceBase {
 
   @override
   Future<ProfileModel?> getProfile(String id) async {
-    final myProfileMap = await _database.collections.getProfileMap(id);
-
-    if (myProfileMap == null) return null;
-
-    return ProfileModel.fromFullInfo(myProfileMap);
+    return await _database.collections.profiles
+        .doc(id)
+        .toModel<ProfileModel>((data) => ProfileModel.fromFullInfo(data));
   }
 
   @override
@@ -131,17 +132,18 @@ class ProfileService extends ProfileServiceBase {
     String id,
     Map<String, dynamic> profileMap,
   ) async {
-    final myProfileRef = _database.collections.getProfileRef(id);
+    final profileRef = _database.collections.profiles.doc(id);
 
-    await myProfileRef.update(profileMap);
+    await profileRef.update(profileMap);
 
-    final myProfileMap = await _database.collections.getProfileMap(id);
+    final profileModel = await profileRef
+        .toModel<ProfileModel>((data) => ProfileModel.fromFullInfo(data));
 
-    if (myProfileMap == null)
+    if (profileModel == null)
       throw Exception(
           "Trying to update a profile that doesn't exists. id: $id");
 
-    return ProfileModel.fromFullInfo(myProfileMap);
+    return profileModel;
   }
 
   @override

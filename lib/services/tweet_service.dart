@@ -14,13 +14,24 @@ class TweetService extends TweetServiceBase {
   @override
   Future<void> createTweet(Map<String, dynamic> map) async {
     final batch = _database.firestore.batch();
+    final createdAt = DateTime.now().toUtc();
 
     //1. create tweet
     final newTweetDoc = _database.collections.tweets.doc();
 
     batch.set(newTweetDoc, map);
 
-    //2. create feed for my followers
+    //2. create a feed for myself
+    final myFeedForMyself = _database.collections.feed.doc();
+
+    batch.set(myFeedForMyself, {
+      Fields.tweetId: newTweetDoc.id,
+      Fields.creatorTweetProfileId: map[Fields.profileId],
+      Fields.concernedProfileId: map[Fields.profileId],
+      Fields.createdAt: createdAt,
+    });
+
+    //3. create feed for my followers
     final followersMap = await _database.collections.followers
         .doc(map[Fields.profileId])
         .toMap();
@@ -33,6 +44,7 @@ class TweetService extends TweetServiceBase {
           Fields.tweetId: newTweetDoc.id,
           Fields.creatorTweetProfileId: map[Fields.profileId],
           Fields.concernedProfileId: followerId,
+          Fields.createdAt: createdAt,
         };
 
         batch.set(newFeedRef, dataFeedRef);
@@ -58,38 +70,47 @@ class TweetService extends TweetServiceBase {
 
   @override
   Future<List<TweetModel>?> getTweets(String myProfileId) async {
-    final List<TweetModel> tweets = List.empty();
+    List<TweetModel> tweets = [];
 
-    final myOwnTweets = await _database.collections.tweets
-        .where(Fields.profileId, isEqualTo: myProfileId)
-        .limit(5)
-        .toModelList<TweetModel>((data) => TweetModel.fromMap(data));
+    // final myOwnTweets = await _database.collections.tweets
+    //     .where(Fields.profileId, isEqualTo: myProfileId)
+    //     .limit(5)
+    //     .toModelList<TweetModel>((data) => TweetModel.fromMap(data));
 
-    if (myOwnTweets != null) {
-      tweets.addAll(myOwnTweets);
-    }
+    // if (myOwnTweets.isNotEmpty) {
+    //   tweets.addAll(myOwnTweets);
+    // }
 
     final myFeedMapList = await _database.collections.feed
         .where(Fields.concernedProfileId, isEqualTo: myProfileId)
         .limit(20)
+        .orderBy(
+          Fields.createdAt,
+          descending: true,
+        )
         .toMapList();
 
-    if (myFeedMapList != null) {
-      myFeedMapList.forEach((myFeedElement) async {
+    if (myFeedMapList.isNotEmpty) {
+      for (var myFeedMap in myFeedMapList) {
         final tweet = await _database.collections.tweets
-            .doc(myFeedElement[Fields.tweetId])
+            .doc(myFeedMap[Fields.tweetId])
             .toModel<TweetModel>((data) => TweetModel.fromMap(data));
 
         if (tweet != null) {
-          final reactionType = myFeedElement[Fields.reactionType];
+          // tweet is not deleted ?
+          final reactionType = myFeedMap[Fields.reactionType];
           if (reactionType != null) {
             // retweet or like
-            tweet.tweetActivity = TweetActivityModel.fromMap(myFeedElement);
+            tweet.tweetActivity = TweetActivityModel.fromMap(myFeedMap);
           }
           tweets.add(tweet);
         }
-      });
+      }
     }
+
+    var uniqueIds = tweets.map((tweet) => tweet.id).toSet();
+
+    tweets.retainWhere((tweet) => uniqueIds.remove(tweet.id));
 
     return tweets.length == 0 ? null : tweets;
   }
@@ -102,20 +123,33 @@ class TweetService extends TweetServiceBase {
     String myProfileName,
   ) async {
     final batch = _database.firestore.batch();
+    final createdAt = DateTime.now().toUtc();
     // up likeCount
 
     final tweetRef = _database.collections.tweets.doc(tweetId);
 
-    final tweetDoc = await tweetRef.get();
+    final tweetMap = await tweetRef.toMap();
 
-    int likeCount = tweetDoc.data()![Fields.likeCount] ?? 0;
+    int likeCount = tweetMap![Fields.likeCount] ?? 0;
 
     likeCount++;
 
     batch.update(tweetRef, {Fields.likeCount: likeCount});
 
-    // set feed for my followers
+    // set a feed for myself
+    var myFeedWithMyReaction = _database.collections.feed.doc();
 
+    batch.set(myFeedWithMyReaction, {
+      Fields.concernedProfileId: myProfileId,
+      Fields.tweetId: tweetId,
+      Fields.creatorTweetProfileId: ofProfileId,
+      Fields.reactionType: ReactionTypes.like,
+      Fields.profileName: myProfileName,
+      Fields.reactedByProfileId: myProfileId,
+      Fields.createdAt: createdAt,
+    });
+
+    // set feed for my followers
     final myFollowersList =
         await _database.collections.followers.doc(myProfileId).toMap();
 
@@ -131,6 +165,7 @@ class TweetService extends TweetServiceBase {
         Fields.reactionType: ReactionTypes.like,
         Fields.profileName: myProfileName,
         Fields.reactedByProfileId: myProfileId,
+        Fields.createdAt: createdAt,
       });
     });
 
@@ -184,6 +219,7 @@ class TweetService extends TweetServiceBase {
     String myProfileName,
   ) async {
     var batch = _database.firestore.batch();
+    final createdAt = DateTime.now().toUtc();
     //up retweet
     var tweetRef = _database.collections.tweets.doc(tweetId);
 
@@ -195,8 +231,20 @@ class TweetService extends TweetServiceBase {
 
     batch.update(tweetRef, {Fields.retweetCount: retweetCount});
 
-    // set feed for my followers
+    // set a feed for myself
+    var myFeedWithMyReaction = _database.collections.feed.doc();
 
+    batch.set(myFeedWithMyReaction, {
+      Fields.concernedProfileId: myProfileId,
+      Fields.tweetId: tweetId,
+      Fields.creatorTweetProfileId: ofProfileId,
+      Fields.reactionType: ReactionTypes.retweet,
+      Fields.profileName: myProfileName,
+      Fields.reactedByProfileId: myProfileId,
+      Fields.createdAt: createdAt,
+    });
+
+    // set feed for my followers
     final myFollowersList =
         await _database.collections.followers.doc(myProfileId).toMap();
 
@@ -212,6 +260,7 @@ class TweetService extends TweetServiceBase {
         Fields.reactionType: ReactionTypes.retweet,
         Fields.profileName: myProfileName,
         Fields.reactedByProfileId: myProfileId,
+        Fields.createdAt: createdAt,
       });
     });
 

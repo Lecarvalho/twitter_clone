@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       drawer: DrawerMenu(),
       body: !_isPageReady
           ? LoadingPageWidget()
-          : Center(child: _pagesSimulation.elementAt(_selectedIndex)),
+          : _pagesSimulation.elementAt(_selectedIndex),
       floatingActionButton: ButtonNewTweetWidget(
         onPressed: () => Navigator.of(context).pushNamed(Routes.new_tweet),
       ),

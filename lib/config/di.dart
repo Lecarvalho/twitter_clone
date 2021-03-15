@@ -13,10 +13,10 @@ import 'package:twitter_clone/services/mock/reply_service_mock.dart';
 import 'package:twitter_clone/services/mock/search_service_mock.dart';
 import 'package:twitter_clone/services/mock/service_provider_mock.dart';
 import 'package:twitter_clone/services/mock/tweet_notifications_service_mock.dart';
-import 'package:twitter_clone/services/mock/tweets_service_mock.dart';
 import 'package:twitter_clone/services/providers/database_provider.dart';
 import 'package:twitter_clone/services/providers/database_storage_provider.dart';
 import 'package:twitter_clone/services/providers/storage_provider.dart';
+import 'package:twitter_clone/services/tweet_service.dart';
 import 'package:twitter_clone/services/user_service.dart';
 
 class Di {
@@ -41,7 +41,7 @@ class Di {
       providers: [
         Provider<TweetController>(
           create: (_) => TweetController(
-            service: TweetsServiceMock(mockProvider),
+            service: TweetService(databaseProvider),
           ),
         ),
         Provider<ProfileController>(

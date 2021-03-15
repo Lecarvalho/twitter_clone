@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 
 void main() {
   test("testing async await and future", () async {
-    var futureAwaitAsync = FutureAwaitAsync();
+    // var futureAwaitAsync = FutureAwaitAsync();
 
     print("starting mainMethod");
 
