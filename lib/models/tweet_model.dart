@@ -12,9 +12,6 @@ class TweetModel extends AsTweetModelBase {
     required this.likeCount,
     required this.repliesCount,
     required this.retweetCount,
-    required this.didILike,
-    required this.didIRetweet,
-    required this.tweetActivity,
   }) : super(
           id: id,
           profileId: profileId,
@@ -26,9 +23,10 @@ class TweetModel extends AsTweetModelBase {
   int likeCount;
   int repliesCount;
   int retweetCount;
-  bool didILike;
-  bool didIRetweet;
   TweetActivityModel? tweetActivity;
+
+  bool didILike = false;
+  bool didIRetweet = false;
 
   bool canRetweet(String myProfileId) =>
       !didIRetweet && profileId != myProfileId;
@@ -43,11 +41,6 @@ class TweetModel extends AsTweetModelBase {
       repliesCount: data["repliesCount"] ?? 0,
       retweetCount: data["retweetCount"] ?? 0,
       profile: ProfileModel.fromBasicInfo(data["profile"]),
-      didILike: data["didILike"] ?? false,
-      didIRetweet: data["didIRetweet"] ?? false,
-      tweetActivity: data["activity"] != null
-          ? TweetActivityModel.fromMap(data["activity"])
-          : null,
     );
   }
 

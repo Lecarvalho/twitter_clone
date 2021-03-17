@@ -1,5 +1,6 @@
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/models/profile_model.dart';
+import 'package:twitter_clone/models/tweet_activity_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/tweet_service_base.dart';
 
@@ -20,9 +21,12 @@ class TweetController extends ControllerBase<TweetServiceBase> {
     }
   }
 
-  Future<void> getProfileTweets(String profileId) async {
+  Future<void> getProfileTweets(
+    String profileId,
+    String myProfileId,
+  ) async {
     try {
-      _tweets = await service.getProfileTweets(profileId);
+      _tweets = await service.getProfileTweets(profileId, myProfileId);
     } catch (e) {
       print("Error on getProfileTweets: " + e.toString());
     }
@@ -42,9 +46,9 @@ class TweetController extends ControllerBase<TweetServiceBase> {
     }
   }
 
-  Future<void> getTweet(String tweetId) async {
+  Future<void> getTweet(String tweetId, String myProfileId) async {
     try {
-      _bigTweet = await service.getTweet(tweetId);
+      _bigTweet = await service.getTweet(tweetId, myProfileId);
     } catch (e) {
       print("Error on getTweet: " + e.toString());
     }
@@ -59,6 +63,10 @@ class TweetController extends ControllerBase<TweetServiceBase> {
       if (tweet.didILike) {
         tweet.likeCount--;
         await service.unlikeTweet(tweet.id, tweet.profileId, myProfileId);
+        // if (tweet.tweetActivity!.reactedByProfileId == myProfileId &&
+        //     tweet.tweetActivity!.tweetAction == TweetAction.like) {
+        //   tweet.tweetActivity = null;
+        // }
       } else {
         tweet.likeCount++;
         await service.likeTweet(

@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  late List<Widget> _pagesSimulation;
 
   late TweetController _tweetController;
   late ProfileController _profileController;
@@ -45,20 +44,38 @@ class _HomePageState extends State<HomePage> {
     _tweetController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
-    await _tweetController.getTweets(_profileController.myProfile.id);
+    await _loadMyFeed();
 
     setState(() {
       _isPageReady = true;
     });
 
-    _pagesSimulation = <Widget>[
-      TweetListWidget(tweets: _tweetController.tweets),
-      Text("Search"),
-      NotificationsPage(),
-      Text("Profile"),
-    ];
-
     super.didChangeDependencies();
+  }
+
+  Future<void> _loadMyFeed() async {
+    await _tweetController.getTweets(_profileController.myProfile.id);
+
+    if (_tweetController.tweets == null) {
+      Navigator.of(context).pushNamed(Routes.search);
+      return;
+    }
+  }
+
+  Set<Widget> get _pagesNavigation => {
+        TweetListWidget(
+          tweets: _tweetController.tweets,
+          onDragRefresh: _onDragRefresh,
+        ),
+        Text("Search"),
+        NotificationsPage(),
+        Text("Profile")
+      };
+
+  Future<void> _onDragRefresh() async {
+    print("ok...");
+    await _loadMyFeed();
+    setState(() {});
   }
 
   @override
@@ -74,7 +91,7 @@ class _HomePageState extends State<HomePage> {
       drawer: DrawerMenu(),
       body: !_isPageReady
           ? LoadingPageWidget()
-          : _pagesSimulation.elementAt(_selectedIndex),
+          : _pagesNavigation.elementAt(_selectedIndex),
       floatingActionButton: ButtonNewTweetWidget(
         onPressed: () => Navigator.of(context).pushNamed(Routes.new_tweet),
       ),

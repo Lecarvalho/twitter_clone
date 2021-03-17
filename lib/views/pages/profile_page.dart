@@ -29,13 +29,18 @@ class _ProfilePageState extends State<ProfilePage> {
         _profileController.myProfile.id;
 
     await _profileController.getProfile(profileId);
-    await _tweetController.getProfileTweets(profileId);
+    await _tweetController.getProfileTweets(
+        profileId, _profileController.myProfile.id);
 
     setState(() {
       _isPageReady = true;
     });
 
     super.didChangeDependencies();
+  }
+
+  Future<void> _onDragRefresh() async {
+    print("ok...");
   }
 
   OutlinedButtonWidget _editProfileButton() {
@@ -76,7 +81,8 @@ class _ProfilePageState extends State<ProfilePage> {
       return _editProfileButton();
     }
 
-    if (myProfile.following?.contains(_profileController.profile!.id) ?? false){
+    if (myProfile.following?.contains(_profileController.profile!.id) ??
+        false) {
       return _followingButton();
     }
 
@@ -97,7 +103,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       profile: _profileController.profile!,
                       actionButton: _actionButton(),
                     ),
-                    TweetListWidget(tweets: _tweetController.tweets),
+                    TweetListWidget(
+                      tweets: _tweetController.tweets,
+                      onDragRefresh: _onDragRefresh,
+                    ),
                   ],
                 ),
               ),

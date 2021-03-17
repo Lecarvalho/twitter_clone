@@ -35,7 +35,7 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
     _replyController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
-    await _tweetController.getTweet(_tweetId);
+    await _tweetController.getTweet(_tweetId, _profileController.myProfile.id);
     await _replyController.getReplies(_tweetId);
 
     _tweet = _tweetController.bigTweet!;

@@ -7,10 +7,12 @@ import 'tweet_scaffold_widget.dart';
 
 class SingleTweetWidget extends TweetScaffoldWidget {
   final TweetModel tweet;
+  final String myProfileId;
   final Function() onHeart;
   final Function()? onRetweet;
 
   SingleTweetWidget({
+    required this.myProfileId,
     required this.tweet,
     required this.onHeart,
     this.onRetweet,
@@ -21,6 +23,7 @@ class SingleTweetWidget extends TweetScaffoldWidget {
   @override
   Widget get activity => TweetActivityWidget(
         tweetActivity: tweet.tweetActivity,
+        myProfileId: myProfileId,
       );
 
   @override

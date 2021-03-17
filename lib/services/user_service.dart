@@ -56,7 +56,10 @@ class UserService extends UserServiceBase {
 
       await userCredential.user!.updateProfile(displayName: name);
 
-      return _returnSuccess(userCredential);
+      final userCredentialUpdated = await _provider.firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      return _returnSuccess(userCredentialUpdated);
     } on FirebaseAuthException catch (e) {
       return UserServiceResponse(message: _getErrorMessage(e.code));
     } catch (e) {

@@ -18,7 +18,10 @@ class TweetServiceMock extends TweetServiceBase {
   }
 
   @override
-  Future<List<TweetModel>?> getProfileTweets(String profileId) async {
+  Future<List<TweetModel>?> getProfileTweets(
+    String profileId,
+    String myProfileId,
+  ) async {
     await MockTools.simulateRequestDelay();
 
     return MockTools.jsonToModelList<TweetModel>(
@@ -37,7 +40,7 @@ class TweetServiceMock extends TweetServiceBase {
   }
 
   @override
-  Future<TweetModel?> getTweet(String tweetId) async {
+  Future<TweetModel?> getTweet(String tweetId, String myProfileId) async {
     var tweets = await MockTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),

@@ -5,21 +5,29 @@ import 'package:twitter_clone/views/resources/styles.dart';
 
 class TweetActivityWidget extends StatelessWidget {
   final TweetActivityModel? tweetActivity;
+  final String myProfileId;
 
   TweetActivityWidget({
     required this.tweetActivity,
+    required this.myProfileId,
   });
+
+  String get _whoReacted => tweetActivity != null
+      ? tweetActivity!.reactedByProfileId == myProfileId
+          ? "You"
+          : tweetActivity!.profileName
+      : "";
 
   Widget _getActionDescription() {
     Image icon;
     String action;
 
     switch (tweetActivity!.tweetAction) {
-      case TweetAction.liked:
+      case TweetAction.like:
         icon = ProjectIcons.heartSolidDarken;
         action = "liked";
         break;
-      case TweetAction.retweeted:
+      case TweetAction.retweet:
         icon = ProjectIcons.retweet;
         action = "retweeted";
         break;
@@ -31,8 +39,7 @@ class TweetActivityWidget extends StatelessWidget {
         children: [
           icon,
           SizedBox(width: 7),
-          Text(tweetActivity!.profileName + " " + action,
-              style: Styles.subtitle2Gray),
+          Text(_whoReacted + " " + action, style: Styles.subtitle2Gray),
         ],
       ),
     );

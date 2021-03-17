@@ -8,11 +8,14 @@ abstract class TweetServiceBase extends ServiceBase {
 
   Future<List<TweetModel>?> getTweets(String myProfileId);
 
-  Future<List<TweetModel>?> getProfileTweets(String profileId);
+  Future<List<TweetModel>?> getProfileTweets(
+    String profileId,
+    String myProfileId,
+  );
 
   Future<void> createTweet(Map<String, dynamic> map);
 
-  Future<TweetModel?> getTweet(String tweetId);
+  Future<TweetModel?> getTweet(String tweetId, String myProfileId);
 
   Future<void> likeTweet(
     String tweetId,

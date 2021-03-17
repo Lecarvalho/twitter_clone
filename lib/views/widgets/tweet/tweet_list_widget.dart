@@ -12,7 +12,8 @@ import 'tweet_line/single_tweet_widget.dart';
 
 class TweetListWidget extends StatefulWidget {
   final List<TweetModel>? tweets;
-  TweetListWidget({required this.tweets});
+  final Future<void> Function() onDragRefresh;
+  TweetListWidget({required this.tweets, required this.onDragRefresh});
 
   @override
   _TweetListWidgetState createState() => _TweetListWidgetState();
@@ -63,29 +64,34 @@ class _TweetListWidgetState extends State<TweetListWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.tweets == null) return Container();
-    return ListView.separated(
-      shrinkWrap: true,
-      primary: false,
-      separatorBuilder: (_, __) => DividerWidget(),
-      itemCount: widget.tweets!.length,
-      itemBuilder: (_, index) {
-        var tweet = widget.tweets![index];
+    return RefreshIndicator(
+      onRefresh: widget.onDragRefresh,
+      child: ListView.separated(
+        physics: AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        primary: false,
+        separatorBuilder: (_, __) => DividerWidget(),
+        itemCount: widget.tweets!.length,
+        itemBuilder: (_, index) {
+          var tweet = widget.tweets![index];
 
-        return Padding(
-          padding: EdgeInsets.only(left: 10, right: 10),
-          child: GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(
-              Routes.opened_tweet,
-              arguments: tweet.id,
+          return Padding(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pushNamed(
+                Routes.opened_tweet,
+                arguments: tweet.id,
+              ),
+              child: SingleTweetWidget(
+                myProfileId: _profileController.myProfile.id,
+                tweet: tweet,
+                onHeart: () => _onPressLike(tweet),
+                onRetweet: () => _onPressRetweet(tweet),
+              ),
             ),
-            child: SingleTweetWidget(
-              tweet: tweet,
-              onHeart: () => _onPressLike(tweet),
-              onRetweet: () => _onPressRetweet(tweet),
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
