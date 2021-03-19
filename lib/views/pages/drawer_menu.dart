@@ -20,7 +20,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
     _profileController = Di.instanceOf(context);
     _userController = Di.instanceOf(context);
 
-    await _profileController.getProfile(_profileController.myProfile.id);
+    await _profileController.refreshMyProfile();
 
     setState(() {});
 

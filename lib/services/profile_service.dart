@@ -134,7 +134,7 @@ class ProfileService extends ProfileServiceBase {
     _updateFollowerCount(
       batch: batch,
       profileId: forProfileId,
-      followerCount: followersMap.length,
+      followersCount: followersMap.length,
     );
   }
 
@@ -170,7 +170,7 @@ class ProfileService extends ProfileServiceBase {
     _updateFollowerCount(
       batch: batch,
       profileId: forProfileId,
-      followerCount: followersMap.length,
+      followersCount: followersMap.length,
     );
   }
 
@@ -186,10 +186,10 @@ class ProfileService extends ProfileServiceBase {
   void _updateFollowerCount({
     required WriteBatch batch,
     required String profileId,
-    required int followerCount,
+    required int followersCount,
   }) {
     final profileRef = _collections.profiles.doc(profileId);
-    batch.update(profileRef, {Fields.followerCount: followerCount});
+    batch.update(profileRef, {Fields.followersCount: followersCount});
   }
 
   Future<void> _takeSomeFeedFromFollowing({

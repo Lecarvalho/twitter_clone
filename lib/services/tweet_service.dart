@@ -69,22 +69,17 @@ class TweetService extends TweetServiceBase {
         .limit(10)
         .toMapList();
 
-    final allFeed = myTweetsFeed + myReactionsFeed;
+    final feedList = myTweetsFeed + myReactionsFeed;
 
-    allFeed.distinct((feed) => feed[Fields.tweetId]);
+    feedList.distinct((feed) => feed[Fields.tweetId]);
 
-    if (allFeed.isEmpty) return null;
-
-    for (var oneFeed in allFeed) {
-      final tweet = await _collections.tweets
-          .doc(oneFeed[Fields.tweetId])
-          .toModel<TweetModel>(
-            (data) => _getMyReactions(TweetModel.fromMap(data), myProfileId),
-          );
-
-      if (tweet != null) {
-        tweets.add(tweet);
-      }
+    if (feedList.isNotEmpty) {
+      tweets.addAll(
+        await _getTweetsFromFeed(
+          feedList: feedList,
+          myProfileId: myProfileId,
+        ),
+      );
     }
 
     return tweets.isNotEmpty ? tweets : null;
@@ -116,6 +111,7 @@ class TweetService extends TweetServiceBase {
       createdAt: createdAt,
       creatorTweetProfileId: ofProfileId,
       reactedByProfileId: myProfileId,
+      reactedByProfileName: myProfileName,
       reactionType: ReactionTypes.like,
       tweetId: tweetId,
     );
@@ -132,6 +128,7 @@ class TweetService extends TweetServiceBase {
           createdAt: createdAt,
           creatorTweetProfileId: ofProfileId,
           reactedByProfileId: myProfileId,
+          reactedByProfileName: myProfileName,
           reactionType: ReactionTypes.like,
           tweetId: tweetId,
         );
@@ -141,7 +138,6 @@ class TweetService extends TweetServiceBase {
     _createAReaction(
       tweetId: tweetId,
       reactedByProfileId: myProfileId,
-      reactedByProfileName: myProfileName,
       createdAt: createdAt,
       batch: batch,
       reactionType: ReactionTypes.like,
@@ -171,6 +167,7 @@ class TweetService extends TweetServiceBase {
       batch: batch,
       reactedByProfileId: myProfileId,
       tweetId: tweetId,
+      creatorTweetProfileId: ofProfileId,
     );
 
     _removeAReaction(
@@ -208,6 +205,7 @@ class TweetService extends TweetServiceBase {
       createdAt: createdAt,
       creatorTweetProfileId: ofProfileId,
       reactedByProfileId: myProfileId,
+      reactedByProfileName: myProfileName,
       reactionType: ReactionTypes.retweet,
       tweetId: tweetId,
     );
@@ -224,6 +222,7 @@ class TweetService extends TweetServiceBase {
           createdAt: createdAt,
           creatorTweetProfileId: ofProfileId,
           reactedByProfileId: myProfileId,
+          reactedByProfileName: myProfileName,
           reactionType: ReactionTypes.retweet,
           tweetId: tweetId,
         );
@@ -234,7 +233,6 @@ class TweetService extends TweetServiceBase {
       batch: batch,
       createdAt: createdAt,
       reactedByProfileId: myProfileId,
-      reactedByProfileName: myProfileName,
       reactionType: ReactionTypes.retweet,
       tweetId: tweetId,
     );
@@ -253,7 +251,7 @@ class TweetService extends TweetServiceBase {
   Future<List<TweetModel>?> getTweets(String myProfileId) async {
     List<TweetModel> tweets = [];
 
-    final myFeedMapList = await _collections.feed
+    final feedList = await _collections.feed
         .where(Fields.concernedProfileId, isEqualTo: myProfileId)
         .limit(20)
         // .orderBy(
@@ -262,21 +260,50 @@ class TweetService extends TweetServiceBase {
         // )
         .toMapList();
 
-    if (myFeedMapList.isNotEmpty) {
-      for (var myFeedMap in myFeedMapList) {
-        final tweet = await _collections.tweets
-            .doc(myFeedMap[Fields.tweetId])
-            .toModel<TweetModel>(
-              (data) => _getMyReactions(TweetModel.fromMap(data), myProfileId),
-            );
-
-        if (tweet != null) {
-          tweets.add(tweet);
-        }
-      }
+    if (feedList.isNotEmpty) {
+      tweets.addAll(
+        await _getTweetsFromFeed(
+          feedList: feedList,
+          myProfileId: myProfileId,
+        ),
+      );
     }
 
     return tweets.isNotEmpty ? tweets : null;
+  }
+
+  Future<List<TweetModel>> _getTweetsFromFeed({
+    required List<Map<String, dynamic>> feedList,
+    required String myProfileId,
+  }) async {
+    List<TweetModel> tweets = [];
+
+    for (var oneFeed in feedList) {
+      final tweet = await _collections.tweets
+          .doc(oneFeed[Fields.tweetId])
+          .toModel<TweetModel>(
+            (data) => TweetModel.fromMap(data),
+          );
+
+      if (tweet != null) {
+        if (oneFeed[Fields.reactedByProfileId] != null) {
+          tweet.tweetReaction = TweetReactionModel.fromMap(oneFeed);
+        }
+
+        tweet.didILike = await _collections.reactions.docExists(
+          _collections.toReactionKey(tweet.id, myProfileId, ReactionTypes.like),
+        );
+
+        tweet.didIRetweet = await _collections.reactions.docExists(
+          _collections.toReactionKey(
+              tweet.id, myProfileId, ReactionTypes.retweet),
+        );
+
+        tweets.add(tweet);
+      }
+    }
+
+    return tweets;
   }
 
   void _createAFeed({
@@ -345,6 +372,7 @@ class TweetService extends TweetServiceBase {
     required String creatorTweetProfileId,
     required String reactionType,
     required String reactedByProfileId,
+    required String reactedByProfileName,
     required DateTime createdAt,
   }) {
     final feedRef = _collections.feed.doc(
@@ -355,7 +383,8 @@ class TweetService extends TweetServiceBase {
       Fields.concernedProfileId: concernedProfileId,
       Fields.tweetId: tweetId,
       Fields.creatorTweetProfileId: creatorTweetProfileId,
-      Fields.reactionType: ReactionTypes.retweet,
+      Fields.reactionType: reactionType,
+      Fields.reactedByProfileName: reactedByProfileName,
       Fields.reactedByProfileId: reactedByProfileId,
       Fields.createdAt: createdAt,
     });
@@ -365,22 +394,37 @@ class TweetService extends TweetServiceBase {
     required WriteBatch batch,
     required String tweetId,
     required String reactedByProfileId,
+    required String creatorTweetProfileId,
   }) async {
-    final removeFeedRef = await _collections.feed
+    final removeLikeFeed = await _collections.feed
         .where(Fields.tweetId, isEqualTo: tweetId)
         .where(Fields.reactionType, isEqualTo: ReactionTypes.like)
         .where(Fields.reactedByProfileId, isEqualTo: reactedByProfileId)
         .get();
 
-    removeFeedRef.docs.forEach((doc) {
-      batch.delete(doc.reference);
+    removeLikeFeed.docs.forEach((doc) async {
+      final feedRef = doc.data()!;
+
+      final followingMap = await _collections.following
+          .doc(feedRef[Fields.concernedProfileId])
+          .toMap();
+
+      if (followingMap?.containsKey(creatorTweetProfileId) ?? false) {
+        batch.set(doc.reference, {
+          Fields.tweetId: tweetId,
+          Fields.creatorTweetProfileId: creatorTweetProfileId,
+          Fields.concernedProfileId: feedRef[Fields.concernedProfileId],
+          Fields.createdAt: feedRef[Fields.createdAt],
+        });
+      } else {
+        batch.delete(doc.reference);
+      }
     });
   }
 
   void _createAReaction({
     required String tweetId,
     required String reactedByProfileId,
-    required String reactedByProfileName,
     required DateTime createdAt,
     required WriteBatch batch,
     required String reactionType,
@@ -394,7 +438,6 @@ class TweetService extends TweetServiceBase {
       Fields.reactionType: reactionType,
       Fields.tweetId: tweetId,
       Fields.reactedByProfileId: reactedByProfileId,
-      Fields.reactedByProfileName: reactedByProfileName,
     });
   }
 

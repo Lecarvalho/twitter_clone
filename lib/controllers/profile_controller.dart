@@ -20,6 +20,16 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
     }
   }
 
+  Future<void> refreshMyProfile()async {
+    try{
+      _myProfile = (await service.getProfile(_myProfile.id))!;
+    } 
+    catch (e) {
+      print("Error on refreshMyProfile: ${e.toString()}");
+
+    }
+  }
+
   Future<bool> amIFollowingProfile(String myProfileId, String otherProfileId) async {
     try {
       return await service.amIFollowingProfile(myProfileId, otherProfileId);
@@ -33,7 +43,6 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
 
   Future<void> follow(String toFollowUserId) async {
     try {
-      _myProfile.followingCount ++;
       service.follow(_myProfile.id, toFollowUserId);
     } catch (e) {
       print("Error on follow: ${e.toString()}");
@@ -42,7 +51,6 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
 
   Future<void> unfollow(String toUnfollowUserId) async {
     try {
-      _myProfile.followingCount --;
       service.unfollow(_myProfile.id, toUnfollowUserId);
     } catch (e) {
       print("Error on unfollow: ${e.toString()}");

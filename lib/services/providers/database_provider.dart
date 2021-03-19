@@ -44,7 +44,7 @@ class Collections {
   /// - reactionType
   CollectionReference get feed => _firestore.collection("feed");
   
-  /// A like or a retweet. The key is tweetId_reactedByProfileId.
+  /// A like or a retweet. The key is tweetId_reactedByProfileId_reactionType.
   /// 
   /// document fields:  
   /// 
@@ -79,7 +79,7 @@ class Fields {
   static String get concernedProfileId => "concernedProfileId";
   static String get creatorTweetProfileId => "creatorTweetProfileId";
   static String get followingCount => "followingCount";
-  static String get followerCount => "followerCount";
+  static String get followersCount => "followersCount";
   static String get reactionType => "reactionType";
   static String get reactedByProfileName => "reactedByProfileName";
   static String get reactedByProfileId => "reactedByProfileId";
@@ -138,5 +138,11 @@ extension DistinctExtension on List {
     final uniqueFields = this.map(expression).toSet();
 
     this.retainWhere((myFeed) => uniqueFields.remove(myFeed[Fields.tweetId]));
+  }
+}
+
+extension CollectionExtension on CollectionReference {
+  Future<bool> docExists(String docKey) async {
+    return (await this.doc(docKey).get()).exists;
   }
 }

@@ -15,7 +15,7 @@ class TweetReactionWidget extends StatelessWidget {
   String get _whoReacted => tweetReaction != null
       ? tweetReaction!.reactedByProfileId == myProfileId
           ? "You"
-          : tweetReaction!.profileName
+          : tweetReaction!.reactedByProfileName
       : "";
 
   Widget _getReactionDescription() {
