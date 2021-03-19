@@ -1,6 +1,6 @@
 import 'as_tweet_model_base.dart';
 import 'profile_model.dart';
-import 'tweet_activity_model.dart';
+import 'tweet_reaction_model.dart';
 
 class TweetModel extends AsTweetModelBase {
   TweetModel({
@@ -23,7 +23,7 @@ class TweetModel extends AsTweetModelBase {
   int likeCount;
   int repliesCount;
   int retweetCount;
-  TweetActivityModel? tweetActivity;
+  TweetReactionModel? tweetReaction;
 
   bool didILike = false;
   bool didIRetweet = false;

@@ -85,7 +85,7 @@ class _TweetListWidgetState extends State<TweetListWidget> {
               child: SingleTweetWidget(
                 myProfileId: _profileController.myProfile.id,
                 tweet: tweet,
-                onHeart: () => _onPressLike(tweet),
+                onLike: () => _onPressLike(tweet),
                 onRetweet: () => _onPressRetweet(tweet),
               ),
             ),

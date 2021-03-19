@@ -63,10 +63,6 @@ So let's check the life cycle of a feed:
 - **Type:** String
 - **Definition:** The profile id from the person who reacted (like, retweet) the tweet.
 
-***reactedByProfileName***
-- **Type:** String
-- **Definition:** The name of the person who reacted (like, retweet) the tweet.
-
 ***reactionType***
 - **Type:** String
 - **Definition:** The type of the tweet: "like" or "retweet"
@@ -91,7 +87,6 @@ One entry is created *or updated* for each follower on feed collection with:
 - **creatorTweetProfileId** see definition above
 - **tweetId:** see definition above
 - **reactedByProfileId:** see definition above
-- **reactedByProfileName:** see definition above
 - **reactionType:** like
 
 ## Unlike a tweet
@@ -113,7 +108,6 @@ One entry is created for each follower on feed collection with:
 - **creatorTweetProfileId** see definition above
 - **tweetId:** see definition above
 - **reactedByProfileId:** see definition above
-- **reactedByProfileName:** see definition above
 - **reactionType:** retweet
 
 ## Follow someone else *(also known as "other")*

@@ -12,7 +12,7 @@ abstract class TweetScaffoldWidget extends StatelessWidget {
     required this.asTweet
   });
 
-  Widget get activity => Container();
+  Widget get reaction => Container();
   Widget get replyingTo => Container();
   Widget get actions => Container();
 
@@ -24,7 +24,7 @@ abstract class TweetScaffoldWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 10),
-        activity,
+        reaction,
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,

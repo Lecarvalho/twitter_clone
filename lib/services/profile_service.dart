@@ -205,7 +205,7 @@ class ProfileService extends ProfileServiceBase {
         .toModelList<TweetModel>((data) => TweetModel.fromMap(data));
 
     for (var tweet in tweetsFromMyFollowing) {
-      final newFeedRef = _collections.feed.doc();
+      final newFeedRef = _collections.feed.doc(_collections.toFeedKey(tweet.id, toProfileId));
       batch.set(newFeedRef, {
         Fields.concernedProfileId: toProfileId,
         Fields.createdAt: startingAt,
