@@ -92,9 +92,7 @@ class _HomePageState extends State<HomePage> {
       body: !_isPageReady
           ? LoadingPageWidget()
           : _pagesNavigation.elementAt(_selectedIndex),
-      floatingActionButton: ButtonNewTweetWidget(
-        onPressed: () => Navigator.of(context).pushNamed(Routes.new_tweet),
-      ),
+      floatingActionButton: ButtonNewTweetWidget(context: context),
       bottomNavigationBar: BottomNavigationWidget(
         onNavigationTapped: _onNavigationTapped,
         selectedIndex: _selectedIndex,

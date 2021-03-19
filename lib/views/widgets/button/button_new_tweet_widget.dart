@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/project_icons.dart';
 
-class ButtonNewTweetWidget extends FloatingActionButton {
-  final Function() onPressed;
+import '../../routes.dart';
 
-  ButtonNewTweetWidget({required this.onPressed})
+class ButtonNewTweetWidget extends FloatingActionButton {
+  final BuildContext context;
+
+  ButtonNewTweetWidget({required this.context})
       : super(
           child: ProjectIcons.addTweet,
-          onPressed: onPressed,
+          onPressed: () => Navigator.of(context).pushNamed(Routes.new_tweet),
         );
 }

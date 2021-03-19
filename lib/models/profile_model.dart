@@ -8,24 +8,22 @@ class ProfileModel extends ModelBase {
   String? nickname;
   String? avatar;
   String? bio;
-  int? followersCount;
-  List<String>? following;
+  int followersCount;
+  int followingCount;
 
   ProfileModel({
     required this.id,
     required this.name,
+    required this.followersCount,
+    required this.followingCount,
     this.createdAt,
     this.nickname,
     this.avatar,
     this.bio,
-    this.followersCount,
-    this.following,
   });
 
   bool get isProfileComplete =>
       nickname != null && avatar != null && bio != null;
-
-  int get followingCount => following?.length ?? 0;
 
   String get createdAtDateMonthYear =>
       DateFormat.MMMM().add_y().format(createdAt!);
@@ -37,6 +35,8 @@ class ProfileModel extends ModelBase {
       id: data["id"],
       name: data["name"],
       createdAt: DateTime.parse(data["createdAt"]),
+      followersCount: data["followersCount"] ?? 0,
+      followingCount: data["followingCount"] ?? 0,
     );
   }
 
@@ -49,9 +49,7 @@ class ProfileModel extends ModelBase {
       bio: data["bio"],
       createdAt: DateTime.parse(data["createdAt"]),
       followersCount: data["followersCount"] ?? 0,
-      following: data["following"] != null
-          ? List.from(data["following"])
-          : List.empty(),
+      followingCount: data["followingCount"] ?? 0,
     );
   }
 
@@ -61,6 +59,8 @@ class ProfileModel extends ModelBase {
       name: data["name"],
       avatar: data["avatar"],
       nickname: data["nickname"],
+      followersCount: data["followersCount"] ?? 0,
+      followingCount: data["followingCount"] ?? 0,
     );
   }
 
@@ -83,6 +83,7 @@ class ProfileModel extends ModelBase {
   }) {
     return {
       "name": name,
+      "nameSearch": name.toLowerCase(),
       "createdAt": createdAt,
     };
   }

@@ -68,12 +68,18 @@ class UserController extends ControllerBase<UserServiceBase> {
             createdAt: DateTime.now().toUtc(),
           ),
         );
-      }
 
-      response = MyProfileResponse(
-        message: userServiceResponse.message,
-        type: ProfileStatusType.incomplete,
-      );
+        response = MyProfileResponse(
+          message: userServiceResponse.message,
+          type: ProfileStatusType.incomplete,
+        );
+      }
+      else {
+        response = MyProfileResponse(
+          message: userServiceResponse.message,
+          type: ProfileStatusType.error,
+        );
+      }
     } catch (e) {
       print(
           "error in User2Controller.createWithEmailAndPassword - ${e.toString()}");

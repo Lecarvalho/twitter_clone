@@ -7,8 +7,7 @@ class AuthProvider extends ServiceProviderBase {
   late FirebaseAuth firebaseAuth;
   
   @override
-  Future<void> init() async {
-    await Firebase.initializeApp();
+  Future<void> init() async {  
     firebaseAuth = FirebaseAuth.instance;
   }
   

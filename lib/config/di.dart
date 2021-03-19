@@ -10,12 +10,13 @@ import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
 import 'package:twitter_clone/services/profile_service.dart';
 import 'package:twitter_clone/services/providers/auth_provider.dart';
 import 'package:twitter_clone/services/mock/reply_service_mock.dart';
-import 'package:twitter_clone/services/mock/search_service_mock.dart';
 import 'package:twitter_clone/services/mock/service_provider_mock.dart';
 import 'package:twitter_clone/services/mock/tweet_notifications_service_mock.dart';
+import 'package:twitter_clone/services/providers/core_provider.dart';
 import 'package:twitter_clone/services/providers/database_provider.dart';
 import 'package:twitter_clone/services/providers/database_storage_provider.dart';
 import 'package:twitter_clone/services/providers/storage_provider.dart';
+import 'package:twitter_clone/services/search_service.dart';
 import 'package:twitter_clone/services/tweet_service.dart';
 import 'package:twitter_clone/services/user_service.dart';
 
@@ -33,6 +34,7 @@ class Di {
       storageProvider,
     );
 
+    await CoreProvider().init();
     await authProvider.init();
     await databaseProvider.init();
     await storageProvider.init();
@@ -61,7 +63,7 @@ class Di {
         ),
         Provider<SearchController>(
           create: (_) => SearchController(
-            service: SearchServiceMock(mockProvider),
+            service: SearchService(databaseProvider),
           ),
         ),
         Provider<UserController>(

@@ -1,6 +1,5 @@
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/models/profile_model.dart';
-import 'package:twitter_clone/models/tweet_activity_model.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/tweet_service_base.dart';
 
@@ -63,10 +62,6 @@ class TweetController extends ControllerBase<TweetServiceBase> {
       if (tweet.didILike) {
         tweet.likeCount--;
         await service.unlikeTweet(tweet.id, tweet.profileId, myProfileId);
-        // if (tweet.tweetActivity!.reactedByProfileId == myProfileId &&
-        //     tweet.tweetActivity!.tweetAction == TweetAction.like) {
-        //   tweet.tweetActivity = null;
-        // }
       } else {
         tweet.likeCount++;
         await service.likeTweet(

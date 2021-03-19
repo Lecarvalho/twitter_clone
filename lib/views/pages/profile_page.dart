@@ -20,17 +20,32 @@ class _ProfilePageState extends State<ProfilePage> {
   late TweetController _tweetController;
   bool _isPageReady = false;
 
+  late bool _amIFollowing;
+  late String _myProfileId;
+
   @override
   void didChangeDependencies() async {
     _profileController = Di.instanceOf<ProfileController>(context);
     _tweetController = Di.instanceOf<TweetController>(context);
 
-    var profileId = ModalRoute.of(context)!.settings.arguments?.toString() ??
-        _profileController.myProfile.id;
+    _myProfileId = _profileController.myProfile.id;
+    final profileIdParam =
+        ModalRoute.of(context)!.settings.arguments?.toString();
+
+    var profileId = profileIdParam ?? _myProfileId;
 
     await _profileController.getProfile(profileId);
     await _tweetController.getProfileTweets(
-        profileId, _profileController.myProfile.id);
+      profileId,
+      _profileController.myProfile.id,
+    );
+
+    if (_myProfileId != profileId) {
+      _amIFollowing = await _profileController.amIFollowingProfile(
+        _myProfileId,
+        profileId,
+      );
+    }
 
     setState(() {
       _isPageReady = true;
@@ -57,6 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
       onPressed: () {
         setState(() {
           _profileController.unfollow(_profileController.profile!.id);
+          _amIFollowing = false;
         });
       },
       text: "Following",
@@ -68,6 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
       onPressed: () {
         setState(() {
           _profileController.follow(_profileController.profile!.id);
+          _amIFollowing = true;
         });
       },
       text: "Follow",
@@ -75,14 +92,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   BaseButtonWidget _actionButton() {
-    var myProfile = _profileController.myProfile;
-
-    if (_profileController.profile!.id == myProfile.id) {
+    if (_profileController.profile!.id == _myProfileId) {
       return _editProfileButton();
     }
 
-    if (myProfile.following?.contains(_profileController.profile!.id) ??
-        false) {
+    if (_amIFollowing) {
       return _followingButton();
     }
 

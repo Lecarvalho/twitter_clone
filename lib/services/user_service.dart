@@ -129,6 +129,8 @@ class UserService extends UserServiceBase {
         return UserServiceResponseMessage.user_disabled;
       case "user-not-found":
         return UserServiceResponseMessage.user_not_found;
+      case "weak-password":
+        return UserServiceResponseMessage.weak_password;
       default:
         return UserServiceResponseMessage.general_error;
     }

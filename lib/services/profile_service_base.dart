@@ -12,4 +12,5 @@ abstract class ProfileServiceBase extends ServiceBase {
   Future<String> uploadAvatar(String selectedImagePath, String filename);
   Future<void> follow(String myProfileId, String toFollowUserId);
   Future<void> unfollow(String myProfileId, String toUnfollowUserId);
+  Future<bool> amIFollowingProfile(String myProfileId, String otherProfileId);
 }

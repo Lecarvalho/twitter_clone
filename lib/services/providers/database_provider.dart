@@ -56,9 +56,10 @@ class Fields {
   static String get followingCount => "followingCount";
   static String get followerCount => "followerCount";
   static String get reactionType => "reactionType";
-  static String get profileName => "profileName";
+  static String get reactedByProfileName => "reactedByProfileName";
   static String get reactedByProfileId => "reactedByProfileId";
   static String get createdAt => "createdAt";
+  static String get nameSearch => "nameSearch";
 }
 
 class ReactionTypes {

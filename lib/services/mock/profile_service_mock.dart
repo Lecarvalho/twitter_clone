@@ -8,7 +8,13 @@ class ProfileServiceMock extends ProfileServiceBase {
   ProfileServiceMock(ServiceProviderMock provider) : super(provider);
 
   @override
-  Future<ProfileModel> createProfile(String id, Map<String, dynamic> profileMap)async {
+  Future<bool> amIFollowingProfile(String myProfileId, String otherProfileId) async {
+    return false;
+  }
+
+  @override
+  Future<ProfileModel> createProfile(
+      String id, Map<String, dynamic> profileMap) async {
     var profile = await MockTools.jsonToModel<ProfileModel>(
       "assets/json/incomplete_profile.json",
       (data) => ProfileModel.fromCreation(data),
@@ -44,7 +50,8 @@ class ProfileServiceMock extends ProfileServiceBase {
   }
 
   @override
-  Future<ProfileModel> updateProfile(String id, Map<String, dynamic> profileMap) async {
+  Future<ProfileModel> updateProfile(
+      String id, Map<String, dynamic> profileMap) async {
     print("id: ${profileMap["id"]}");
     print("avatar: ${profileMap["avatar"]}");
     print("bio: ${profileMap["bio"]}");

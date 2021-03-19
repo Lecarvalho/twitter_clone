@@ -6,14 +6,6 @@ import 'package:twitter_clone/views/widgets/user/profile_name_nick_timeago_horiz
 import 'package:twitter_clone/views/widgets/user/profile_picture_widget.dart';
 
 abstract class TweetScaffoldWidget extends StatelessWidget {
-  // final String avatar;
-  // final String tweetId;
-  // final String profileId;
-  // final String profileName;
-  // final String profileNickname;
-  // final String tweetCreationTimeAgo;
-  // final String text;
-
   final AsTweetModelBase asTweet;
 
   TweetScaffoldWidget({
@@ -44,7 +36,7 @@ abstract class TweetScaffoldWidget extends StatelessWidget {
               profileId: asTweet.profileId,
               onTap: () => Navigator.of(context).pushNamed(
                 Routes.profile,
-                arguments: asTweet.id,
+                arguments: asTweet.profileId,
               ),
             ),
             SizedBox(width: 8),

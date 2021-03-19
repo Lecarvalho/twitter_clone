@@ -3,6 +3,7 @@ import 'package:twitter_clone/controllers/search_controller.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
+import 'package:twitter_clone/views/widgets/button/button_new_tweet_widget.dart';
 import 'package:twitter_clone/views/widgets/divider_widget.dart';
 import 'package:twitter_clone/views/widgets/search/search_default_banner_widget.dart';
 import 'package:twitter_clone/views/widgets/search/search_result_widget.dart';
@@ -63,6 +64,7 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
       body: _buildBody(),
+      floatingActionButton: ButtonNewTweetWidget(context: context),
     );
   }
 }

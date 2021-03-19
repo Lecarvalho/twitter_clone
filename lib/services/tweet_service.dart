@@ -202,7 +202,7 @@ class TweetService extends TweetServiceBase {
       Fields.tweetId: tweetId,
       Fields.creatorTweetProfileId: ofProfileId,
       Fields.reactionType: ReactionTypes.like,
-      Fields.profileName: myProfileName,
+      Fields.reactedByProfileName: myProfileName,
       Fields.reactedByProfileId: myProfileId,
       Fields.createdAt: createdAt,
     });
@@ -220,7 +220,7 @@ class TweetService extends TweetServiceBase {
           Fields.tweetId: tweetId,
           Fields.creatorTweetProfileId: ofProfileId,
           Fields.reactionType: ReactionTypes.like,
-          Fields.profileName: myProfileName,
+          Fields.reactedByProfileName: myProfileName,
           Fields.reactedByProfileId: myProfileId,
           Fields.createdAt: createdAt,
         });
@@ -301,7 +301,7 @@ class TweetService extends TweetServiceBase {
       Fields.tweetId: tweetId,
       Fields.creatorTweetProfileId: ofProfileId,
       Fields.reactionType: ReactionTypes.retweet,
-      Fields.profileName: myProfileName,
+      Fields.reactedByProfileName: myProfileName,
       Fields.reactedByProfileId: myProfileId,
       Fields.createdAt: createdAt,
     });
@@ -319,7 +319,7 @@ class TweetService extends TweetServiceBase {
           Fields.tweetId: tweetId,
           Fields.creatorTweetProfileId: ofProfileId,
           Fields.reactionType: ReactionTypes.retweet,
-          Fields.profileName: myProfileName,
+          Fields.reactedByProfileName: myProfileName,
           Fields.reactedByProfileId: myProfileId,
           Fields.createdAt: createdAt,
         });

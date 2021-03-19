@@ -20,6 +20,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
     _profileController = Di.instanceOf(context);
     _userController = Di.instanceOf(context);
 
+    await _profileController.getProfile(_profileController.myProfile.id);
+
+    setState(() {});
+
     super.didChangeDependencies();
   }
 
@@ -32,17 +36,19 @@ class _DrawerMenuState extends State<DrawerMenu> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfilePictureNameNickVerticalWidget(profile: _profileController.myProfile),
+              ProfilePictureNameNickVerticalWidget(
+                  profile: _profileController.myProfile),
               SizedBox(height: 10),
               FollowingFollowersCountWidget(
-                followersCount: _profileController.myProfile.followersCount!,
+                followersCount: _profileController.myProfile.followersCount,
                 followingCount: _profileController.myProfile.followingCount,
               ),
               SizedBox(height: 25),
               GestureDetector(
                 onTap: () {
                   _userController.signOut();
-                  Navigator.of(context).pushNamedAndRemoveUntil(Routes.login, (route) => false);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(Routes.login, (route) => false);
                 },
                 child: Text("Logoff"),
               ),

@@ -20,11 +20,20 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
     }
   }
 
+  Future<bool> amIFollowingProfile(String myProfileId, String otherProfileId) async {
+    try {
+      return await service.amIFollowingProfile(myProfileId, otherProfileId);
+    } catch (e) {
+      print("Error on amIFollowingProfile: ${e.toString()}");
+      return false;
+    }
+  }
+
   set setMyProfile(ProfileModel myProfile) => _myProfile = myProfile;
 
   Future<void> follow(String toFollowUserId) async {
     try {
-      _myProfile.following?.add(toFollowUserId);
+      _myProfile.followingCount ++;
       service.follow(_myProfile.id, toFollowUserId);
     } catch (e) {
       print("Error on follow: ${e.toString()}");
@@ -33,7 +42,7 @@ class ProfileController extends ControllerBase<ProfileServiceBase> {
 
   Future<void> unfollow(String toUnfollowUserId) async {
     try {
-      _myProfile.following?.remove(toUnfollowUserId);
+      _myProfile.followingCount --;
       service.unfollow(_myProfile.id, toUnfollowUserId);
     } catch (e) {
       print("Error on unfollow: ${e.toString()}");

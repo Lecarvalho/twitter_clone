@@ -57,4 +57,5 @@ class UserServiceResponseMessage {
       "We cannot make this right now, please try again later";
   static const String success = "Success";
   static const String user_not_found = "User not found, please try again";
+  static const String weak_password = "The password is too weak, please fix it";
 }

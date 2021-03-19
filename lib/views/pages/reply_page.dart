@@ -31,7 +31,7 @@ class _ReplyPageState extends State<ReplyPage> {
     _textController.addListener(() {
       if (_hasText && _onPressedReplyTweet == null) {
         setState(() {
-          _onPressedReplyTweet = _onCommentTweet;
+          _onPressedReplyTweet = _onReplyTweet;
         });
       } else if (!_hasText) {
         setState(() {
@@ -43,7 +43,7 @@ class _ReplyPageState extends State<ReplyPage> {
     super.didChangeDependencies();
   }
 
-  void _onCommentTweet() async {
+  void _onReplyTweet() async {
     await _replyController.replyTweet(
       replyingToTweetId: _replyingTweet.id,
       text: _textController.text,
