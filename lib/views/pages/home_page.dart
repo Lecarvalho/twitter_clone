@@ -28,15 +28,24 @@ class _HomePageState extends State<HomePage> {
   bool _isPageReady = false;
 
   void _onNavigationTapped(int index) {
-    if (index == 1) {
-      Navigator.of(context).pushNamed(Routes.search);
-    } else if (index == 3) {
-      Navigator.of(context).pushNamed(Routes.profile);
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
+    switch (index) {
+      case 0: //feed
+        _loadMyFeed().then((_) => setState(() {}));
+        break;
+      case 1: //search
+        Navigator.of(context).pushNamed(Routes.search);
+        return;
+      case 3: //profile
+        Navigator.of(context).pushNamed(Routes.profile);
+        return;
+      case 2: //notifications
+      default:
+        break;
     }
+
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -73,8 +82,8 @@ class _HomePageState extends State<HomePage> {
       };
 
   Future<void> _onDragRefresh() async {
-    print("ok...");
     await _loadMyFeed();
+
     setState(() {});
   }
 

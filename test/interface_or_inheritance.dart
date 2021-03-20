@@ -9,11 +9,9 @@ abstract class AsInterfaceOrInheritance {
 class ConcreteClass implements AsInterfaceOrInheritance {
   @override
   void method() {
-    // TODO: implement method
   }
 
   @override
   void methodWithImplementation() {
-    // TODO: implement methodWithImplementation
   }
 }
