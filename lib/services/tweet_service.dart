@@ -168,6 +168,7 @@ class TweetService extends TweetServiceBase {
       reactedByProfileId: myProfileId,
       tweetId: tweetId,
       creatorTweetProfileId: ofProfileId,
+
     );
 
     _removeAReaction(
@@ -396,20 +397,26 @@ class TweetService extends TweetServiceBase {
     required String reactedByProfileId,
     required String creatorTweetProfileId,
   }) async {
-    final removeLikeFeed = await _collections.feed
+    final likeOnFeed = await _collections.feed
         .where(Fields.tweetId, isEqualTo: tweetId)
         .where(Fields.reactionType, isEqualTo: ReactionTypes.like)
         .where(Fields.reactedByProfileId, isEqualTo: reactedByProfileId)
         .get();
 
-    removeLikeFeed.docs.forEach((doc) async {
+    for (var doc in likeOnFeed.docs) {
       final feedRef = doc.data()!;
 
       final followingMap = await _collections.following
           .doc(feedRef[Fields.concernedProfileId])
           .toMap();
 
-      if (followingMap?.containsKey(creatorTweetProfileId) ?? false) {
+      final itsAFollowerForThisCreator =
+          followingMap?.containsKey(creatorTweetProfileId) ?? false;
+
+      final unlikeMyOwnTweet = reactedByProfileId == creatorTweetProfileId;
+
+      if (itsAFollowerForThisCreator || unlikeMyOwnTweet) {
+        //just reset
         batch.set(doc.reference, {
           Fields.tweetId: tweetId,
           Fields.creatorTweetProfileId: creatorTweetProfileId,
@@ -417,9 +424,10 @@ class TweetService extends TweetServiceBase {
           Fields.createdAt: feedRef[Fields.createdAt],
         });
       } else {
+        //it is not a concern anymore
         batch.delete(doc.reference);
       }
-    });
+    }
   }
 
   void _createAReaction({

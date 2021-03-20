@@ -30,12 +30,12 @@ class Collections {
   CollectionReference get followers => _firestore.collection("followers");
 
   /// Collection with all the tweetIds for profilesIds (many to many) so we can catch the tweetId where
-  /// profileId = mine then finally get the tweets. 
-  /// 
+  /// profileId = mine then finally get the tweets.
+  ///
   /// The key is tweetId_concernedProfileId_reactionType
-  /// 
+  ///
   /// document fields:
-  /// 
+  ///
   /// - concernedProfileId
   /// - createdAt
   /// - creatorTweetProfileId
@@ -43,16 +43,18 @@ class Collections {
   /// - reactedByProfileId
   /// - reactionType
   CollectionReference get feed => _firestore.collection("feed");
-  
+
   /// A like or a retweet. The key is tweetId_reactedByProfileId_reactionType.
-  /// 
-  /// document fields:  
-  /// 
+  ///
+  /// document fields:
+  ///
   /// - createdAt: the date where the tweet was reacted.
   /// - reactionType: like or retweet
   /// - tweetId
   /// - reactedByProfileId
   CollectionReference get reactions => _firestore.collection("reactions");
+
+  CollectionReference get replies => _firestore.collection("replies");
 
   static Map<String, dynamic> parseDataToPrimitiveTypes(
       Map<String, dynamic> firebaseData) {
@@ -64,9 +66,11 @@ class Collections {
     return firebaseData;
   }
 
-  String toReactionKey(String tweetId, String reactedByProfileId, String reactionType) => "${tweetId}_${reactedByProfileId}_$reactionType";
-  String toFeedKey(String tweetId, String concernedProfileId) => "${tweetId}_$concernedProfileId";
-  
+  String toReactionKey(
+          String tweetId, String reactedByProfileId, String reactionType) =>
+      "${tweetId}_${reactedByProfileId}_$reactionType";
+  String toFeedKey(String tweetId, String concernedProfileId) =>
+      "${tweetId}_$concernedProfileId";
 }
 
 class Fields {
@@ -85,6 +89,14 @@ class Fields {
   static String get reactedByProfileId => "reactedByProfileId";
   static String get createdAt => "createdAt";
   static String get nameSearch => "nameSearch";
+  static String get text => "text";
+  static String get replyingToTweetId => "replyingToTweetId";
+  static String get replyingToProfileId => "replyingToProfileId";
+  static String get profile => "profile";
+  static String get avatar => "avatar";
+  static String get name => "name";
+  static String get nickname => "nickname";
+  static String get repliesCount => "repliesCount";
 }
 
 class ReactionTypes {

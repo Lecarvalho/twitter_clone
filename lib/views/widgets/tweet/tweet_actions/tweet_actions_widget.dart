@@ -31,11 +31,13 @@ class TweetActionsWidget extends StatelessWidget {
           repliesCount: tweet.repliesCount,
           onReply: () => _onTapComment(context),
         ),
+        SizedBox(width: 25),
         RetweetIconWidget(
           didIRetweet: tweet.didIRetweet,
           onRetweet: onRetweet,
           retweetCount: tweet.retweetCount,
         ),
+        SizedBox(width: 25),
         HeartIconWidget(
           didILike: tweet.didILike,
           likeCount: tweet.likeCount,

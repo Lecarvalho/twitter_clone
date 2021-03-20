@@ -62,6 +62,9 @@ class TweetController extends ControllerBase<TweetServiceBase> {
       if (tweet.didILike) {
         tweet.likeCount--;
         await service.unlikeTweet(tweet.id, tweet.profileId, myProfileId);
+        if (tweet.tweetReaction?.reactedByProfileId == myProfileId){
+          tweet.tweetReaction = null;
+        }
       } else {
         tweet.likeCount++;
         await service.likeTweet(
