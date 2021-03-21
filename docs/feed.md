@@ -8,34 +8,11 @@ The reactions (retweet, like) are also an entry on the feed collection.
 
 ## Associative relationship
 
-It is a relationship between many concerned and many tweets:
-
-| TweetId   | ProfileId | 
-| :---      | :---      |
-| 1         | 35        |
-| 1         | 36        |
-| 1         | 37        |
-...
-
-In this case, the id is composed that way:
-
-1_35  
-1_36  
-1_37  
-
 It means that one feed entry is **a tweet reference for just one concerned**.
 
-Just to not has a duplicated tweet in the feed, all reactions on a specific tweet is replacing the previous feed registry.
+~~Just to not has a duplicated tweet in the feed, all reactions on a specific tweet is flagging the new feed entry as "last".~~
 
-So let's check the life cycle of a feed:  
- 
-1. Someone create's a tweet one entry per follower is created on the feed collection. Also one entry is created for the creator too.
-2. Someone else reacts the tweet (like or retweet): for each follower of the person who reacts the tweet:
-    2.1. If there's no feed entry for the specific follower, one entry is created with the reaction.
-    2.2. If there's already an entry for the specific follower, the entry is updated with the reaction.
-3. If someone else (or even the same person) react again the same tweet: the previous feed is replaced for the new one for each follower
-... and so on
-4. If a person who reacted undoes the react: remove the feed entry (if there exists) for each follower.
+It is duplicating right now, it's going to be fixed later.
 
 ## All possible fields:
 
@@ -76,11 +53,12 @@ One entry is created for each follower on feed collection with:
 - **createdAt:** see definition above
 - **creatorTweetProfileId** see definition above
 - **tweetId:** see definition above
+- **last:** true
 
 ## Like a tweet
 
 When someone likes a tweet, what happens to feed collection:  
-One entry is created *or updated* for each follower on feed collection with:
+~~The previous entry is updated and~~ an entry is created for each follower on feed collection with:
 - **key:** tweetId_profileId where profileId is the follower profile id
 - **concernedProfileId:** the profile id of the follower
 - **createdAt:** see definition above
@@ -92,7 +70,7 @@ One entry is created *or updated* for each follower on feed collection with:
 ## Unlike a tweet
 
 When someone unlikes a tweet, what happens to feed collection:  
-It is basically the undo of the previous action, one entry is removed for each follower on feed collection where:  
+It removes the previous action for each follower on feed collection ~~and updates the previous one with the flag last = true~~:  
 > **concernedProfileId** == follower profile id *and*  
 > **tweetId** == tweetId *and*  
 > **reactedByProfileId** == profile id from the person who is unliking the tweet *and*  
@@ -101,7 +79,7 @@ It is basically the undo of the previous action, one entry is removed for each f
 ## Retweet
 
 When someone retweets a tweet, what happens to feed collection:  
-One entry is created for each follower on feed collection with:
+~~The previous entry is updated and~~ an entry is created for each follower on feed collection with:
 - **key:** tweetId_profileId where profileId is the follower profile id
 - **concernedProfileId:** the profile id of the follower
 - **createdAt:** see definition above

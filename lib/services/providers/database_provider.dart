@@ -32,7 +32,7 @@ class Collections {
   /// Collection with all the tweetIds for profilesIds (many to many) so we can catch the tweetId where
   /// profileId = mine then finally get the tweets.
   ///
-  /// The key is tweetId_concernedProfileId_reactionType
+  /// The key is tweetId_concernedProfileId_createdAt
   ///
   /// document fields:
   ///
@@ -42,6 +42,7 @@ class Collections {
   /// - tweetId
   /// - reactedByProfileId
   /// - reactionType
+  /// - last
   CollectionReference get feed => _firestore.collection("feed");
 
   /// A like or a retweet. The key is tweetId_reactedByProfileId_reactionType.
@@ -69,8 +70,8 @@ class Collections {
   String toReactionKey(
           String tweetId, String reactedByProfileId, String reactionType) =>
       "${tweetId}_${reactedByProfileId}_$reactionType";
-  String toFeedKey(String tweetId, String concernedProfileId) =>
-      "${tweetId}_$concernedProfileId";
+  // String toFeedKey(String tweetId, String concernedProfileId, DateTime createdAt) =>
+  //     "${tweetId}_${concernedProfileId}_$createdAt";
 }
 
 class Fields {

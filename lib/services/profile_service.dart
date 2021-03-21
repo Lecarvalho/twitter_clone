@@ -69,11 +69,11 @@ class ProfileService extends ProfileServiceBase {
     );
 
     //3. I need some tweets on my feed
-    await _takeSomeFeedFromFollowing(
+    await _createSomeFeedForNewFollower(
       batch: batch,
-      followingProfileId: otherProfileId,
+      isFollowingProfileId: otherProfileId,
       howMuchToTake: 2,
-      toProfileId: myProfileId,
+      newFollowerProfileId: myProfileId,
       startingAt: startingAt,
     );
 
@@ -192,25 +192,26 @@ class ProfileService extends ProfileServiceBase {
     batch.update(profileRef, {Fields.followersCount: followersCount});
   }
 
-  Future<void> _takeSomeFeedFromFollowing({
-    required String toProfileId,
-    required String followingProfileId,
+  Future<void> _createSomeFeedForNewFollower({
+    required String newFollowerProfileId,
+    required String isFollowingProfileId,
     required int howMuchToTake,
     required WriteBatch batch,
     required DateTime startingAt,
   }) async {
     final tweetsFromMyFollowing = await _collections.tweets
-        .where(Fields.profileId, isEqualTo: followingProfileId)
+        .where(Fields.profileId, isEqualTo: isFollowingProfileId)
+        .orderBy(Fields.createdAt, descending: true)
         .limit(howMuchToTake)
         .toModelList<TweetModel>((data) => TweetModel.fromMap(data));
 
     for (var tweet in tweetsFromMyFollowing) {
-      final newFeedRef = _collections.feed.doc(_collections.toFeedKey(tweet.id, toProfileId));
+      final newFeedRef = _collections.feed.doc();
       batch.set(newFeedRef, {
-        Fields.concernedProfileId: toProfileId,
+        Fields.concernedProfileId: newFollowerProfileId,
         Fields.createdAt: startingAt,
         Fields.tweetId: tweet.id,
-        Fields.creatorTweetProfileId: followingProfileId,
+        Fields.creatorTweetProfileId: isFollowingProfileId,
       });
     }
   }

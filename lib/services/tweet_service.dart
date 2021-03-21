@@ -61,11 +61,13 @@ class TweetService extends TweetServiceBase {
 
     final myTweetsFeed = await _collections.feed
         .where(Fields.creatorTweetProfileId, isEqualTo: profileId)
+        .orderBy(Fields.createdAt, descending: true)
         .limit(10)
         .toMapList();
 
     final myReactionsFeed = await _collections.feed
         .where(Fields.reactedByProfileId, isEqualTo: profileId)
+        .orderBy(Fields.createdAt, descending: true)
         .limit(10)
         .toMapList();
 
@@ -168,7 +170,6 @@ class TweetService extends TweetServiceBase {
       reactedByProfileId: myProfileId,
       tweetId: tweetId,
       creatorTweetProfileId: ofProfileId,
-
     );
 
     _removeAReaction(
@@ -254,11 +255,8 @@ class TweetService extends TweetServiceBase {
 
     final feedList = await _collections.feed
         .where(Fields.concernedProfileId, isEqualTo: myProfileId)
+        .orderBy(Fields.createdAt, descending: true)
         .limit(20)
-        // .orderBy(
-        //   Fields.createdAt,
-        //   descending: true,
-        // )
         .toMapList();
 
     if (feedList.isNotEmpty) {
@@ -314,11 +312,9 @@ class TweetService extends TweetServiceBase {
     required String concernedProfileId,
     required DateTime createdAt,
   }) {
-    final myFeedForMyself = _collections.feed.doc(
-      _collections.toFeedKey(newTweetDoc.id, concernedProfileId),
-    );
+    final feedRef = _collections.feed.doc();
 
-    batch.set(myFeedForMyself, {
+    batch.set(feedRef, {
       Fields.tweetId: newTweetDoc.id,
       Fields.creatorTweetProfileId: creatorTweetProfileId,
       Fields.concernedProfileId: concernedProfileId,
@@ -376,9 +372,7 @@ class TweetService extends TweetServiceBase {
     required String reactedByProfileName,
     required DateTime createdAt,
   }) {
-    final feedRef = _collections.feed.doc(
-      _collections.toFeedKey(tweetId, concernedProfileId),
-    );
+    final feedRef = _collections.feed.doc();
 
     batch.set(feedRef, {
       Fields.concernedProfileId: concernedProfileId,
@@ -404,29 +398,7 @@ class TweetService extends TweetServiceBase {
         .get();
 
     for (var doc in likeOnFeed.docs) {
-      final feedRef = doc.data()!;
-
-      final followingMap = await _collections.following
-          .doc(feedRef[Fields.concernedProfileId])
-          .toMap();
-
-      final itsAFollowerForThisCreator =
-          followingMap?.containsKey(creatorTweetProfileId) ?? false;
-
-      final unlikeMyOwnTweet = reactedByProfileId == creatorTweetProfileId;
-
-      if (itsAFollowerForThisCreator || unlikeMyOwnTweet) {
-        //just reset
-        batch.set(doc.reference, {
-          Fields.tweetId: tweetId,
-          Fields.creatorTweetProfileId: creatorTweetProfileId,
-          Fields.concernedProfileId: feedRef[Fields.concernedProfileId],
-          Fields.createdAt: feedRef[Fields.createdAt],
-        });
-      } else {
-        //it is not a concern anymore
-        batch.delete(doc.reference);
-      }
+      batch.delete(doc.reference);
     }
   }
 
