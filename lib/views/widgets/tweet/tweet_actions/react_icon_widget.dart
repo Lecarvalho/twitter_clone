@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 abstract class ReactIconWidget extends StatelessWidget {
@@ -32,7 +33,8 @@ abstract class ReactIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Padding(
+      child: Container(
+        color: ProjectColors.transparent,
         padding: EdgeInsets.only(
           top: 10,
           bottom: 10,
