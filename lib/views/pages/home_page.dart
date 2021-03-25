@@ -72,10 +72,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Set<Widget> get _pagesNavigation => {
-        TweetListWidget(
-          tweets: _tweetController.tweets,
-          onDragRefresh: _onDragRefresh,
-        ),
+        !_isPageReady
+            ? LoadingPageWidget()
+            : TweetListWidget(
+                tweets: _tweetController.tweets,
+                onDragRefresh: _onDragRefresh,
+              ),
         Text("Search"),
         NotificationsPage(),
         Text("Profile")
@@ -98,9 +100,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       drawer: DrawerMenu(),
-      body: !_isPageReady
-          ? LoadingPageWidget()
-          : _pagesNavigation.elementAt(_selectedIndex),
+      body: _pagesNavigation.elementAt(_selectedIndex),
       floatingActionButton: ButtonNewTweetWidget(context: context),
       bottomNavigationBar: BottomNavigationWidget(
         onNavigationTapped: _onNavigationTapped,
