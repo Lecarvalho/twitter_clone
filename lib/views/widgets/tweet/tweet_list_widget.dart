@@ -38,7 +38,13 @@ class _TweetListWidgetState extends State<TweetListWidget> {
       _profileController.myProfile.id,
       _profileController.myProfile.name,
     );
-    setState(() {});
+  }
+
+  void _onTapOpenTweet(String tweetId) {
+    Navigator.of(context).pushNamed(
+      Routes.opened_tweet,
+      arguments: tweetId,
+    );
   }
 
   void _onPressRetweet(TweetModel tweet) async {
@@ -53,7 +59,6 @@ class _TweetListWidgetState extends State<TweetListWidget> {
               _profileController.myProfile.id,
               _profileController.myProfile.name,
             );
-            setState(() {});
             Navigator.of(context).pop();
           },
         ),
@@ -76,12 +81,9 @@ class _TweetListWidgetState extends State<TweetListWidget> {
           var tweet = widget.tweets![index];
 
           return Padding(
-            padding: EdgeInsets.only(left: 10, right: 10),
+            padding: EdgeInsets.only(left: 20, right: 20),
             child: GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed(
-                Routes.opened_tweet,
-                arguments: tweet.id,
-              ),
+              onTap: () => _onTapOpenTweet(tweet.id),
               child: SingleTweetWidget(
                 myProfileId: _profileController.myProfile.id,
                 tweet: tweet,
