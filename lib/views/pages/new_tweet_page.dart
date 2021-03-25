@@ -46,7 +46,7 @@ class _NewTweetPageState extends State<NewTweetPage> {
         _profileController.myProfile,
       );
 
-      Navigator.of(context).pushReplacementNamed(Routes.home);
+      Navigator.of(context).pop();
     }
   }
 
