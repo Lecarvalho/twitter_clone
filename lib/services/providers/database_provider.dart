@@ -32,7 +32,7 @@ class Collections {
   /// Collection with all the tweetIds for profilesIds (many to many) so we can catch the tweetId where
   /// profileId = mine then finally get the tweets.
   ///
-  /// The key is tweetId_concernedProfileId_createdAt
+  /// The key is auto generated
   ///
   /// document fields:
   ///

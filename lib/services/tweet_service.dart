@@ -259,6 +259,8 @@ class TweetService extends TweetServiceBase {
         .limit(20)
         .toMapList();
 
+    feedList.distinct((feed) => feed[Fields.tweetId]);
+
     if (feedList.isNotEmpty) {
       tweets.addAll(
         await _getTweetsFromFeed(
