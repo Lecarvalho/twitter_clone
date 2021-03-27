@@ -25,7 +25,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   void _onPressNotification(BuildContext context, String tweetId) {
-    Navigator.of(context).pushNamed(Routes.opened_tweet, arguments: tweetId);
+    Navigator.of(context).pushNamed(Routes.selected_tweet, arguments: tweetId);
   }
 
   @override

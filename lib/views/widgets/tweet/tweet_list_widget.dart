@@ -38,11 +38,13 @@ class _TweetListWidgetState extends State<TweetListWidget> {
       _profileController.myProfile.id,
       _profileController.myProfile.name,
     );
+
+    setState(() {});
   }
 
   void _onTapOpenTweet(String tweetId) {
     Navigator.of(context).pushNamed(
-      Routes.opened_tweet,
+      Routes.selected_tweet,
       arguments: tweetId,
     );
   }
@@ -60,6 +62,8 @@ class _TweetListWidgetState extends State<TweetListWidget> {
               _profileController.myProfile.name,
             );
             Navigator.of(context).pop();
+
+            setState(() {});
           },
         ),
       );

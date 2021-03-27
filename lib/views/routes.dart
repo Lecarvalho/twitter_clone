@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/pages/preload_page.dart';
 import 'package:twitter_clone/views/pages/reply_page.dart';
 
-import 'pages/opened_tweet_page.dart';
+import 'pages/selected_tweet_page.dart';
 import 'pages/edit_profile_page.dart';
 import 'pages/create_user_page.dart';
 import 'pages/home_page.dart';
@@ -18,7 +18,7 @@ class Routes {
   static const String profile = "/profile";
   static const String login = "/login";
   static const String new_tweet = "/new_tweet";
-  static const String opened_tweet = "/opened_tweet";
+  static const String selected_tweet = "/selected_tweet";
   static const String reply = "/reply";
   static const String create_user = "/create_user";
   static const String edit_profile = "/edit_profile";
@@ -30,7 +30,7 @@ class Routes {
     profile: (BuildContext context) => ProfilePage(),
     login: (BuildContext context) => LoginPage(),
     new_tweet: (BuildContext context) => NewTweetPage(),
-    opened_tweet: (BuildContext context) => OpenedTweetPage(),
+    selected_tweet: (BuildContext context) => SelectedTweetPage(),
     reply: (BuildContext context) => ReplyPage(),
     create_user: (BuildContext context) => CreateUserPage(),
     edit_profile: (BuildContext context) => EditProfilePage(),

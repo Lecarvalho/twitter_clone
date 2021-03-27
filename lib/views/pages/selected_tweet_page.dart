@@ -14,12 +14,12 @@ import 'package:twitter_clone/views/widgets/tweet/confirm_retweet.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_actions/tweet_actions_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/opened_tweet_widget.dart';
 
-class OpenedTweetPage extends StatefulWidget {
+class SelectedTweetPage extends StatefulWidget {
   @override
-  _OpenedTweetPageState createState() => _OpenedTweetPageState();
+  _SelectedTweetPageState createState() => _SelectedTweetPageState();
 }
 
-class _OpenedTweetPageState extends State<OpenedTweetPage> {
+class _SelectedTweetPageState extends State<SelectedTweetPage> {
   late TweetController _tweetController;
   late ReplyController _replyController;
   late ProfileController _profileController;
@@ -38,7 +38,7 @@ class _OpenedTweetPageState extends State<OpenedTweetPage> {
     await _tweetController.getTweet(_tweetId, _profileController.myProfile.id);
     await _replyController.getReplies(_tweetId);
 
-    _tweet = _tweetController.bigTweet!;
+    _tweet = _tweetController.selectedTweet!;
 
     setState(() {
       _isPageReady = true;

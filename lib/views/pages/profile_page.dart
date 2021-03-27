@@ -22,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   late bool _amIFollowing;
   late String _myProfileId;
+  late String _selectedProfileId;
 
   @override
   void didChangeDependencies() async {
@@ -32,30 +33,34 @@ class _ProfilePageState extends State<ProfilePage> {
     final profileIdParam =
         ModalRoute.of(context)!.settings.arguments?.toString();
 
-    var profileId = profileIdParam ?? _myProfileId;
+    _selectedProfileId = profileIdParam ?? _myProfileId;
 
-    await _profileController.getProfile(profileId);
-    await _tweetController.getProfileTweets(
-      profileId,
-      _profileController.myProfile.id,
-    );
-
-    if (_myProfileId != profileId) {
+    await _profileController.getProfile(_selectedProfileId);
+    if (_myProfileId != _selectedProfileId) {
       _amIFollowing = await _profileController.amIFollowingProfile(
         _myProfileId,
-        profileId,
+        _selectedProfileId,
       );
     }
 
-    setState(() {
-      _isPageReady = true;
-    });
+    _loadTweets();
 
     super.didChangeDependencies();
   }
 
+  void _loadTweets() async {
+    await _tweetController.getProfileTweets(
+      _selectedProfileId,
+      _profileController.myProfile.id,
+    );
+
+    setState(() {
+      _isPageReady = true;
+    });
+  }
+
   Future<void> _onDragRefresh() async {
-    print("ok...");
+    _loadTweets();
   }
 
   OutlinedButtonWidget _editProfileButton() {
@@ -71,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ButtonWidget(
       onPressed: () {
         setState(() {
-          _profileController.unfollow(_profileController.profile!.id);
+          _profileController.unfollow(_selectedProfileId);
           _amIFollowing = false;
         });
       },
@@ -83,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return OutlinedButtonWidget(
       onPressed: () {
         setState(() {
-          _profileController.follow(_profileController.profile!.id);
+          _profileController.follow(_selectedProfileId);
           _amIFollowing = true;
         });
       },
@@ -92,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   BaseButtonWidget _actionButton() {
-    if (_profileController.profile!.id == _myProfileId) {
+    if (_selectedProfileId == _myProfileId) {
       return _editProfileButton();
     }
 

@@ -62,3 +62,9 @@ class TweetModel extends AsTweetModelBase {
     };
   }
 }
+
+extension SortByCreatedAt on List<TweetModel> {
+  List<TweetModel> sortByCreatedAt(){
+    return this..sort((t1, t2) => t2.createdAt.compareTo(t1.createdAt));
+  }
+}

@@ -52,7 +52,7 @@ class _ReplyPageState extends State<ReplyPage> {
     );
 
     Navigator.of(context).pushReplacementNamed(
-      Routes.opened_tweet,
+      Routes.selected_tweet,
       arguments: _replyingTweet.id,
     );
   }

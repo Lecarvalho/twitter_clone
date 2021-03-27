@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/config/app_debug.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   void _onNavigationTapped(int index) {
     switch (index) {
       case 0: //feed
-        _loadMyFeed().then((_) => setState(() {}));
+        _loadMyFeed();
         break;
       case 1: //search
         Navigator.of(context).pushNamed(Routes.search);
@@ -53,22 +54,22 @@ class _HomePageState extends State<HomePage> {
     _tweetController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
-    await _loadMyFeed();
-
-    setState(() {
-      _isPageReady = true;
-    });
+    _loadMyFeed();
 
     super.didChangeDependencies();
   }
 
-  Future<void> _loadMyFeed() async {
+  void _loadMyFeed() async {
     await _tweetController.getTweets(_profileController.myProfile.id);
 
     if (_tweetController.tweets == null) {
       Navigator.of(context).pushNamed(Routes.search);
       return;
     }
+
+    setState(() {
+      _isPageReady = true;
+    });
   }
 
   Set<Widget> get _pagesNavigation => {
@@ -84,9 +85,7 @@ class _HomePageState extends State<HomePage> {
       };
 
   Future<void> _onDragRefresh() async {
-    await _loadMyFeed();
-
-    setState(() {});
+    _loadMyFeed();
   }
 
   @override
