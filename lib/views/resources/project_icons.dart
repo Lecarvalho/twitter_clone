@@ -26,20 +26,20 @@ class ProjectIcons {
         height: _smallIconSize,
       );
 
-  static Image get heart => Image.asset(
-        AssetsIcons.heart,
+  static Image get like => Image.asset(
+        AssetsIcons.like,
         width: _microIconSize,
         height: _microIconSize,
       );
 
-  static Image get heartSolid => Image.asset(
-        AssetsIcons.heartSolid,
+  static Image get likeSolid => Image.asset(
+        AssetsIcons.likeSolid,
         width: _microIconSize,
         height: _microIconSize,
       );
 
-  static Image get heartSolidDarken => Image.asset(
-        AssetsIcons.heartSolidDarken,
+  static Image get likeSolidDarken => Image.asset(
+        AssetsIcons.likeSolidDarken,
         width: _microIconSize,
         height: _microIconSize,
       );

@@ -3,7 +3,7 @@ import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 
 import 'reply_icon_widget.dart';
-import 'heart_icon_widget.dart';
+import 'like_icon_widget.dart';
 import 'retweet_icon_widget.dart';
 
 class TweetActionsWidget extends StatelessWidget {
@@ -38,10 +38,10 @@ class TweetActionsWidget extends StatelessWidget {
           retweetCount: tweet.retweetCount,
         ),
         SizedBox(width: 25),
-        HeartIconWidget(
+        LikeIconWidget(
           didILike: tweet.didILike,
           likeCount: tweet.likeCount,
-          onHeart: onHeart,
+          onLike: onHeart,
         ),
       ],
     );

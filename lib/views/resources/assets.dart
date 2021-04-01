@@ -19,9 +19,9 @@ class AssetsIcons {
   static const appIcon = _assetsBasePath + "app-icon.png";
   static const reply = _assetsBasePath + "reply.png";
   static const feature = _assetsBasePath + "feature.png";
-  static const heartSolidDarken = _assetsBasePath + "heart-solid-darken.png";
-  static const heartSolid = _assetsBasePath + "heart-solid.png";
-  static const heart = _assetsBasePath + "heart.png";
+  static const likeSolidDarken = _assetsBasePath + "like-solid-darken.png";
+  static const likeSolid = _assetsBasePath + "like-solid.png";
+  static const like = _assetsBasePath + "like.png";
   static const homeSolid = _assetsBasePath + "home-solid.png";
   static const home = _assetsBasePath + "home.png";
   static const notificationSolid = _assetsBasePath + "notification-solid.png";

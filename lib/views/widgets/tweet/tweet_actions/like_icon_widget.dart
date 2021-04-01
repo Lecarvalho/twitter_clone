@@ -4,22 +4,22 @@ import 'package:twitter_clone/views/resources/project_icons.dart';
 
 import 'react_icon_widget.dart';
 
-class HeartIconWidget extends ReactIconWidget {
-  HeartIconWidget({
+class LikeIconWidget extends ReactIconWidget {
+  LikeIconWidget({
     required bool didILike,
     required int likeCount,
-    required Function() onHeart,
+    required Function() onLike,
   }) : super(
           isReacted: didILike,
           reactCount: likeCount,
-          onTap: onHeart,
+          onTap: onLike,
         );
 
   @override
-  Widget get reactedIcon => ProjectIcons.heartSolid;
+  Widget get reactedIcon => ProjectIcons.likeSolid;
 
   @override
-  Widget get defaultIcon => ProjectIcons.heart;
+  Widget get defaultIcon => ProjectIcons.like;
 
   @override
   Color get reactionColor => ProjectColors.red;

@@ -24,7 +24,7 @@ class TweetReactionWidget extends StatelessWidget {
 
     switch (tweetReaction!.reactionType) {
       case TweetReactionType.like:
-        icon = ProjectIcons.heartSolidDarken;
+        icon = ProjectIcons.likeSolidDarken;
         reaction = "liked";
         break;
       case TweetReactionType.retweet:
