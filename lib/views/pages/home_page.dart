@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_debug.dart';
+import 'package:twitter_clone/controllers/feed_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
-import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/pages/notifications_page.dart';
 import 'package:twitter_clone/views/resources/project_logos.dart';
@@ -10,6 +10,7 @@ import 'package:twitter_clone/views/resources/project_icons.dart';
 import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/bottom_navigation_widget.dart';
 import 'package:twitter_clone/views/widgets/button/button_new_tweet_widget.dart';
+import 'package:twitter_clone/views/widgets/button/tap_to_update_button_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_list_widget.dart';
 
@@ -23,10 +24,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  late TweetController _tweetController;
+  late FeedController _feedController;
   late ProfileController _profileController;
 
   bool _isPageReady = false;
+  bool _showUpdateFeedButton = false;
 
   void _onNavigationTapped(int index) {
     switch (index) {
@@ -51,7 +53,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void didChangeDependencies() async {
-    _tweetController = Di.instanceOf(context);
+    _feedController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
     _loadMyFeed();
@@ -60,32 +62,50 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loadMyFeed() async {
-    await _tweetController.getTweets(_profileController.myProfile.id);
+    _feedController.listenFeed(_profileController.myProfile.id);
 
-    if (_tweetController.tweets == null) {
-      Navigator.of(context).pushNamed(Routes.search);
-      return;
-    }
-
-    setState(() {
+    _feedController.notifier.stream.listen((asksToRefresh) {
       _isPageReady = true;
+      if (asksToRefresh) {
+        _showUpdateFeedButton = true;
+        setState(() {});
+      } else {
+        _showUpdateFeedButton = false;
+        _feedController.refreshShownTweets();
+        setState(() {});
+      }
     });
   }
 
   Set<Widget> get _pagesNavigation => {
         !_isPageReady
             ? LoadingPageWidget()
-            : TweetListWidget(
-                tweets: _tweetController.tweets,
-                onDragRefresh: _onDragRefresh,
-              ),
+            : Stack(children: [
+                TweetListWidget(
+                  tweets: _feedController.tweets,
+                  onDragRefresh: _onRefreshFeed,
+                ),
+                Visibility(
+                  visible: _showUpdateFeedButton,
+                  child: TapToUpdateButtonWidget(
+                    onPressed: () {
+                      _onRefreshFeed();
+                    },
+                  ),
+                ),
+              ]),
         Text("Search"),
         NotificationsPage(),
         Text("Profile")
       };
 
-  Future<void> _onDragRefresh() async {
-    _loadMyFeed();
+  Future<void> _onRefreshFeed({bool doSetState = true}) async {
+    // _tweetController.refreshFeed();
+    if (doSetState) {
+      setState(() {
+        _showUpdateFeedButton = false;
+      });
+    }
   }
 
   @override

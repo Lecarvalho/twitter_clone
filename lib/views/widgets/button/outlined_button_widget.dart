@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 import 'package:twitter_clone/views/widgets/button/base_button_widget.dart';
+
+import 'shapes.dart';
 
 class OutlinedButtonWidget extends BaseButtonWidget {
   final Function() onPressed;
@@ -16,9 +17,6 @@ class OutlinedButtonWidget extends BaseButtonWidget {
           textStyle: Styles.subtitle2Blue,
           color: ProjectColors.white,
           onPressed: onPressed,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(color: ProjectColors.blueActive),
-          ),
+          shape: Shapes.roundedBordered(),
         );
 }

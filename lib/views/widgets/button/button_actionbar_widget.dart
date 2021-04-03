@@ -3,6 +3,7 @@ import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 import 'base_button_widget.dart';
+import 'shapes.dart';
 
 class ButtonActionBarWidget extends StatelessWidget {
   final Function()? onPressed;
@@ -21,9 +22,7 @@ class ButtonActionBarWidget extends StatelessWidget {
         text: text,
         color: ProjectColors.blueActive,
         disabledColor: ProjectColors.blueInactive,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: Shapes.rounded(),
         textStyle: Styles.subtitle2White,
       ),
     );

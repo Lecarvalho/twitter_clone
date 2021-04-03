@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
 import 'base_button_widget.dart';
+import 'shapes.dart';
 
 class ButtonWidget extends BaseButtonWidget {
   final Function()? onPressed;
@@ -18,8 +18,6 @@ class ButtonWidget extends BaseButtonWidget {
           textStyle: Styles.subtitle2White,
           color: ProjectColors.blueActive,
           disabledColor: ProjectColors.blueInactive,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
+          shape: Shapes.rounded(),
         );
 }

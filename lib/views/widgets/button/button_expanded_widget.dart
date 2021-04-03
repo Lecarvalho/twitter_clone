@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/views/resources/colors.dart';
 import 'package:twitter_clone/views/resources/styles.dart';
 
+import 'shapes.dart';
+
 class ButtonExpandedWidget extends StatelessWidget {
   final String text;
   final Function()? onPressed;
@@ -22,9 +24,7 @@ class ButtonExpandedWidget extends StatelessWidget {
         color: ProjectColors.grayBackground,
         disabledColor: ProjectColors.blueInactive,
         child: Text(text, style: Styles.subtitle2),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: Shapes.rounded(),
       ),
     );
   }

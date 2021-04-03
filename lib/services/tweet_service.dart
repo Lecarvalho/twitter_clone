@@ -53,6 +53,138 @@ class TweetService extends TweetServiceBase {
   }
 
   @override
+  Future<List<TweetModel>?> getTweets(String myProfileId) async {
+    List<TweetModel> tweets = [];
+
+    final feedList = await _collections.feed
+        .where(Fields.concernedProfileId, isEqualTo: myProfileId)
+        .orderBy(Fields.createdAt, descending: true)
+        .limit(20)
+        .toMapList();
+
+    feedList.distinct((feed) => feed[Fields.tweetId]);
+
+    if (feedList.isNotEmpty) {
+      for (var oneFeed in feedList) {
+        final tweet =
+            await _toTweetModel(oneFeed[Fields.tweetId], oneFeed, myProfileId);
+
+        if (tweet != null) tweets.add(tweet);
+      }
+    }
+
+    return tweets.isNotEmpty ? tweets : null;
+  }
+
+  @override
+  Future<TweetModel?> getTweet(String tweetId, String myProfileId) async {
+    return await _collections.tweets.doc(tweetId).toModel<TweetModel>(
+          (tweetMap) =>
+              _getMyReactions(TweetModel.fromMap(tweetMap), myProfileId),
+        );
+  }
+
+  Future<TweetModel?> _toTweetModel(
+    String tweetId,
+    Map<String, dynamic> feedMap,
+    String myProfileId,
+  ) async {
+    final tweet = await _collections.tweets.doc(tweetId).toModel<TweetModel>(
+          (data) => TweetModel.fromMap(data),
+        );
+
+    if (tweet != null) {
+      if (feedMap[Fields.reactedByProfileId] != null) {
+        tweet.tweetReaction = TweetReactionModel.fromMap(feedMap);
+      }
+
+      await _getMyReactions(tweet, myProfileId);
+
+      return tweet;
+    }
+  }
+
+  Future<TweetModel> _getMyReactions(
+      TweetModel tweet, String myProfileId) async {
+    tweet.didILike = await _collections.reactions.docExists(
+      _collections.toReactionKey(tweet.id, myProfileId, ReactionTypes.like),
+    );
+
+    tweet.didIRetweet = await _collections.reactions.docExists(
+      _collections.toReactionKey(tweet.id, myProfileId, ReactionTypes.retweet),
+    );
+
+    return tweet;
+  }
+
+  // @override
+  // Stream<FeedChangesResponse> listenFeed(String myProfileId) async* {
+  //   final myFeedStreamSnapshot = _collections.feed
+  //       .where(Fields.concernedProfileId, isEqualTo: myProfileId)
+  //       .orderBy(Fields.createdAt, descending: true)
+  //       .limit(20)
+  //       .snapshots();
+
+  //   await for (var myFeedSnapshoot in myFeedStreamSnapshot) {
+  //     yield await _toListTweetModel(myFeedSnapshoot, myProfileId);
+  //   }
+  // }
+
+  // @override
+  // Stream<TweetModel> listenReactions(String tweetId) async* {
+  //   final tweetStreamSnapshot = _collections.tweets.doc(tweetId).snapshots();
+
+  //   await for (var tweetSnapshot in tweetStreamSnapshot) {
+  //     if (tweetSnapshot.exists) {
+  //       var tweet = await tweetSnapshot.reference.toModel<TweetModel>(
+  //         (tweetMap) => TweetModel.fromMap(tweetMap),
+  //       );
+  //       yield tweet!;
+  //     }
+  //   }
+  // }
+
+  // Future<FeedChangesResponse> _toListTweetModel(
+  //   QuerySnapshot snapshot,
+  //   String myProfileId,
+  // ) async {
+  //   List<TweetModel> changedTweets = [];
+  //   List<String> deletedTweetIds = [];
+  //   for (var feedDoc in snapshot.docChanges) {
+  //     final feedMap = feedDoc.doc.data();
+  //     final tweetId = feedMap![Fields.tweetId];
+
+  //     if (feedDoc.newIndex != -1) {
+  //       //updated
+  //       final tweet = await _toTweetModel(tweetId, feedMap, myProfileId);
+  //       if (tweet != null) changedTweets.add(tweet);
+  //     } else {
+  //       // deleted from feed, check if it was not just an undo reaction
+  //       var previousFeedRef = await _collections.feed
+  //           .where(Fields.concernedProfileId, isEqualTo: myProfileId)
+  //           .where(Fields.tweetId, isEqualTo: tweetId)
+  //           .orderBy(Fields.createdAt, descending: true)
+  //           .limit(1)
+  //           .toMapList();
+
+  //       if (previousFeedRef.isNotEmpty) {
+  //         final tweet =
+  //             await _toTweetModel(tweetId, previousFeedRef.first, myProfileId);
+  //         if (tweet != null) changedTweets.add(tweet);
+  //       } else {
+  //         //it was really removed from the user's feed
+  //         deletedTweetIds.add(tweetId);
+  //       }
+  //     }
+  //   }
+
+  //   return FeedChangesResponse(
+  //     changedTweets: changedTweets,
+  //     deletedTweetIds: deletedTweetIds,
+  //   );
+  // }
+
+  @override
   Future<List<TweetModel>?> getProfileTweets(
     String profileId,
     String myProfileId,
@@ -76,12 +208,12 @@ class TweetService extends TweetServiceBase {
     feedList.distinct((feed) => feed[Fields.tweetId]);
 
     if (feedList.isNotEmpty) {
-      tweets.addAll(
-        await _getTweetsFromFeed(
-          feedList: feedList,
-          myProfileId: myProfileId,
-        ),
-      );
+      for (var oneFeed in feedList) {
+        final tweet =
+            await _toTweetModel(oneFeed[Fields.tweetId], oneFeed, myProfileId);
+
+        if (tweet != null) tweets.add(tweet);
+      }
     }
 
     return tweets.isNotEmpty ? tweets : null;
@@ -94,58 +226,29 @@ class TweetService extends TweetServiceBase {
     String myProfileId,
     String myProfileName,
   ) async {
-    final batch = _database.firestore.batch();
     final createdAt = DateTime.now().toUtc();
     final tweetRef = _collections.tweets.doc(tweetId);
-
-    // up likeCount
-
-    int likeCount = await _getLikeCount(tweetRef);
-
-    likeCount++;
-
-    batch.update(tweetRef, {Fields.likeCount: likeCount});
-
-    // set a feed for myself
-    _setReactionOnFeed(
-      batch: batch,
-      concernedProfileId: myProfileId,
-      createdAt: createdAt,
-      creatorTweetProfileId: ofProfileId,
-      reactedByProfileId: myProfileId,
-      reactedByProfileName: myProfileName,
-      reactionType: ReactionTypes.like,
-      tweetId: tweetId,
+    final reactionRef = _collections.reactions.doc(
+      _collections.toReactionKey(tweetId, myProfileId, ReactionTypes.like),
     );
 
-    // set feed for my followers
-    final myFollowersMap =
-        await _collections.followers.doc(myProfileId).toMap();
+    _database.firestore.runTransaction((transaction) async {
+      var tweetDoc = await transaction.get(tweetRef);
 
-    if (myFollowersMap != null) {
-      myFollowersMap.keys.forEach((myFollowerId) {
-        _setReactionOnFeed(
-          batch: batch,
-          concernedProfileId: myFollowerId,
-          createdAt: createdAt,
-          creatorTweetProfileId: ofProfileId,
-          reactedByProfileId: myProfileId,
-          reactedByProfileName: myProfileName,
-          reactionType: ReactionTypes.like,
-          tweetId: tweetId,
-        );
-      });
-    }
+      if (tweetDoc.exists) {
+        var tweetMap = (await tweetDoc.reference.toMap())!;
+        int likeCount = tweetMap[Fields.likeCount] ?? 0;
+        likeCount++;
+        transaction.update(tweetRef, {Fields.likeCount: likeCount});
 
-    _createAReaction(
-      tweetId: tweetId,
-      reactedByProfileId: myProfileId,
-      createdAt: createdAt,
-      batch: batch,
-      reactionType: ReactionTypes.like,
-    );
-
-    await batch.commit();
+        transaction.set(reactionRef, {
+          Fields.createdAt: createdAt,
+          Fields.reactionType: ReactionTypes.like,
+          Fields.tweetId: tweetId,
+          Fields.reactedByProfileId: myProfileId,
+        });
+      }
+    });
   }
 
   @override
@@ -154,32 +257,23 @@ class TweetService extends TweetServiceBase {
     String ofProfileId,
     String myProfileId,
   ) async {
-    final batch = _database.firestore.batch();
     var tweetRef = _collections.tweets.doc(tweetId);
-
-    // down likeCount
-
-    int likeCount = await _getLikeCount(tweetRef);
-
-    likeCount--;
-
-    batch.update(tweetRef, {Fields.likeCount: likeCount});
-
-    await _removeLikeOnFeed(
-      batch: batch,
-      reactedByProfileId: myProfileId,
-      tweetId: tweetId,
-      creatorTweetProfileId: ofProfileId,
+    final reactionRef = _collections.reactions.doc(
+      _collections.toReactionKey(tweetId, myProfileId, ReactionTypes.like),
     );
 
-    _removeAReaction(
-      batch: batch,
-      reactedByProfileId: myProfileId,
-      reactionType: ReactionTypes.like,
-      tweetId: tweetId,
-    );
+    _database.firestore.runTransaction((transaction) async {
+      var tweetDoc = await transaction.get(tweetRef);
 
-    await batch.commit();
+      if (tweetDoc.exists) {
+        var tweetMap = (await tweetDoc.reference.toMap())!;
+        int likeCount = tweetMap[Fields.likeCount] ?? 0;
+        likeCount--;
+        transaction.update(tweetRef, {Fields.likeCount: likeCount});
+
+        transaction.delete(reactionRef);
+      }
+    });
   }
 
   @override
@@ -242,71 +336,6 @@ class TweetService extends TweetServiceBase {
     await batch.commit();
   }
 
-  @override
-  Future<TweetModel?> getTweet(String tweetId, String myProfileId) async {
-    return await _collections.tweets.doc(tweetId).toModel<TweetModel>(
-          (data) => _getMyReactions(TweetModel.fromMap(data), myProfileId),
-        );
-  }
-
-  @override
-  Future<List<TweetModel>?> getTweets(String myProfileId) async {
-    List<TweetModel> tweets = [];
-
-    final feedList = await _collections.feed
-        .where(Fields.concernedProfileId, isEqualTo: myProfileId)
-        .orderBy(Fields.createdAt, descending: true)
-        .limit(20)
-        .toMapList();
-
-    feedList.distinct((feed) => feed[Fields.tweetId]);
-
-    if (feedList.isNotEmpty) {
-      tweets.addAll(
-        await _getTweetsFromFeed(
-          feedList: feedList,
-          myProfileId: myProfileId,
-        ),
-      );
-    }
-
-    return tweets.isNotEmpty ? tweets : null;
-  }
-
-  Future<List<TweetModel>> _getTweetsFromFeed({
-    required List<Map<String, dynamic>> feedList,
-    required String myProfileId,
-  }) async {
-    List<TweetModel> tweets = [];
-
-    for (var oneFeed in feedList) {
-      final tweet = await _collections.tweets
-          .doc(oneFeed[Fields.tweetId])
-          .toModel<TweetModel>(
-            (data) => TweetModel.fromMap(data),
-          );
-
-      if (tweet != null) {
-        if (oneFeed[Fields.reactedByProfileId] != null) {
-          tweet.tweetReaction = TweetReactionModel.fromMap(oneFeed);
-        }
-
-        tweet.didILike = await _collections.reactions.docExists(
-          _collections.toReactionKey(tweet.id, myProfileId, ReactionTypes.like),
-        );
-
-        tweet.didIRetweet = await _collections.reactions.docExists(
-          _collections.toReactionKey(
-              tweet.id, myProfileId, ReactionTypes.retweet),
-        );
-
-        tweets.add(tweet);
-      }
-    }
-
-    return tweets;
-  }
-
   void _createAFeed({
     required WriteBatch batch,
     required DocumentReference newTweetDoc,
@@ -323,41 +352,6 @@ class TweetService extends TweetServiceBase {
       Fields.createdAt: createdAt,
     });
   }
-
-  Future<TweetModel> _getMyReactions(
-    TweetModel tweet,
-    String myProfileId,
-  ) async {
-    // did I like this tweet?
-    final myLikeReaction = await _collections.reactions
-        .doc(_collections.toReactionKey(
-            tweet.id, myProfileId, ReactionTypes.like))
-        .toModel<TweetReactionModel>(
-            (data) => TweetReactionModel.fromMap(data));
-
-    tweet.didILike = (myLikeReaction != null);
-    tweet.tweetReaction = myLikeReaction;
-
-    // did I retweet this tweet?
-    final myRetweetReaction = await _collections.reactions
-        .doc(_collections.toReactionKey(
-            tweet.id, myProfileId, ReactionTypes.retweet))
-        .toModel<TweetReactionModel>(
-            (data) => TweetReactionModel.fromMap(data));
-
-    tweet.didIRetweet = (myRetweetReaction != null);
-    tweet.tweetReaction =
-        tweet.didIRetweet ? myRetweetReaction : tweet.tweetReaction;
-
-    return tweet;
-  }
-
-  Future<int> _getLikeCount(DocumentReference tweetRef) async {
-    final tweetMap = await tweetRef.toMap();
-
-    return tweetMap![Fields.likeCount] ?? 0;
-  }
-
   Future<int> _getRetweetCount(DocumentReference tweetRef) async {
     final tweetMap = await tweetRef.toMap();
 
@@ -387,23 +381,6 @@ class TweetService extends TweetServiceBase {
     });
   }
 
-  Future<void> _removeLikeOnFeed({
-    required WriteBatch batch,
-    required String tweetId,
-    required String reactedByProfileId,
-    required String creatorTweetProfileId,
-  }) async {
-    final likeOnFeed = await _collections.feed
-        .where(Fields.tweetId, isEqualTo: tweetId)
-        .where(Fields.reactionType, isEqualTo: ReactionTypes.like)
-        .where(Fields.reactedByProfileId, isEqualTo: reactedByProfileId)
-        .get();
-
-    for (var doc in likeOnFeed.docs) {
-      batch.delete(doc.reference);
-    }
-  }
-
   void _createAReaction({
     required String tweetId,
     required String reactedByProfileId,
@@ -423,16 +400,4 @@ class TweetService extends TweetServiceBase {
     });
   }
 
-  void _removeAReaction({
-    required String reactionType,
-    required String reactedByProfileId,
-    required String tweetId,
-    required WriteBatch batch,
-  }) {
-    final reactionRef = _collections.reactions.doc(
-      _collections.toReactionKey(tweetId, reactedByProfileId, reactionType),
-    );
-
-    batch.delete(reactionRef);
-  }
 }

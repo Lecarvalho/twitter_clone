@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
 class BaseButtonWidget extends MaterialButton {
-  final Function()? onPressed;
-  final String text;
-  final ShapeBorder shape;
-  final Color? color;
-  final Color? disabledColor;
-  final TextStyle textStyle;
-  final double? height;
+  // final Function()? onPressed;
+  // final String text;
+  // final ShapeBorder shape;
+  // final Color? color;
+  // final Color? disabledColor;
+  // final TextStyle textStyle;
+  // final double? height;
 
   BaseButtonWidget({
-    this.onPressed,
-    required this.text,
-    required this.shape,
-    required this.textStyle,
-    this.color,
-    this.disabledColor,
-    this.height,
+    Function()? onPressed,
+    required String text,
+    required ShapeBorder shape,
+    required TextStyle textStyle,
+    Color? color,
+    Color? disabledColor,
+    double? height,
+    double elevation = 0,
   }) : super(
           height: height,
           child: Text(text, style: textStyle),
@@ -24,6 +25,6 @@ class BaseButtonWidget extends MaterialButton {
           onPressed: onPressed,
           disabledColor: disabledColor,
           minWidth: 70,
-          elevation: 0,
+          elevation: elevation,
         );
 }
