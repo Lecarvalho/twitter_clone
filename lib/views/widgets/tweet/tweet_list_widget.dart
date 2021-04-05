@@ -13,8 +13,7 @@ import 'tweet_line/single_tweet_widget.dart';
 
 class TweetListWidget extends StatefulWidget {
   final List<TweetModel>? tweets;
-  final Future<void> Function() onDragRefresh;
-  TweetListWidget({required this.tweets, required this.onDragRefresh});
+  TweetListWidget({required this.tweets});
 
   @override
   _TweetListWidgetState createState() => _TweetListWidgetState();
@@ -71,30 +70,27 @@ class _TweetListWidgetState extends State<TweetListWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.tweets == null) return Container();
-    return RefreshIndicator(
-      onRefresh: widget.onDragRefresh,
-      child: ListView.separated(
-        shrinkWrap: true,
-        primary: false,
-        separatorBuilder: (_, __) => DividerWidget(),
-        itemCount: widget.tweets!.length,
-        itemBuilder: (_, index) {
-          var tweet = widget.tweets![index];
+    return ListView.separated(
+      shrinkWrap: true,
+      primary: false,
+      separatorBuilder: (_, __) => DividerWidget(),
+      itemCount: widget.tweets!.length,
+      itemBuilder: (_, index) {
+        var tweet = widget.tweets![index];
 
-          return Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: GestureDetector(
-              onTap: () => _onTapOpenTweet(tweet.id),
-              child: SingleTweetWidget(
-                myProfileId: _profileController.myProfile.id,
-                tweet: tweet,
-                onLike: () => _onPressLike(tweet),
-                onRetweet: () => _onPressRetweet(tweet),
-              ),
+        return Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: GestureDetector(
+            onTap: () => _onTapOpenTweet(tweet.id),
+            child: SingleTweetWidget(
+              myProfileId: _profileController.myProfile.id,
+              tweet: tweet,
+              onLike: () => _onPressLike(tweet),
+              onRetweet: () => _onPressRetweet(tweet),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

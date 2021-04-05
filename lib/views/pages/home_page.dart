@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/app_debug.dart';
 import 'package:twitter_clone/controllers/feed_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
@@ -63,6 +62,7 @@ class _HomePageState extends State<HomePage> {
 
     super.didChangeDependencies();
   }
+
   void _loadMyFeed() async {
     _feedController.listenFeed(
       _profileController.myProfile.id,
@@ -84,10 +84,7 @@ class _HomePageState extends State<HomePage> {
         !_isPageReady
             ? LoadingPageWidget()
             : Stack(children: [
-                TweetListWidget(
-                  tweets: _feedController.tweets,
-                  onDragRefresh: _onRefreshFeed,
-                ),
+                TweetListWidget(tweets: _feedController.tweets),
                 Visibility(
                   visible: _showUpdateFeedButton,
                   child: TapToUpdateButtonWidget(

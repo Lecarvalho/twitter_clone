@@ -120,10 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       profile: _profileController.profile!,
                       actionButton: _actionButton(),
                     ),
-                    TweetListWidget(
-                      tweets: _tweetController.tweets,
-                      onDragRefresh: _onDragRefresh,
-                    ),
+                    TweetListWidget(tweets: _tweetController.tweets),
                   ],
                 ),
               ),

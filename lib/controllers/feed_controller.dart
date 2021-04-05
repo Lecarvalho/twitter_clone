@@ -69,8 +69,9 @@ class FeedController extends ControllerBase<FeedServiceBase> {
       final streamSubs = streamTweet.listen((tweet) {
         if (tweet != null) {
           tweet.tweetReaction = commingTweets[tweetId];
-          final asksToRefresh = _addOrUpdateTweetOnAllTweetsMap(tweet);
+          final isNewTweet = _addOrUpdateTweetOnAllTweetsMap(tweet);
           if (_hasAllTweetsFinishedLoading()) {
+            final asksToRefresh = _shownTweets.isNotEmpty && isNewTweet && tweet.profileId != myProfileId;
             _notifyView(asksToRefresh: asksToRefresh);
           }
         }
@@ -85,15 +86,15 @@ class FeedController extends ControllerBase<FeedServiceBase> {
   }
 
   bool _addOrUpdateTweetOnAllTweetsMap(TweetModel tweet) {
-    bool asksToRefresh;
+    bool isNewTweet;
     if (_allTweets.containsKey(tweet.id)) {
       _allTweets.update(tweet.id, (_) => tweet);
-      asksToRefresh = false;
+      isNewTweet = false;
     } else {
       _allTweets.putIfAbsent(tweet.id, () => tweet);
-      asksToRefresh = _shownTweets.isNotEmpty;
+      isNewTweet = true;
     }
-    return asksToRefresh;
+    return isNewTweet;
   }
 
   void _removeTweetsFromAllTweetsMap(Set<String> tweetsId) async {
