@@ -50,6 +50,12 @@ abstract class ReactIconWidget extends StatelessWidget {
         ),
       ),
       onTap: onTap,
+      onDoubleTap: () async {
+        if (onTap != null) {
+          await Future.delayed(Duration(seconds: 1));
+          onTap!;
+        }
+      },
     );
   }
 }

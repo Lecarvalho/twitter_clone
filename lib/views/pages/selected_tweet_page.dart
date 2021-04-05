@@ -14,6 +14,8 @@ import 'package:twitter_clone/views/widgets/tweet/confirm_retweet.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_actions/tweet_actions_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/opened_tweet_widget.dart';
 
+import '../screen_state.dart';
+
 class SelectedTweetPage extends StatefulWidget {
   @override
   _SelectedTweetPageState createState() => _SelectedTweetPageState();
@@ -40,9 +42,8 @@ class _SelectedTweetPageState extends State<SelectedTweetPage> {
 
     _tweet = _tweetController.selectedTweet!;
 
-    setState(() {
-      _isPageReady = true;
-    });
+    _isPageReady = true;
+    ScreenState.refreshView(this);
 
     super.didChangeDependencies();
   }
@@ -54,7 +55,7 @@ class _SelectedTweetPageState extends State<SelectedTweetPage> {
       _profileController.myProfile.name,
     );
 
-    setState(() {});
+    ScreenState.refreshView(this);
   }
 
   void _onPressRetweet(TweetModel tweet) {
@@ -69,7 +70,8 @@ class _SelectedTweetPageState extends State<SelectedTweetPage> {
               _profileController.myProfile.id,
               _profileController.myProfile.name,
             );
-            setState(() {});
+            ScreenState.refreshView(this);
+
             Navigator.of(context).pop();
           },
         ),

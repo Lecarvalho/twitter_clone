@@ -10,6 +10,8 @@ import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_list_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_header_widget.dart';
 
+import '../screen_state.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -53,10 +55,9 @@ class _ProfilePageState extends State<ProfilePage> {
       _selectedProfileId,
       _profileController.myProfile.id,
     );
+    _isPageReady = true;
 
-    setState(() {
-      _isPageReady = true;
-    });
+    ScreenState.refreshView(this);
   }
 
   Future<void> _onDragRefresh() async {
@@ -75,10 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
   ButtonWidget _followingButton() {
     return ButtonWidget(
       onPressed: () {
-        setState(() {
-          _profileController.unfollow(_selectedProfileId);
-          _amIFollowing = false;
-        });
+        _profileController.unfollow(_selectedProfileId);
+        _amIFollowing = false;
+        ScreenState.refreshView(this);
       },
       text: "Following",
     );
@@ -87,10 +87,9 @@ class _ProfilePageState extends State<ProfilePage> {
   OutlinedButtonWidget _followButton() {
     return OutlinedButtonWidget(
       onPressed: () {
-        setState(() {
-          _profileController.follow(_selectedProfileId);
-          _amIFollowing = true;
-        });
+        _profileController.follow(_selectedProfileId);
+        _amIFollowing = true;
+        ScreenState.refreshView(this);
       },
       text: "Follow",
     );
@@ -115,7 +114,6 @@ class _ProfilePageState extends State<ProfilePage> {
         child: !_isPageReady
             ? LoadingPageWidget()
             : SingleChildScrollView(
-                primary: true,
                 child: Column(
                   children: [
                     ProfileHeaderWidget(

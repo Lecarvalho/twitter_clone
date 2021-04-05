@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:twitter_clone/config/app_debug.dart';
+import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
+import 'package:twitter_clone/models/tweet_reaction_model.dart';
 import 'package:twitter_clone/services/feed_service_base.dart';
 
 import 'controller_base.dart';
@@ -9,100 +10,102 @@ import 'controller_base.dart';
 class FeedController extends ControllerBase<FeedServiceBase> {
   FeedController({required service}) : super(service: service);
 
-  late StreamController<bool> notifier;
+  final notifier = StreamController<bool>();
+  Stream<FeedUpdateResponse>? _streamFeedResponse;
 
-  void _declareEventsStreamController(){
-    notifier = StreamController<bool>(
-      onListen: () {
-        print("on listen");
-      },
-      onCancel: () {
-        print("on cancel");
-      },
-      onPause: () {
-        print("on pause");
-      },
-      onResume: () {
-        print("on resume");
-      }
-    );
-  }
-  
   Map<String, TweetModel> _shownTweets = {};
   Map<String, TweetModel> _allTweets = {};
-  List<String> _listeningTweetIds = [];
+  Map<String, StreamSubscription<TweetModel?>> _listeningTweetsIds = {};
+
+  Set<String> get _allTweetsIdsOrdered => _allTweets.values
+      .toList()
+      .sortByCreatedAt()
+      .map((tweet) => tweet.id)
+      .toSet();
 
   List<TweetModel> get tweets => _shownTweets.values.toList().sortByCreatedAt();
 
-  void listenFeed(String myProfileId) {
-    final streamFeedResponse = service.listenFeed(myProfileId);
+  bool get _alreadyListeningFeed => _streamFeedResponse != null;
 
-    _declareEventsStreamController();
+  void listenFeed(String myProfileId, Function(bool) onData) {
+    if (_alreadyListeningFeed) return;
 
-    streamFeedResponse.listen((feedResponse) {
-      _buildFeed(feedResponse);
-      if (_shownTweets.isEmpty) {
-        refreshShownTweets();
-        _notifyView(asksToRefresh: false);
-      } else {
-        _notifyView(asksToRefresh: true);
+    _streamFeedResponse = service.listenFeed(myProfileId);
+
+    _streamFeedResponse!.listen((feedResponse) {
+      if (feedResponse.commingTweets.isNotEmpty) {
+        _listenTweetsComming(feedResponse.commingTweets, myProfileId);
       }
-      final tweetIdsComming =
-          feedResponse.commingTweets.map((tweet) => tweet.id).toList();
-      _listenTweetsComming(tweetIdsComming);
+
+      if (feedResponse.deletedTweetsIds.isNotEmpty) {
+        _removeTweetsFromAllTweetsMap(feedResponse.deletedTweetsIds);
+      }
+
+      if (feedResponse.commingTweets.isEmpty &&
+          feedResponse.deletedTweetsIds.isEmpty) {
+        _notifyView(asksToRefresh: false);
+      }
     });
+
+    notifier.stream.listen(onData);
   }
 
   void refreshShownTweets() {
     _shownTweets = Map.from(_allTweets);
   }
 
-  void _listenTweetsComming(List<String> tweetIds) {
-    final listeningTweetIds = List.from(_listeningTweetIds);
-    final tweetIdsToListenChanges = List.from(tweetIds);
-    final notListeningTweetIds = tweetIdsToListenChanges
-      ..removeWhere((tweetId) => listeningTweetIds.contains(tweetId));
+  void _listenTweetsComming(
+      Map<String, TweetReactionModel?> commingTweets, String myProfileId) {
+    final alreadyListeningTweetsIds =
+        Set<String>.from(_listeningTweetsIds.keys);
+    final listenToTweetsIds = Set<String>.from(commingTweets.keys);
+    final notListeningYetToTweetsIds = listenToTweetsIds
+      ..removeWhere((tweetId) => alreadyListeningTweetsIds.contains(tweetId));
 
-    for (var tweetId in notListeningTweetIds) {
-      final streamTweet = service.listenTweetChanges(tweetId);
+    for (var tweetId in notListeningYetToTweetsIds) {
+      final streamTweet = service.listenTweetChanges(tweetId, myProfileId);
 
-      streamTweet.listen((tweet) {
-        _addOrUpdateTweetOnAllTweetsMap(tweet);
-        _notifyView(asksToRefresh: false);
+      // ignore: cancel_subscriptions
+      final streamSubs = streamTweet.listen((tweet) {
+        if (tweet != null) {
+          tweet.tweetReaction = commingTweets[tweetId];
+          final asksToRefresh = _addOrUpdateTweetOnAllTweetsMap(tweet);
+          if (_hasAllTweetsFinishedLoading()) {
+            _notifyView(asksToRefresh: asksToRefresh);
+          }
+        }
       });
 
-      _listeningTweetIds.add(tweetId);
+      _listeningTweetsIds.putIfAbsent(tweetId, () => streamSubs);
     }
-  }
-
-  void _buildFeed(FeedUpdateResponse feedResponse) {
-    _addOrUpdateTweetsOnAllTweetsMap(feedResponse.commingTweets);
-    _removeTweetsFromAllTweetsMap(feedResponse.deletedTweetsIds);
   }
 
   void _notifyView({required bool asksToRefresh}) {
     notifier.add(asksToRefresh);
   }
 
-  void _addOrUpdateTweetsOnAllTweetsMap(List<TweetModel> tweets) {
-    for (var tweet in tweets) {
-      _addOrUpdateTweetOnAllTweetsMap(tweet);
-    }
-  }
-
-  void _addOrUpdateTweetOnAllTweetsMap(TweetModel tweet){
+  bool _addOrUpdateTweetOnAllTweetsMap(TweetModel tweet) {
+    bool asksToRefresh;
     if (_allTweets.containsKey(tweet.id)) {
-        _allTweets.update(tweet.id, (_) => tweet);
-      } else {
-        _allTweets.putIfAbsent(tweet.id, () => tweet);
-      }
+      _allTweets.update(tweet.id, (_) => tweet);
+      asksToRefresh = false;
+    } else {
+      _allTweets.putIfAbsent(tweet.id, () => tweet);
+      asksToRefresh = _shownTweets.isNotEmpty;
+    }
+    return asksToRefresh;
   }
 
-  void _removeTweetsFromAllTweetsMap(List<String>? tweetsId) {
-    if (tweetsId != null) {
-      for (var tweetId in tweetsId) {
-        _allTweets.remove(tweetId);
-      }
+  void _removeTweetsFromAllTweetsMap(Set<String> tweetsId) async {
+    for (var tweetId in tweetsId) {
+      _allTweets.remove(tweetId);
+      _listeningTweetsIds[tweetId]!.cancel();
+      _listeningTweetsIds.remove(tweetId);
     }
+    _notifyView(asksToRefresh: true);
+  }
+
+  bool _hasAllTweetsFinishedLoading() {
+    return setEquals(_listeningTweetsIds.keys.toSet(), _allTweetsIdsOrdered);
   }
 }

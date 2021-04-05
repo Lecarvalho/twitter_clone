@@ -6,6 +6,7 @@ import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/views/resources/rounded_bottom_sheet.dart';
 
+import '../../screen_state.dart';
 import '../divider_widget.dart';
 import 'confirm_retweet.dart';
 import 'tweet_line/single_tweet_widget.dart';
@@ -33,14 +34,12 @@ class _TweetListWidgetState extends State<TweetListWidget> {
   }
 
   void _onPressLike(TweetModel tweet) async {
-
     await _tweetController.toggleLikeTweet(
       tweet,
       _profileController.myProfile.id,
       _profileController.myProfile.name,
     );
-
-    setState(() {});
+    ScreenState.refreshView(this);
   }
 
   void _onTapOpenTweet(String tweetId) {
@@ -63,8 +62,6 @@ class _TweetListWidgetState extends State<TweetListWidget> {
               _profileController.myProfile.name,
             );
             Navigator.of(context).pop();
-
-            setState(() {});
           },
         ),
       );
@@ -77,7 +74,6 @@ class _TweetListWidgetState extends State<TweetListWidget> {
     return RefreshIndicator(
       onRefresh: widget.onDragRefresh,
       child: ListView.separated(
-        physics: AlwaysScrollableScrollPhysics(),
         shrinkWrap: true,
         primary: false,
         separatorBuilder: (_, __) => DividerWidget(),

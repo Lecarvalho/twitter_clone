@@ -38,7 +38,7 @@ class TweetReactionWidget extends StatelessWidget {
       child: Row(
         children: [
           icon,
-          SizedBox(width: 7),
+          SizedBox(width: 5),
           Text(_whoReacted + " " + reaction, style: Styles.subtitle2Gray),
         ],
       ),

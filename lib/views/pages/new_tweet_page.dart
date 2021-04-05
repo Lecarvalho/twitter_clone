@@ -6,6 +6,8 @@ import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/button/button_actionbar_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_create_new_widget.dart';
 
+import '../screen_state.dart';
+
 class NewTweetPage extends StatefulWidget {
   @override
   _NewTweetPageState createState() => _NewTweetPageState();
@@ -25,13 +27,11 @@ class _NewTweetPageState extends State<NewTweetPage> {
 
     _textController.addListener(() {
       if (_hasText && _onPressedCreateTweet == null) {
-        setState(() {
-          _onPressedCreateTweet = _onCreateTweet;
-        });
+        _onPressedCreateTweet = _onCreateTweet;
+        ScreenState.refreshView(this);
       } else if (!_hasText) {
-        setState(() {
-          _onPressedCreateTweet = null;
-        });
+        _onPressedCreateTweet = null;
+        ScreenState.refreshView(this);
       }
     });
 

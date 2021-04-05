@@ -9,6 +9,8 @@ import 'package:twitter_clone/views/widgets/search/search_default_banner_widget.
 import 'package:twitter_clone/views/widgets/search/search_result_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/search_textbox_widget.dart';
 
+import '../screen_state.dart';
+
 class SearchPage extends StatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -29,7 +31,7 @@ class _SearchPageState extends State<SearchPage> {
   void _handleTextSearch() {
     _searchTextController.addListener(() async {
       await _searchController.searchProfiles(_searchTextController.text);
-      setState(() {});
+      ScreenState.refreshView(this);
     });
   }
 

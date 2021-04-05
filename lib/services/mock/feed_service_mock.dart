@@ -14,17 +14,21 @@ class FeedServiceMock extends FeedServiceBase {
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
     );
 
-    yield FeedUpdateResponse(commingTweets: tweets!);
+    final tweetIds = tweets!.map((tweet) => tweet.id).toSet();
+
+    yield FeedUpdateResponse(
+      commingTweets: {tweetIds.first: null},
+      deletedTweetsIds: {},
+    );
   }
 
   @override
-  Stream<TweetModel> listenTweetChanges(String tweetId) async* {
+  Stream<TweetModel?> listenTweetChanges(String tweetId, String myProfileId) async* {
     final tweets = await MockTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
     );
 
-    yield tweets!.firstWhere((_tweet) => _tweet.id == tweetId);
+    yield tweets?.firstWhere((_tweet) => _tweet.id == tweetId);
   }
-  
 }

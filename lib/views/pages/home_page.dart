@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_debug.dart';
 import 'package:twitter_clone/controllers/feed_controller.dart';
+import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/config/di.dart';
@@ -14,6 +15,7 @@ import 'package:twitter_clone/views/widgets/button/tap_to_update_button_widget.d
 import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/tweet_list_widget.dart';
 
+import '../screen_state.dart';
 import 'drawer_menu.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   late FeedController _feedController;
+  late TweetController _tweetController;
   late ProfileController _profileController;
 
   bool _isPageReady = false;
@@ -46,35 +49,35 @@ class _HomePageState extends State<HomePage> {
         break;
     }
 
-    setState(() {
-      _selectedIndex = index;
-    });
+    _selectedIndex = index;
+    ScreenState.refreshView(this);
   }
 
   @override
   void didChangeDependencies() async {
     _feedController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
+    _tweetController = Di.instanceOf(context);
 
     _loadMyFeed();
 
     super.didChangeDependencies();
   }
-
   void _loadMyFeed() async {
-    _feedController.listenFeed(_profileController.myProfile.id);
-
-    _feedController.notifier.stream.listen((asksToRefresh) {
-      _isPageReady = true;
-      if (asksToRefresh) {
-        _showUpdateFeedButton = true;
-        setState(() {});
-      } else {
-        _showUpdateFeedButton = false;
-        _feedController.refreshShownTweets();
-        setState(() {});
-      }
-    });
+    _feedController.listenFeed(
+      _profileController.myProfile.id,
+      (asksToRefresh) {
+        _isPageReady = true;
+        if (asksToRefresh) {
+          _showUpdateFeedButton = true;
+        } else {
+          _showUpdateFeedButton = false;
+          _feedController.refreshShownTweets();
+        }
+        ScreenState.refreshView(this);
+        _tweetController.releaseActionButton();
+      },
+    );
   }
 
   Set<Widget> get _pagesNavigation => {
@@ -88,9 +91,7 @@ class _HomePageState extends State<HomePage> {
                 Visibility(
                   visible: _showUpdateFeedButton,
                   child: TapToUpdateButtonWidget(
-                    onPressed: () {
-                      _onRefreshFeed();
-                    },
+                    onPressed: _onRefreshFeed,
                   ),
                 ),
               ]),
@@ -99,13 +100,10 @@ class _HomePageState extends State<HomePage> {
         Text("Profile")
       };
 
-  Future<void> _onRefreshFeed({bool doSetState = true}) async {
-    // _tweetController.refreshFeed();
-    if (doSetState) {
-      setState(() {
-        _showUpdateFeedButton = false;
-      });
-    }
+  Future<void> _onRefreshFeed() async {
+    _feedController.refreshShownTweets();
+    _showUpdateFeedButton = false;
+    ScreenState.refreshView(this);
   }
 
   @override

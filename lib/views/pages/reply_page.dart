@@ -8,6 +8,8 @@ import 'package:twitter_clone/views/widgets/appbar_widget.dart';
 import 'package:twitter_clone/views/widgets/button/button_actionbar_widget.dart';
 import 'package:twitter_clone/views/widgets/tweet/write_reply_widget.dart';
 
+import '../screen_state.dart';
+
 class ReplyPage extends StatefulWidget {
   @override
   _ReplyPageState createState() => _ReplyPageState();
@@ -30,13 +32,11 @@ class _ReplyPageState extends State<ReplyPage> {
 
     _textController.addListener(() {
       if (_hasText && _onPressedReplyTweet == null) {
-        setState(() {
-          _onPressedReplyTweet = _onReplyTweet;
-        });
+        _onPressedReplyTweet = _onReplyTweet;
+        ScreenState.refreshView(this);
       } else if (!_hasText) {
-        setState(() {
-          _onPressedReplyTweet = null;
-        });
+        _onPressedReplyTweet = null;
+        ScreenState.refreshView(this);
       }
     });
 
@@ -45,11 +45,10 @@ class _ReplyPageState extends State<ReplyPage> {
 
   void _onReplyTweet() async {
     await _replyController.replyTweet(
-      replyingToTweetId: _replyingTweet.id,
-      text: _textController.text,
-      myProfileId: _profileController.myProfile.id,
-      replyingToProfileId: _replyingTweet.profileId
-    );
+        replyingToTweetId: _replyingTweet.id,
+        text: _textController.text,
+        myProfileId: _profileController.myProfile.id,
+        replyingToProfileId: _replyingTweet.profileId);
 
     Navigator.of(context).pushReplacementNamed(
       Routes.selected_tweet,

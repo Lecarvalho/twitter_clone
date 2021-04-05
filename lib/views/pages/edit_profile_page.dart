@@ -14,6 +14,8 @@ import 'package:twitter_clone/views/widgets/textbox/loading_page_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/multiline_textbox_widget.dart';
 import 'package:twitter_clone/views/widgets/textbox/textbox_widget.dart';
 
+import '../screen_state.dart';
+
 class EditProfilePage extends StatefulWidget {
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -43,16 +45,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     _isProfileComplete = _profileController.myProfile.isProfileComplete;
 
-    setState(() {
-      _isPageReady = true;
-    });
+    _isPageReady = true;
+    ScreenState.refreshView(this);
 
     super.didChangeDependencies();
   }
 
   void _onPressSave(BuildContext context) async {
     _closeKeyboard(context);
-    if (!(_isNicknameAvailable ?? true)){
+    if (!(_isNicknameAvailable ?? true)) {
       return;
     }
     String result = await _profileController.updateProfile(
@@ -84,14 +85,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
       }
     }
 
-    setState(() {
-      _isNicknameAvailable = isNicknameAvailable;
-    });
+    _isNicknameAvailable = isNicknameAvailable;
+    ScreenState.refreshView(this);
   }
 
   void _onPressChangePhoto() async {
     _avatarLocalPath = await _profileController.selectAvatar();
-    setState(() {});
+    ScreenState.refreshView(this);
   }
 
   void _closeKeyboard(BuildContext context) {

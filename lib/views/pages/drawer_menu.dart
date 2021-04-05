@@ -7,6 +7,8 @@ import 'package:twitter_clone/views/resources/project_logos.dart';
 import 'package:twitter_clone/views/widgets/tweet/following_followers_count_widget.dart';
 import 'package:twitter_clone/views/widgets/user/profile_picture_name_nick_vertical_widget.dart';
 
+import '../screen_state.dart';
+
 class DrawerMenu extends StatefulWidget {
   @override
   _DrawerMenuState createState() => _DrawerMenuState();
@@ -22,7 +24,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
 
     await _profileController.refreshMyProfile();
 
-    setState(() {});
+    ScreenState.refreshView(this);
 
     super.didChangeDependencies();
   }
