@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/controllers/feed_controller.dart';
-import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/config/di.dart';
@@ -26,7 +25,6 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   late FeedController _feedController;
-  late TweetController _tweetController;
   late ProfileController _profileController;
 
   bool _isPageReady = false;
@@ -56,7 +54,6 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() async {
     _feedController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
-    _tweetController = Di.instanceOf(context);
 
     _loadMyFeed();
 
@@ -75,7 +72,6 @@ class _HomePageState extends State<HomePage> {
           _feedController.refreshShownTweets();
         }
         ScreenState.refreshView(this);
-        _tweetController.releaseActionButton();
       },
     );
   }

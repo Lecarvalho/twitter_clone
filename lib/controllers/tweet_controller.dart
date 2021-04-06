@@ -14,7 +14,6 @@ class TweetController extends ControllerBase<TweetServiceBase> {
 
   List<TweetModel>? _tweets;
   List<TweetModel>? get tweets => _tweets?.toList().sortByCreatedAt();
-  bool _lockActionButton = false;
 
   Future<void> getProfileTweets(
     String profileId,
@@ -49,30 +48,23 @@ class TweetController extends ControllerBase<TweetServiceBase> {
     }
   }
 
-  void releaseActionButton() {
-    _lockActionButton = false;
-  }
-
   Future<void> toggleLikeTweet(
     TweetModel tweet,
     String myProfileId,
     String myProfileName,
   ) async {
     try {
-      if (!_lockActionButton) {
-        _lockActionButton = true;
-        if (tweet.didILike) {
-          tweet.likeCount--;
-          await service.unlikeTweet(tweet.id, tweet.profileId, myProfileId);
-        } else {
-          tweet.likeCount++;
-          await service.likeTweet(
-            tweet.id,
-            tweet.profileId,
-            myProfileId,
-            myProfileName,
-          );
-        }
+      if (tweet.didILike) {
+        tweet.likeCount--;
+        await service.unlikeTweet(tweet.id, tweet.profileId, myProfileId);
+      } else {
+        tweet.likeCount++;
+        await service.likeTweet(
+          tweet.id,
+          tweet.profileId,
+          myProfileId,
+          myProfileName,
+        );
       }
       tweet.didILike = !tweet.didILike;
     } catch (e) {
@@ -86,16 +78,13 @@ class TweetController extends ControllerBase<TweetServiceBase> {
     String myProfileName,
   ) async {
     try {
-      if (!_lockActionButton) {
-        _lockActionButton = true;
-        if (!tweet.didIRetweet) {
-          await service.retweet(
-            tweet.id,
-            tweet.profileId,
-            myProfileId,
-            myProfileName,
-          );
-        }
+      if (!tweet.didIRetweet) {
+        await service.retweet(
+          tweet.id,
+          tweet.profileId,
+          myProfileId,
+          myProfileName,
+        );
       }
     } catch (e) {
       print("Error on retweet: " + e.toString());

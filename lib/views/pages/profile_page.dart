@@ -60,10 +60,6 @@ class _ProfilePageState extends State<ProfilePage> {
     ScreenState.refreshView(this);
   }
 
-  Future<void> _onDragRefresh() async {
-    _loadTweets();
-  }
-
   OutlinedButtonWidget _editProfileButton() {
     return OutlinedButtonWidget(
       onPressed: () {
