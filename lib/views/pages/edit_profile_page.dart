@@ -68,7 +68,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
 
     if (result == "Success") {
-      Navigator.of(context).pushNamed(Routes.home);
+      Navigator.of(context).pushReplacementNamed(Routes.home);
     } else {
       PopMessage.show(result, context);
     }

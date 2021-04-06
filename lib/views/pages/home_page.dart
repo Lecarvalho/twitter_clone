@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/config/app_debug.dart';
 import 'package:twitter_clone/controllers/feed_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
@@ -51,29 +52,59 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    print("initState");
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    print("dispose");
+    super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    print("deactivate");
+    super.deactivate();
+  }
+
+  @override
   void didChangeDependencies() async {
     _feedController = Di.instanceOf(context);
+
     _profileController = Di.instanceOf(context);
 
     _loadMyFeed();
 
+    print("didChangeDependencies");
+
     super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    print("didUpdateWidget");
+    super.didUpdateWidget(oldWidget);
   }
 
   void _loadMyFeed() async {
     _feedController.listenFeed(
       _profileController.myProfile.id,
       (asksToRefresh) {
-        _isPageReady = true;
         if (asksToRefresh) {
           _showUpdateFeedButton = true;
         } else {
           _showUpdateFeedButton = false;
           _feedController.refreshShownTweets();
         }
+        _isPageReady = true;
         ScreenState.refreshView(this);
       },
     );
+
+    _isPageReady = true;
+    ScreenState.refreshView(this);
   }
 
   Set<Widget> get _pagesNavigation => {

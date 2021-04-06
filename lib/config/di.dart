@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:twitter_clone/controllers/feed_controller.dart';
 import 'package:twitter_clone/controllers/reply_controller.dart';
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/controllers/search_controller.dart';
@@ -8,7 +7,6 @@ import 'package:twitter_clone/controllers/user_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
-import 'package:twitter_clone/services/feed_service.dart';
 import 'package:twitter_clone/services/profile_service.dart';
 import 'package:twitter_clone/services/providers/auth_provider.dart';
 import 'package:twitter_clone/services/mock/service_provider_mock.dart';
@@ -25,10 +23,12 @@ import 'package:twitter_clone/services/user_service.dart';
 class Di {
   Di._();
 
+  static late DatabaseProvider databaseProvider;
+
   static init<T>(child) async {
     final mockProvider = ServiceProviderMock();
     final authProvider = AuthProvider();
-    final databaseProvider = DatabaseProvider();
+    databaseProvider = DatabaseProvider();
     final storageProvider = StorageProvider();
 
     final databaseStorageProvider = DatabaseStorageProvider(
@@ -74,11 +74,6 @@ class Di {
             profileService: ProfileService(databaseStorageProvider),
           ),
         ),
-        Provider<FeedController>(
-          create: (_) => FeedController(
-            service: FeedService(databaseProvider),
-          ),
-        )
       ],
       child: child,
     );

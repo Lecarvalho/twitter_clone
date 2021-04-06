@@ -7,8 +7,8 @@ import 'service_base.dart';
 abstract class FeedServiceBase extends ServiceBase {
   FeedServiceBase(ServiceProviderBase provider) : super(provider);
 
-  Stream<FeedUpdateResponse> listenFeed(String myProfileId);
-  Stream<TweetModel?> listenTweetChanges(String tweetId, String myProfileId);
+  Stream<FeedUpdateResponse> streamFeed(String myProfileId);
+  Stream<TweetModel?> streamTweet(String tweetId, String myProfileId);
 }
 
 class FeedUpdateResponse {

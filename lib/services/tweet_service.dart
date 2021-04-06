@@ -22,6 +22,8 @@ class TweetService extends TweetServiceBase {
     //1. create tweet
     final newTweetDoc = _collections.tweets.doc();
 
+    map["profile"] = _collections.profiles.doc(map["profileId"]);
+
     batch.set(newTweetDoc, map);
 
     //2. create a feed for myself

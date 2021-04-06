@@ -53,12 +53,12 @@ class TweetModel extends AsTweetModelBase {
       "text": text,
       "profileId": myProfile.id,
       "createdAt": createdAt,
-      "profile": ProfileModel.getMapForCreateTweet(
-        id: myProfile.id,
-        avatar: myProfile.avatar!,
-        name: myProfile.name,
-        nickname: myProfile.nickname!,
-      )
+      // "profile": ProfileModel.getMapForCreateTweet(
+      //   id: myProfile.id,
+      //   avatar: myProfile.avatar!,
+      //   name: myProfile.name,
+      //   nickname: myProfile.nickname!,
+      // )
     };
   }
 }

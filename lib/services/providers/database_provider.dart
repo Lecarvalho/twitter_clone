@@ -132,7 +132,18 @@ extension DocumentRefExtension on DocumentReference {
     Function(Map<String, dynamic> data) fromMap,
   ) async {
     var data = await this.toMap();
+
     if (data == null) return null;
+
+    for (var itemData in data.entries) {
+      if (itemData.value is DocumentReference) {
+        DocumentReference docRef = itemData.value;
+
+        final docMap = await docRef.toMap();
+
+        data["profile"] = docMap;
+      }
+    }
 
     data.putIfAbsent(Fields.id, () => this.id);
 

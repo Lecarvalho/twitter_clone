@@ -8,7 +8,7 @@ class FeedServiceMock extends FeedServiceBase {
   FeedServiceMock(ServiceProviderBase provider) : super(provider);
 
   @override
-  Stream<FeedUpdateResponse> listenFeed(String myProfileId) async* {
+  Stream<FeedUpdateResponse> streamFeed(String myProfileId) async* {
     final tweets = await MockTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
@@ -23,7 +23,7 @@ class FeedServiceMock extends FeedServiceBase {
   }
 
   @override
-  Stream<TweetModel?> listenTweetChanges(String tweetId, String myProfileId) async* {
+  Stream<TweetModel?> streamTweet(String tweetId, String myProfileId) async* {
     final tweets = await MockTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),

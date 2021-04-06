@@ -14,7 +14,7 @@ class FeedService extends FeedServiceBase {
   }
 
   @override
-  Stream<FeedUpdateResponse> listenFeed(String myProfileId) async* {
+  Stream<FeedUpdateResponse> streamFeed(String myProfileId) async* {
     final myFeedStreamSnapshot = _collections.feed
         .where(Fields.concernedProfileId, isEqualTo: myProfileId)
         .orderBy(Fields.createdAt, descending: true)
@@ -27,7 +27,7 @@ class FeedService extends FeedServiceBase {
   }
 
   @override
-  Stream<TweetModel?> listenTweetChanges(
+  Stream<TweetModel?> streamTweet(
       String tweetId, String myProfileId) async* {
     final tweetStreamSnapshot = _collections.tweets.doc(tweetId).snapshots();
 

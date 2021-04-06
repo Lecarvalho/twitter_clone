@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:twitter_clone/config/app_debug.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/models/tweet_reaction_model.dart';
 import 'package:twitter_clone/services/feed_service_base.dart';
@@ -10,8 +11,8 @@ import 'controller_base.dart';
 class FeedController extends ControllerBase<FeedServiceBase> {
   FeedController({required service}) : super(service: service);
 
-  final notifier = StreamController<bool>();
-  Stream<FeedUpdateResponse>? _streamFeedResponse;
+  final _notifier = StreamController<bool>();
+  final _feedStreamController = StreamController<FeedUpdateResponse>();
 
   Map<String, TweetModel> _shownTweets = {};
   Map<String, TweetModel> _allTweets = {};
@@ -25,29 +26,33 @@ class FeedController extends ControllerBase<FeedServiceBase> {
 
   List<TweetModel> get tweets => _shownTweets.values.toList().sortByCreatedAt();
 
-  bool get _alreadyListeningFeed => _streamFeedResponse != null;
+  void listenFeed(String myProfileId, Function(bool) onData) async {
+    if (_feedStreamController.hasListener) return;
+    
+    final streamFeedResponse = service.streamFeed(myProfileId);
 
-  void listenFeed(String myProfileId, Function(bool) onData) {
-    if (_alreadyListeningFeed) return;
+    _feedStreamController.addStream(streamFeedResponse);
 
-    _streamFeedResponse = service.listenFeed(myProfileId);
+    _notifier.stream.listen(onData);
 
-    _streamFeedResponse!.listen((feedResponse) {
-      if (feedResponse.commingTweets.isNotEmpty) {
-        _listenTweetsComming(feedResponse.commingTweets, myProfileId);
-      }
+    _feedStreamController.stream.listen(
+      (feedResponse) => onDataFeed(feedResponse, myProfileId),
+    );
+  }
 
-      if (feedResponse.deletedTweetsIds.isNotEmpty) {
-        _removeTweetsFromAllTweetsMap(feedResponse.deletedTweetsIds);
-      }
+  void onDataFeed(FeedUpdateResponse feedResponse, String myProfileId) {
+    if (feedResponse.commingTweets.isNotEmpty) {
+      _listenTweetsComming(feedResponse.commingTweets, myProfileId);
+    }
 
-      if (feedResponse.commingTweets.isEmpty &&
-          feedResponse.deletedTweetsIds.isEmpty) {
-        _notifyView(asksToRefresh: false);
-      }
-    });
+    if (feedResponse.deletedTweetsIds.isNotEmpty) {
+      _removeTweetsFromAllTweetsMap(feedResponse.deletedTweetsIds);
+    }
 
-    notifier.stream.listen(onData);
+    if (feedResponse.commingTweets.isEmpty &&
+        feedResponse.deletedTweetsIds.isEmpty) {
+      _notifyView(asksToRefresh: false);
+    }
   }
 
   void refreshShownTweets() {
@@ -63,15 +68,18 @@ class FeedController extends ControllerBase<FeedServiceBase> {
       ..removeWhere((tweetId) => alreadyListeningTweetsIds.contains(tweetId));
 
     for (var tweetId in notListeningYetToTweetsIds) {
-      final streamTweet = service.listenTweetChanges(tweetId, myProfileId);
+      final streamTweet = service.streamTweet(tweetId, myProfileId);
 
       // ignore: cancel_subscriptions
       final streamSubs = streamTweet.listen((tweet) {
+        print("listening...");
         if (tweet != null) {
           tweet.tweetReaction = commingTweets[tweetId];
           final isNewTweet = _addOrUpdateTweetOnAllTweetsMap(tweet);
           if (_hasAllTweetsFinishedLoading()) {
-            final asksToRefresh = _shownTweets.isNotEmpty && isNewTweet && tweet.profileId != myProfileId;
+            final asksToRefresh = _shownTweets.isNotEmpty &&
+                isNewTweet &&
+                tweet.profileId != myProfileId;
             _notifyView(asksToRefresh: asksToRefresh);
           }
         }
@@ -82,7 +90,7 @@ class FeedController extends ControllerBase<FeedServiceBase> {
   }
 
   void _notifyView({required bool asksToRefresh}) {
-    notifier.add(asksToRefresh);
+    _notifier.add(asksToRefresh);
   }
 
   bool _addOrUpdateTweetOnAllTweetsMap(TweetModel tweet) {
