@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/services/providers/service_provider_base.dart';
 
@@ -8,7 +10,8 @@ class FeedServiceMock extends FeedServiceBase {
   FeedServiceMock(ServiceProviderBase provider) : super(provider);
 
   @override
-  Stream<FeedUpdateResponse> streamFeed(String myProfileId) async* {
+  Future<StreamSubscription> streamFeed(
+      String myProfileId, Function(FeedUpdateResponse) onListen) async {
     final tweets = await MockTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
@@ -16,19 +19,24 @@ class FeedServiceMock extends FeedServiceBase {
 
     final tweetIds = tweets!.map((tweet) => tweet.id).toSet();
 
-    yield FeedUpdateResponse(
-      commingTweets: {tweetIds.first: null},
-      deletedTweetsIds: {},
-    );
+    return Stream.value(onListen(
+      FeedUpdateResponse(
+        commingTweets: {tweetIds.first: null},
+        deletedTweetsIds: {},
+      ),
+    )).listen((event) {});
   }
 
   @override
-  Stream<TweetModel?> streamTweet(String tweetId, String myProfileId) async* {
+  Future<StreamSubscription> streamTweet(String tweetId, String myProfileId,
+      Function(TweetModel?) onListen) async {
     final tweets = await MockTools.jsonToModelList<TweetModel>(
       "assets/json/tweets.json",
       (Map<String, dynamic> data) => TweetModel.fromMap(data),
     );
 
-    yield tweets?.firstWhere((_tweet) => _tweet.id == tweetId);
+    final tweet = tweets?.firstWhere((_tweet) => _tweet.id == tweetId);
+
+    return Stream.value(onListen(tweet)).listen((event) {});
   }
 }

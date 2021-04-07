@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/models/tweet_reaction_model.dart';
@@ -14,30 +16,32 @@ class FeedService extends FeedServiceBase {
   }
 
   @override
-  Stream<FeedUpdateResponse> streamFeed(String myProfileId) async* {
+  Future<StreamSubscription> streamFeed(String myProfileId, Function(FeedUpdateResponse) onListen) async {
     final myFeedStreamSnapshot = _collections.feed
         .where(Fields.concernedProfileId, isEqualTo: myProfileId)
         .orderBy(Fields.createdAt, descending: true)
         .limit(20)
         .snapshots();
 
-    await for (var myFeedSnapshoot in myFeedStreamSnapshot) {
-      yield await _getFeedItem(myFeedSnapshoot, myProfileId);
-    }
+    return myFeedStreamSnapshot.listen((myFeedSnapshot) async {
+      final feedUpdateResponse = await _getFeedItem(myFeedSnapshot, myProfileId);
+      onListen(feedUpdateResponse);
+    });
   }
 
   @override
-  Stream<TweetModel?> streamTweet(
-      String tweetId, String myProfileId) async* {
+  Future<StreamSubscription> streamTweet(
+      String tweetId, String myProfileId, Function(TweetModel?) onListen) async {
     final tweetStreamSnapshot = _collections.tweets.doc(tweetId).snapshots();
 
-    await for (var tweetSnapshot in tweetStreamSnapshot) {
-      var tweet = await tweetSnapshot.reference.toModel<TweetModel>(
+    return tweetStreamSnapshot.listen((tweetSnapshot) async { 
+      final tweet = await tweetSnapshot.reference.toModel<TweetModel>(
         (tweetMap) =>
             _getMyReactions(TweetModel.fromMap(tweetMap), myProfileId),
       );
-      yield tweet;
-    }
+
+      onListen(tweet);
+    });
   }
 
   Future<FeedUpdateResponse> _getFeedItem(

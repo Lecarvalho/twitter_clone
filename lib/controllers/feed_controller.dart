@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:twitter_clone/config/app_debug.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/models/tweet_reaction_model.dart';
 import 'package:twitter_clone/services/feed_service_base.dart';
@@ -12,11 +11,14 @@ class FeedController extends ControllerBase<FeedServiceBase> {
   FeedController({required service}) : super(service: service);
 
   final _notifier = StreamController<bool>();
-  final _feedStreamController = StreamController<FeedUpdateResponse>();
+
+  // ignore: cancel_subscriptions
+  StreamSubscription<dynamic>? _streamFeedResponse;
+  StreamSubscription<bool>? _streamForView;
 
   Map<String, TweetModel> _shownTweets = {};
   Map<String, TweetModel> _allTweets = {};
-  Map<String, StreamSubscription<TweetModel?>> _listeningTweetsIds = {};
+  Map<String, StreamSubscription> _listeningTweetsIds = {};
 
   Set<String> get _allTweetsIdsOrdered => _allTweets.values
       .toList()
@@ -27,17 +29,18 @@ class FeedController extends ControllerBase<FeedServiceBase> {
   List<TweetModel> get tweets => _shownTweets.values.toList().sortByCreatedAt();
 
   void listenFeed(String myProfileId, Function(bool) onData) async {
-    if (_feedStreamController.hasListener) return;
-    
-    final streamFeedResponse = service.streamFeed(myProfileId);
+    if (_streamFeedResponse != null) {
+      _cleanAllListeners();
+    } else {
+      _streamForView = _notifier.stream.listen((_) {});
+    }
 
-    _feedStreamController.addStream(streamFeedResponse);
+    _streamForView?.onData(onData);
 
-    _notifier.stream.listen(onData);
-
-    _feedStreamController.stream.listen(
-      (feedResponse) => onDataFeed(feedResponse, myProfileId),
-    );
+    _streamFeedResponse =
+        await service.streamFeed(myProfileId, (streamFeedResponse) {
+      onDataFeed(streamFeedResponse, myProfileId);
+    });
   }
 
   void onDataFeed(FeedUpdateResponse feedResponse, String myProfileId) {
@@ -59,8 +62,18 @@ class FeedController extends ControllerBase<FeedServiceBase> {
     _shownTweets = Map.from(_allTweets);
   }
 
-  void _listenTweetsComming(
-      Map<String, TweetReactionModel?> commingTweets, String myProfileId) {
+  void _cleanAllListeners() {
+    _streamFeedResponse!.cancel();
+    _allTweets.clear();
+    _shownTweets.clear();
+    _listeningTweetsIds.forEach((key, value) {
+      value.cancel();
+    });
+    _listeningTweetsIds.clear();
+  }
+
+  void _listenTweetsComming(Map<String, TweetReactionModel?> commingTweets,
+      String myProfileId) async {
     final alreadyListeningTweetsIds =
         Set<String>.from(_listeningTweetsIds.keys);
     final listenToTweetsIds = Set<String>.from(commingTweets.keys);
@@ -68,11 +81,9 @@ class FeedController extends ControllerBase<FeedServiceBase> {
       ..removeWhere((tweetId) => alreadyListeningTweetsIds.contains(tweetId));
 
     for (var tweetId in notListeningYetToTweetsIds) {
-      final streamTweet = service.streamTweet(tweetId, myProfileId);
-
       // ignore: cancel_subscriptions
-      final streamSubs = streamTweet.listen((tweet) {
-        print("listening...");
+      final streamSubs =
+          await service.streamTweet(tweetId, myProfileId, (tweet) {
         if (tweet != null) {
           tweet.tweetReaction = commingTweets[tweetId];
           final isNewTweet = _addOrUpdateTweetOnAllTweetsMap(tweet);

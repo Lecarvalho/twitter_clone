@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:twitter_clone/config/di.dart';
-import 'package:twitter_clone/controllers/feed_controller.dart';
-import 'package:twitter_clone/services/feed_service.dart';
 import 'package:twitter_clone/views/pages/preload_page.dart';
 import 'package:twitter_clone/views/pages/reply_page.dart';
 
@@ -29,12 +25,7 @@ class Routes {
   static const String preload = "/preload";
 
   static final routes = <String, WidgetBuilder>{
-    home: (BuildContext context) => Provider<FeedController>(
-          create: (_) => FeedController(
-            service: FeedService(Di.databaseProvider),
-          ),
-          child: HomePage()
-        ),
+    home: (BuildContext context) => HomePage(),
     search: (BuildContext context) => SearchPage(),
     profile: (BuildContext context) => ProfilePage(),
     login: (BuildContext context) => LoginPage(),
