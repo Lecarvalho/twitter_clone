@@ -57,20 +57,15 @@ class Collections {
 
   static Future<Map<String, dynamic>> parseDataToPrimitiveTypes(
       Map<String, dynamic> firebaseData) async {
+    for (var entry in firebaseData.entries) {
+      if (entry.value is DocumentReference) {
+        DocumentReference docRef = entry.value;
+        firebaseData[entry.key] = await docRef.toMap();
+      }
 
-        for (var entry in firebaseData.entries){
-          if (entry.value is DocumentReference){
-            firebaseData[entry.key] = await entry.value.toMap();
-          }
-
-          if (entry.value is Timestamp){
-            firebaseData[entry.key] = firebaseData[entry.value].toDate().toString();
-          }
-        }
-
-    if (firebaseData[Fields.createdAt] != null) {
-      firebaseData[Fields.createdAt] =
-          firebaseData[Fields.createdAt].toDate().toString();
+      if (entry.value is Timestamp) {
+        firebaseData[entry.key] = entry.value.toDate().toString();
+      }
     }
 
     return firebaseData;
@@ -79,8 +74,6 @@ class Collections {
   String toReactionKey(
           String tweetId, String reactedByProfileId, String reactionType) =>
       "${tweetId}_${reactedByProfileId}_$reactionType";
-  // String toFeedKey(String tweetId, String concernedProfileId, DateTime createdAt) =>
-  //     "${tweetId}_${concernedProfileId}_$createdAt";
 }
 
 class Fields {
@@ -117,14 +110,17 @@ class ReactionTypes {
 
 extension DocQueryExtension on Query {
   Future<List<Model>> toModelList<Model extends ModelBase>(
-      Function(Map<String, dynamic> data) fromMap) async {
+      Model Function(Map<String, dynamic> data) fromMap) async {
     var snapshot = await this.get();
-    var iterable = snapshot.docs.map((doc) async {
+    List<Model> mapList = [];
+
+    for (var doc in snapshot.docs){
       var data = doc.data()!;
       data.putIfAbsent(Fields.id, () => doc.id);
-      return fromMap(await Collections.parseDataToPrimitiveTypes(data));
-    });
-    return List<Model>.from(iterable);
+      mapList.add(fromMap(await Collections.parseDataToPrimitiveTypes(data)));
+    }
+
+    return mapList;
   }
 
   Future<List<Map<String, dynamic>>>
