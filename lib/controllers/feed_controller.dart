@@ -23,9 +23,8 @@ class FeedController extends ControllerBase<FeedServiceBase> {
   List<TweetModel> get tweets => _shownTweets.values.toList().sortByCreatedAt();
 
   void listenFeed(String myProfileId, Function(bool) onData) async {
-
     if (_streamFeedResponse != null) {
-      _cleanAllListeners();
+      clearAllListeners();
     } else {
       _streamForView = _notifier.stream.listen((_) {});
     }
@@ -55,13 +54,13 @@ class FeedController extends ControllerBase<FeedServiceBase> {
     _shownTweets = Map.from(_allTweets);
   }
 
-  void _cleanAllListeners() {
-    _streamFeedResponse!.cancel();
+  Future<void> clearAllListeners() async {
+    await _streamFeedResponse!.cancel();
+    for (var streamSub in _listeningTweetsIds.values) {
+      await streamSub.cancel();
+    }
     _allTweets.clear();
     _shownTweets.clear();
-    _listeningTweetsIds.forEach((_, streamSubs) {
-      streamSubs.cancel();
-    });
     _listeningTweetsIds.clear();
   }
 

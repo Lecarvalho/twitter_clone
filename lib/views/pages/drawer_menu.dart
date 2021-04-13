@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/controllers/auth_controller.dart';
+import 'package:twitter_clone/controllers/feed_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/config/di.dart';
@@ -17,10 +18,13 @@ class DrawerMenu extends StatefulWidget {
 class _DrawerMenuState extends State<DrawerMenu> {
   late ProfileController _profileController;
   late AuthController _authController;
+  late FeedController _feedController;
+
   @override
   void didChangeDependencies() async {
     _profileController = Di.instanceOf(context);
     _authController = Di.instanceOf(context);
+    _feedController = Di.instanceOf(context);
 
     await _profileController.refreshMyProfile();
 
@@ -47,8 +51,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
               ),
               SizedBox(height: 25),
               GestureDetector(
-                onTap: () {
-                  _authController.signOut();
+                onTap: () async {
+                  await _feedController.clearAllListeners();
+                  await _authController.signOut();
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(Routes.login, (route) => false);
                 },
