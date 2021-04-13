@@ -55,10 +55,19 @@ class Collections {
   /// - reactedByProfileId
   CollectionReference get reactions => _firestore.collection("reactions");
 
-  CollectionReference get replies => _firestore.collection("replies");
+  static Future<Map<String, dynamic>> parseDataToPrimitiveTypes(
+      Map<String, dynamic> firebaseData) async {
 
-  static Map<String, dynamic> parseDataToPrimitiveTypes(
-      Map<String, dynamic> firebaseData) {
+        for (var entry in firebaseData.entries){
+          if (entry.value is DocumentReference){
+            firebaseData[entry.key] = await entry.value.toMap();
+          }
+
+          if (entry.value is Timestamp){
+            firebaseData[entry.key] = firebaseData[entry.value].toDate().toString();
+          }
+        }
+
     if (firebaseData[Fields.createdAt] != null) {
       firebaseData[Fields.createdAt] =
           firebaseData[Fields.createdAt].toDate().toString();
@@ -110,10 +119,10 @@ extension DocQueryExtension on Query {
   Future<List<Model>> toModelList<Model extends ModelBase>(
       Function(Map<String, dynamic> data) fromMap) async {
     var snapshot = await this.get();
-    var iterable = snapshot.docs.map((doc) {
+    var iterable = snapshot.docs.map((doc) async {
       var data = doc.data()!;
       data.putIfAbsent(Fields.id, () => doc.id);
-      return fromMap(Collections.parseDataToPrimitiveTypes(data));
+      return fromMap(await Collections.parseDataToPrimitiveTypes(data));
     });
     return List<Model>.from(iterable);
   }
@@ -135,19 +144,9 @@ extension DocumentRefExtension on DocumentReference {
 
     if (data == null) return null;
 
-    for (var itemData in data.entries) {
-      if (itemData.value is DocumentReference) {
-        DocumentReference docRef = itemData.value;
-
-        final docMap = await docRef.toMap();
-
-        data["profile"] = docMap;
-      }
-    }
-
     data.putIfAbsent(Fields.id, () => this.id);
 
-    return fromMap(Collections.parseDataToPrimitiveTypes(data));
+    return fromMap(await Collections.parseDataToPrimitiveTypes(data));
   }
 
   Future<Map<String, dynamic>?> toMap() async {

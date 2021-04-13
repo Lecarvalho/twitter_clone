@@ -4,7 +4,7 @@ import 'package:twitter_clone/controllers/feed_controller.dart';
 import 'package:twitter_clone/controllers/reply_controller.dart';
 import 'package:twitter_clone/controllers/controller_base.dart';
 import 'package:twitter_clone/controllers/search_controller.dart';
-import 'package:twitter_clone/controllers/user_controller.dart';
+import 'package:twitter_clone/controllers/auth_controller.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
 import 'package:twitter_clone/controllers/tweet_controller.dart';
 import 'package:twitter_clone/controllers/tweet_notifications_controller.dart';
@@ -20,7 +20,7 @@ import 'package:twitter_clone/services/providers/storage_provider.dart';
 import 'package:twitter_clone/services/reply_service.dart';
 import 'package:twitter_clone/services/search_service.dart';
 import 'package:twitter_clone/services/tweet_service.dart';
-import 'package:twitter_clone/services/user_service.dart';
+import 'package:twitter_clone/services/auth_service.dart';
 
 class Di {
   Di._();
@@ -69,9 +69,9 @@ class Di {
             service: SearchService(databaseProvider),
           ),
         ),
-        Provider<UserController>(
-          create: (_) => UserController(
-            service: UserService(authProvider),
+        Provider<AuthController>(
+          create: (_) => AuthController(
+            service: AuthService(authProvider),
             profileService: ProfileService(databaseStorageProvider),
           ),
         ),

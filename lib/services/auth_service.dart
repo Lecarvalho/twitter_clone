@@ -2,22 +2,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/services/providers/auth_provider.dart';
-import 'user_service_base.dart';
+import 'auth_service_base.dart';
 
-class UserService extends UserServiceBase {
+class AuthService extends AuthServiceBase {
   late AuthProvider _provider;
 
-  UserService(AuthProvider provider) : super(provider) {
+  AuthService(AuthProvider provider) : super(provider) {
     _provider = provider;
   }
 
   @override
-  Future<UserServiceResponse> createOrSignInWithGoogle() async {
+  Future<AuthResponse> createOrSignInWithGoogle() async {
     try {
       final googleUser = await GoogleSignIn().signIn();
 
       if (googleUser == null) {
-        return UserServiceResponse.cancel();
+        return AuthResponse.cancel();
       }
 
       final googleAuth = await googleUser.authentication;
@@ -32,17 +32,17 @@ class UserService extends UserServiceBase {
 
       return _returnSuccess(userCredential);
     } on FirebaseAuthException catch (e) {
-      return UserServiceResponse(message: _getErrorMessage(e.code));
+      return AuthResponse(message: _getErrorMessage(e.code));
     } catch (e) {
       print("Error in UserService.createOrSignInWithGoogle, ${e.toString()}");
-      return UserServiceResponse(
-        message: UserServiceResponseMessage.general_error,
+      return AuthResponse(
+        message: AuthResponseMessage.general_error,
       );
     }
   }
 
   @override
-  Future<UserServiceResponse> createWithEmailAndPassword({
+  Future<AuthResponse> createWithEmailAndPassword({
     required String name,
     required String email,
     required String password,
@@ -61,17 +61,17 @@ class UserService extends UserServiceBase {
 
       return _returnSuccess(userCredentialUpdated);
     } on FirebaseAuthException catch (e) {
-      return UserServiceResponse(message: _getErrorMessage(e.code));
+      return AuthResponse(message: _getErrorMessage(e.code));
     } catch (e) {
       print("Error in UserService.createWithEmailAndPassword, ${e.toString()}");
-      return UserServiceResponse(
-        message: UserServiceResponseMessage.general_error,
+      return AuthResponse(
+        message: AuthResponseMessage.general_error,
       );
     }
   }
 
   @override
-  Future<UserServiceResponse> signInWithEmailAndPassword(
+  Future<AuthResponse> signInWithEmailAndPassword(
     String email,
     String password,
   ) async {
@@ -84,11 +84,11 @@ class UserService extends UserServiceBase {
 
       return _returnSuccess(userCredential);
     } on FirebaseAuthException catch (e) {
-      return UserServiceResponse(message: _getErrorMessage(e.code));
+      return AuthResponse(message: _getErrorMessage(e.code));
     } catch (e) {
       print("Error in UserService.signInWithEmailAndPassword, ${e.toString()}");
-      return UserServiceResponse(
-        message: UserServiceResponseMessage.general_error,
+      return AuthResponse(
+        message: AuthResponseMessage.general_error,
       );
     }
   }
@@ -99,14 +99,14 @@ class UserService extends UserServiceBase {
   }
 
   @override
-  Future<UserServiceResponse> tryAutoSigIn() async {
+  Future<AuthResponse> tryAutoSigIn() async {
     if (_provider.firebaseAuth.currentUser == null) {
-      return UserServiceResponse(
+      return AuthResponse(
         message: "",
       );
     }
 
-    return UserServiceResponse.success(
+    return AuthResponse.success(
       UserModel(
         displayName: _provider.firebaseAuth.currentUser!.displayName!,
         email: _provider.firebaseAuth.currentUser!.email!,
@@ -119,25 +119,25 @@ class UserService extends UserServiceBase {
     print(errorCode);
     switch (errorCode) {
       case "account-exists-with-different-credential":
-        return UserServiceResponseMessage.email_already_in_use;
+        return AuthResponseMessage.email_already_in_use;
       case "invalid-credential":
       case "wrong-password":
-        return UserServiceResponseMessage.invalid_email_or_password;
+        return AuthResponseMessage.invalid_email_or_password;
       case "operation-not-allowed":
-        return UserServiceResponseMessage.general_error;
+        return AuthResponseMessage.general_error;
       case "user-disabled":
-        return UserServiceResponseMessage.user_disabled;
+        return AuthResponseMessage.user_disabled;
       case "user-not-found":
-        return UserServiceResponseMessage.user_not_found;
+        return AuthResponseMessage.user_not_found;
       case "weak-password":
-        return UserServiceResponseMessage.weak_password;
+        return AuthResponseMessage.weak_password;
       default:
-        return UserServiceResponseMessage.general_error;
+        return AuthResponseMessage.general_error;
     }
   }
 
-  UserServiceResponse _returnSuccess(UserCredential credential) {
-    return UserServiceResponse.success(
+  AuthResponse _returnSuccess(UserCredential credential) {
+    return AuthResponse.success(
       UserModel(
         uid: credential.user!.uid,
         displayName: credential.user!.displayName!,

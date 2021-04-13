@@ -1,15 +1,15 @@
 import 'package:twitter_clone/models/user_model.dart';
 
-import '../user_service_base.dart';
+import '../auth_service_base.dart';
 import 'mock_tools.dart';
 import 'service_provider_mock.dart';
 
-class UserServiceMock extends UserServiceBase {
-  UserServiceMock(ServiceProviderMock provider) : super(provider);
+class AuthServiceMock extends AuthServiceBase {
+  AuthServiceMock(ServiceProviderMock provider) : super(provider);
 
   @override
-  Future<UserServiceResponse> createOrSignInWithGoogle() async {
-    UserServiceResponse response;
+  Future<AuthResponse> createOrSignInWithGoogle() async {
+    AuthResponse response;
 
     try {
       var user = await MockTools.jsonToModel<UserModel>(
@@ -23,12 +23,12 @@ class UserServiceMock extends UserServiceBase {
 
       MockTools.simulateRequestDelay();
 
-      response = UserServiceResponse.success(user!);
+      response = AuthResponse.success(user!);
     } catch (e) {
       print(
           "error in userServiceMock.createOrSignInWithGoogle ${e.toString()}");
-      response = UserServiceResponse(
-        message: UserServiceResponseMessage.general_error,
+      response = AuthResponse(
+        message: AuthResponseMessage.general_error,
       );
     }
 
@@ -36,12 +36,12 @@ class UserServiceMock extends UserServiceBase {
   }
 
   @override
-  Future<UserServiceResponse> createWithEmailAndPassword({
+  Future<AuthResponse> createWithEmailAndPassword({
     required String name,
     required String email,
     required String password,
   }) async {
-    UserServiceResponse response;
+    AuthResponse response;
 
     try {
       var user = await MockTools.jsonToModel<UserModel>(
@@ -55,12 +55,12 @@ class UserServiceMock extends UserServiceBase {
 
       MockTools.simulateRequestDelay();
 
-      response = UserServiceResponse.success(user!);
+      response = AuthResponse.success(user!);
     } catch (e) {
       print(
           "error in userServiceMock.createWithEmailAndPassword ${e.toString()}");
-      response = UserServiceResponse(
-        message: UserServiceResponseMessage.general_error,
+      response = AuthResponse(
+        message: AuthResponseMessage.general_error,
       );
     }
 
@@ -68,11 +68,11 @@ class UserServiceMock extends UserServiceBase {
   }
 
   @override
-  Future<UserServiceResponse> signInWithEmailAndPassword(
+  Future<AuthResponse> signInWithEmailAndPassword(
     String email,
     String password,
   ) async {
-    UserServiceResponse response;
+    AuthResponse response;
 
     try {
       var user = await MockTools.jsonToModel<UserModel>(
@@ -86,12 +86,12 @@ class UserServiceMock extends UserServiceBase {
 
       MockTools.simulateRequestDelay();
 
-      response = UserServiceResponse.success(user!);
+      response = AuthResponse.success(user!);
     } catch (e) {
       print(
           "error in userServiceMock.signInWithEmailAndPassword ${e.toString()}");
-      response = UserServiceResponse(
-        message: UserServiceResponseMessage.general_error,
+      response = AuthResponse(
+        message: AuthResponseMessage.general_error,
       );
     }
 
@@ -106,10 +106,10 @@ class UserServiceMock extends UserServiceBase {
   }
 
   @override
-  Future<UserServiceResponse> tryAutoSigIn() async {
+  Future<AuthResponse> tryAutoSigIn() async {
     print("tryAutoSigIn");
 
-    UserServiceResponse response;
+    AuthResponse response;
 
     try {
       var user = await MockTools.jsonToModel<UserModel>(
@@ -126,17 +126,17 @@ class UserServiceMock extends UserServiceBase {
       await MockTools.simulateQuickRequestDelay();
 
       if (user == null)
-        response = UserServiceResponse(
+        response = AuthResponse(
           message: "",
         );
       else {
-        response = UserServiceResponse.success(user);
+        response = AuthResponse.success(user);
       }
     } catch (e) {
       print("error in userServiceMock.tryAutoSigIn ${e.toString()}");
 
-      response = UserServiceResponse(
-        message: UserServiceResponseMessage.general_error,
+      response = AuthResponse(
+        message: AuthResponseMessage.general_error,
       );
     }
 

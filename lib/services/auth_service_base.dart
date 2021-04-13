@@ -3,52 +3,52 @@ import 'package:twitter_clone/services/providers/service_provider_base.dart';
 
 import 'service_base.dart';
 
-abstract class UserServiceBase extends ServiceBase {
-  UserServiceBase(ServiceProviderBase provider) : super(provider);
+abstract class AuthServiceBase extends ServiceBase {
+  AuthServiceBase(ServiceProviderBase provider) : super(provider);
 
-  Future<UserServiceResponse> createOrSignInWithGoogle();
+  Future<AuthResponse> createOrSignInWithGoogle();
 
-  Future<UserServiceResponse> createWithEmailAndPassword({
+  Future<AuthResponse> createWithEmailAndPassword({
     required String name,
     required String email,
     required String password,
   });
 
-  Future<UserServiceResponse> signInWithEmailAndPassword(
+  Future<AuthResponse> signInWithEmailAndPassword(
     String email,
     String password,
   );
 
   Future<void> signOut();
 
-  Future<UserServiceResponse> tryAutoSigIn();
+  Future<AuthResponse> tryAutoSigIn();
 }
 
-class UserServiceResponse {
+class AuthResponse {
   UserModel? user;
   bool get success =>
-      user != null && message == UserServiceResponseMessage.success;
-  String message;
+      user != null && message == AuthResponseMessage.success;
+  String? message;
 
-  UserServiceResponse({
+  AuthResponse({
     this.user,
-    required this.message,
+    this.message,
   });
 
-  factory UserServiceResponse.success(UserModel user) {
-    return UserServiceResponse(
-      message: UserServiceResponseMessage.success,
+  factory AuthResponse.success(UserModel user) {
+    return AuthResponse(
+      message: AuthResponseMessage.success,
       user: user,
     );
   }
 
-  factory UserServiceResponse.cancel() {
-    return UserServiceResponse(message: "");
+  factory AuthResponse.cancel() {
+    return AuthResponse(message: "");
   }
 }
 
-class UserServiceResponseMessage {
-  UserServiceResponseMessage._();
+class AuthResponseMessage {
+  AuthResponseMessage._();
   static const String invalid_email_or_password = "Invalid email or password";
   static const String email_already_in_use = "The email is already in use.";
   static const String user_disabled =

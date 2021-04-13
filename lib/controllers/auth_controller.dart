@@ -1,17 +1,17 @@
 import 'package:twitter_clone/models/profile_model.dart';
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/services/profile_service_base.dart';
-import 'package:twitter_clone/services/user_service_base.dart';
+import 'package:twitter_clone/services/auth_service_base.dart';
 
 import 'controller_base.dart';
 
-class UserController extends ControllerBase<UserServiceBase> {
+class AuthController extends ControllerBase<AuthServiceBase> {
   ProfileServiceBase profileService;
 
   late ProfileModel _myProfile;
   ProfileModel get myProfile => _myProfile;
 
-  UserController({required service, required this.profileService})
+  AuthController({required service, required this.profileService})
       : super(service: service);
 
   Future<MyProfileResponse> createOrSignInWithGoogle() async {
@@ -28,7 +28,7 @@ class UserController extends ControllerBase<UserServiceBase> {
       }
     } catch (e) {
       response = MyProfileResponse(
-        message: UserServiceResponseMessage.general_error,
+        message: AuthResponseMessage.general_error,
         type: ProfileStatusType.error,
       );
       print(
@@ -84,7 +84,7 @@ class UserController extends ControllerBase<UserServiceBase> {
       print(
           "error in User2Controller.createWithEmailAndPassword - ${e.toString()}");
       response = MyProfileResponse(
-        message: UserServiceResponseMessage.general_error,
+        message: AuthResponseMessage.general_error,
         type: ProfileStatusType.error,
       );
     }
@@ -121,7 +121,7 @@ class UserController extends ControllerBase<UserServiceBase> {
       print(
           "error in User2Controller.signInWithEmailAndPassword - ${e.toString()}");
       return MyProfileResponse(
-        message: UserServiceResponseMessage.general_error,
+        message: AuthResponseMessage.general_error,
         type: ProfileStatusType.error,
       );
     }
@@ -132,7 +132,7 @@ class UserController extends ControllerBase<UserServiceBase> {
   }
 
   Future<MyProfileResponse> _createNewProfileIfNeeded(
-    UserServiceResponse userServiceResponse,
+    AuthResponse userServiceResponse,
   ) async {
     var _profile = await _tryGetProfile(userServiceResponse.user!.uid);
     if (_profile == null) {
@@ -179,7 +179,7 @@ class UserController extends ControllerBase<UserServiceBase> {
     } catch (e) {
       print("Error on tryAutoSigIn: ${e.toString()}");
       return MyProfileResponse(
-        message: UserServiceResponseMessage.general_error,
+        message: AuthResponseMessage.general_error,
         type: ProfileStatusType.error,
       );
     }
@@ -187,7 +187,7 @@ class UserController extends ControllerBase<UserServiceBase> {
 }
 
 class MyProfileResponse {
-  String message;
+  String? message;
   ProfileStatusType type;
 
   MyProfileResponse({required this.message, required this.type});

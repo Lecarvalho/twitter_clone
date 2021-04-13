@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
-import 'package:twitter_clone/controllers/user_controller.dart';
+import 'package:twitter_clone/controllers/auth_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
@@ -21,12 +21,12 @@ class _LoginPageState extends State<LoginPage> {
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
 
-  late UserController _userController;
+  late AuthController _authController;
   late ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
-    _userController = Di.instanceOf(context);
+    _authController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
     super.didChangeDependencies();
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
   void _onPressLogin(BuildContext context) async {
     _closeKeyboard();
 
-    var response = await _userController.signInWithEmailAndPassword(
+    var response = await _authController.signInWithEmailAndPassword(
       _emailTextController.text,
       _passwordTextController.text,
     );
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onPressLoginWithGoogle() async {
-    var response = await _userController.createOrSignInWithGoogle();
+    var response = await _authController.createOrSignInWithGoogle();
 
     _handleLoginResponse(response);
   }
@@ -92,13 +92,13 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     if (response.type == ProfileStatusType.complete) {
-      _profileController.setMyProfile = _userController.myProfile;
+      _profileController.setMyProfile = _authController.myProfile;
       Navigator.of(context).pushNamed(Routes.home);
       return;
     }
 
     if (response.type == ProfileStatusType.incomplete) {
-      _profileController.setMyProfile = _userController.myProfile;
+      _profileController.setMyProfile = _authController.myProfile;
       Navigator.of(context).pushNamed(Routes.edit_profile);
       return;
     }

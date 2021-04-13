@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/app_config.dart';
 import 'package:twitter_clone/controllers/profile_controller.dart';
-import 'package:twitter_clone/controllers/user_controller.dart';
+import 'package:twitter_clone/controllers/auth_controller.dart';
 import 'package:twitter_clone/views/routes.dart';
 import 'package:twitter_clone/config/di.dart';
 import 'package:twitter_clone/views/resources/pop_message.dart';
@@ -21,12 +21,12 @@ class _CreateUserPageState extends State<CreateUserPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  late UserController _userController;
+  late AuthController _authController;
   late ProfileController _profileController;
 
   @override
   void didChangeDependencies() {
-    _userController = Di.instanceOf(context);
+    _authController = Di.instanceOf(context);
     _profileController = Di.instanceOf(context);
 
     super.didChangeDependencies();
@@ -39,7 +39,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
   void _onPressNext(BuildContext context) async {
     _closeKeyboard();
 
-    var response = await _userController.createWithEmailAndPassword(
+    var response = await _authController.createWithEmailAndPassword(
       email: _emailController.text,
       name: _nameController.text,
       password: _passwordController.text,
@@ -49,7 +49,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
       PopMessage.show(response.message, context);
     } else {
       PopMessage.show("We are almost done...", context);
-      _profileController.setMyProfile = _userController.myProfile;
+      _profileController.setMyProfile = _authController.myProfile;
       Navigator.of(context).pushReplacementNamed(Routes.edit_profile);
     }
   }

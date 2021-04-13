@@ -12,23 +12,18 @@ class FeedController extends ControllerBase<FeedServiceBase> {
 
   final _notifier = StreamController<bool>();
 
-  // ignore: cancel_subscriptions
-  StreamSubscription<dynamic>? _streamFeedResponse;
   StreamSubscription<bool>? _streamForView;
+  // ignore: cancel_subscriptions
+  StreamSubscription? _streamFeedResponse;
 
   Map<String, TweetModel> _shownTweets = {};
   Map<String, TweetModel> _allTweets = {};
   Map<String, StreamSubscription> _listeningTweetsIds = {};
 
-  Set<String> get _allTweetsIdsOrdered => _allTweets.values
-      .toList()
-      .sortByCreatedAt()
-      .map((tweet) => tweet.id)
-      .toSet();
-
   List<TweetModel> get tweets => _shownTweets.values.toList().sortByCreatedAt();
 
   void listenFeed(String myProfileId, Function(bool) onData) async {
+
     if (_streamFeedResponse != null) {
       _cleanAllListeners();
     } else {
@@ -37,13 +32,11 @@ class FeedController extends ControllerBase<FeedServiceBase> {
 
     _streamForView?.onData(onData);
 
-    _streamFeedResponse =
-        await service.streamFeed(myProfileId, (streamFeedResponse) {
-      onDataFeed(streamFeedResponse, myProfileId);
-    });
+    _streamFeedResponse = await service.streamFeed(
+        myProfileId, (feedResponse) => onListenFeed(feedResponse, myProfileId));
   }
 
-  void onDataFeed(FeedUpdateResponse feedResponse, String myProfileId) {
+  void onListenFeed(FeedUpdateResponse feedResponse, String myProfileId) {
     if (feedResponse.commingTweets.isNotEmpty) {
       _listenTweetsComming(feedResponse.commingTweets, myProfileId);
     }
@@ -66,8 +59,8 @@ class FeedController extends ControllerBase<FeedServiceBase> {
     _streamFeedResponse!.cancel();
     _allTweets.clear();
     _shownTweets.clear();
-    _listeningTweetsIds.forEach((key, value) {
-      value.cancel();
+    _listeningTweetsIds.forEach((_, streamSubs) {
+      streamSubs.cancel();
     });
     _listeningTweetsIds.clear();
   }
@@ -126,6 +119,12 @@ class FeedController extends ControllerBase<FeedServiceBase> {
   }
 
   bool _hasAllTweetsFinishedLoading() {
-    return setEquals(_listeningTweetsIds.keys.toSet(), _allTweetsIdsOrdered);
+    final allTweetsIdsOrdered = _allTweets.values
+        .toList()
+        .sortByCreatedAt()
+        .map((tweet) => tweet.id)
+        .toSet();
+
+    return setEquals(_listeningTweetsIds.keys.toSet(), allTweetsIdsOrdered);
   }
 }

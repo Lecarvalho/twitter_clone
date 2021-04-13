@@ -5,8 +5,8 @@ import 'package:toast/toast.dart';
 class PopMessage {
   PopMessage._();
 
-  static void show(String message, BuildContext context) {
-    if (message.isNotEmpty)
+  static void show(String? message, BuildContext context) {
+    if (message?.isNotEmpty ?? false)
       Toast.show(
         message,
         context,
