@@ -126,9 +126,12 @@ extension DocQueryExtension on Query {
   Future<List<Map<String, dynamic>>>
       toMapList<Model extends ModelBase>() async {
     var snapshot = await this.get();
-    return List.from(snapshot.docs.map(
-      (doc) => Collections.parseDataToPrimitiveTypes(doc.data()!),
-    ));
+    List<Map<String, dynamic>> mapList = [];
+    for (var doc in snapshot.docs){
+      var map = await Collections.parseDataToPrimitiveTypes(doc.data()!);
+      mapList.add(map);
+    }
+    return mapList;
   }
 }
 
