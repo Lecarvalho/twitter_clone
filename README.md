@@ -7,18 +7,18 @@
 - Firestore Database
 - Firebase Auth (Google / Email - password)
 - Firebase Storage
-
-<img src="docs/screenshots/Screenshot_1618321329.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321356.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321361.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321370.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321375.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321388.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321391.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321407.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321414.png" width="200">
-<img src="docs/screenshots/Screenshot_1618321427.png" width="200">
-
+<p float="left">
+    <img src="docs/screenshots/Screenshot_1618321329.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321356.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321361.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321370.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321375.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321388.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321391.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321407.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321414.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618321427.png" width="200">
+</p>
 ## Getting Started with Flutter
 
 A few resources to get you started if this is your first Flutter project:
