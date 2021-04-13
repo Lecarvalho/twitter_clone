@@ -13,6 +13,7 @@
     <img src="docs/screenshots/Screenshot_1618321356.png" width="200">
     <img src="docs/screenshots/Screenshot_1618321361.png" width="200">
     <img src="docs/screenshots/Screenshot_1618321370.png" width="200">
+    <img src="docs/screenshots/Screenshot_1618327967.png" width="200">
     <img src="docs/screenshots/Screenshot_1618321375.png" width="200">
     <img src="docs/screenshots/Screenshot_1618321388.png" width="200">
     <img src="docs/screenshots/Screenshot_1618321391.png" width="200">
