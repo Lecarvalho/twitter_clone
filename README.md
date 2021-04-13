@@ -1,10 +1,25 @@
-# twitter_clone
+# Twitter Clone made with Flutter
 
-A new Flutter project.
+- null-safety
+- MVC
+- setState - State Management (ephemeral state approach)
+- Provider - Dependency Injections
+- Firestore Database
+- Firebase Auth (Google / Email - password)
+- Firebase Storage
 
-## Getting Started
+<img src="docs/screenshots/Screenshot_1618321329.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321356.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321361.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321370.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321375.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321388.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321391.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321407.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321414.png" width="200">
+<img src="docs/screenshots/Screenshot_1618321427.png" width="200">
 
-This project is a starting point for a Flutter application.
+## Getting Started with Flutter
 
 A few resources to get you started if this is your first Flutter project:
 
